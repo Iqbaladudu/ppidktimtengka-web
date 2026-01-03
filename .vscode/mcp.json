@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"],
+      "type": "stdio"
+    },
+    "Deepwiki": {
+      "url": "https://mcp.deepwiki.com/sse",
+      "type": "http"
+    }
+  },
+  "inputs": []
+}
