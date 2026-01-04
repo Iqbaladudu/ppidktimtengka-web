@@ -71,7 +71,6 @@ export const About: React.FC = React.memo(() => {
             >
               {/* Subtle gradient accent on hover */}
               <div
-                className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity"
                 className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${item.gradientFrom} ${item.gradientTo} opacity-0 group-hover:opacity-100 transition-opacity`}
                 aria-hidden="true"
               />
