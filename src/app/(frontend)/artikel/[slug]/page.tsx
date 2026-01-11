@@ -113,7 +113,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       />
 
       {/* Article Container */}
-      <article className="mx-auto max-w-4xl px-4 py-8 md:px-6 md:py-12">
+      <article className="mx-auto max-w-4xl px-3 py-6 md:px-6 md:py-12">
         {/* Article Header */}
         <ArticleMeta article={article} />
 
@@ -126,7 +126,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
 
         {/* Article Content */}
-        <div className="rounded-2xl bg-white px-6 py-8 shadow-sm md:px-12 md:py-12">
+        <div className="rounded-2xl bg-white px-5 py-6 shadow-sm md:px-12 md:py-12">
           <ArticleContent content={article.content} />
         </div>
 

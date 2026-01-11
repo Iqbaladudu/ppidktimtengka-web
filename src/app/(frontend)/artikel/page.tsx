@@ -77,7 +77,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
         {/* Category Filter */}
         {categories.docs.length > 0 && (
           <div className="mb-8">
-            <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/artikel"
                 className={`shrink-0 rounded-full border px-5 py-2.5 text-sm font-medium transition-all ${
