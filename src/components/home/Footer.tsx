@@ -28,23 +28,23 @@ export const Footer: React.FC = React.memo(() => {
             <h4 className="text-white font-bold mb-4">Tautan</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className="hover:text-emerald-400 transition-colors">
+                <Link href="/" className="hover:text-emerald-400 transition-colors">
                   Beranda
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-emerald-400 transition-colors">
+                <Link href="/artikel" className="hover:text-emerald-400 transition-colors">
+                  Artikel
+                </Link>
+              </li>
+              <li>
+                <Link href="/#about" className="hover:text-emerald-400 transition-colors">
                   Tentang Kami
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-emerald-400 transition-colors">
+                <Link href="/#programs" className="hover:text-emerald-400 transition-colors">
                   Program Kerja
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-emerald-400 transition-colors">
-                  Kontak
                 </Link>
               </li>
             </ul>

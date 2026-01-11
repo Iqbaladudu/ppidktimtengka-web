@@ -14,7 +14,7 @@ export const Header: React.FC = React.memo(() => {
     >
       <div className="mx-auto max-w-3xl sm:max-w-4xl md:max-w-6xl flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-xl shadow-lg shadow-emerald-200">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-teal-600 text-white font-bold text-xl shadow-lg shadow-emerald-200">
             P
           </div>
           <span className="text-lg font-bold tracking-tight text-slate-900">{siteName}</span>
@@ -23,17 +23,17 @@ export const Header: React.FC = React.memo(() => {
           className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600"
           aria-label="Main navigation"
         >
-          <Link href="#" className="hover:text-emerald-600 transition-colors">
+          <Link href="/" className="hover:text-emerald-600 transition-colors">
             Beranda
+          </Link>
+          <Link href="/artikel" className="hover:text-emerald-600 transition-colors">
+            Artikel
           </Link>
           <Link href="#about" className="hover:text-emerald-600 transition-colors">
             Tentang Kami
           </Link>
           <Link href="#programs" className="hover:text-emerald-600 transition-colors">
             Program
-          </Link>
-          <Link href="#gallery" className="hover:text-emerald-600 transition-colors">
-            Galeri
           </Link>
         </nav>
         <div className="flex items-center gap-4">
