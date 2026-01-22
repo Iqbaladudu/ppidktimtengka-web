@@ -28,14 +28,14 @@ export function ArticleContent({ content, className }: ArticleContentProps) {
         // Paragraphs
         'prose-p:leading-7 md:prose-p:leading-8 prose-p:text-slate-700 prose-p:mb-5 md:prose-p:mb-6',
         // Links
-        'prose-a:text-emerald-700 prose-a:no-underline prose-a:border-b prose-a:border-emerald-200 hover:prose-a:border-emerald-600 hover:prose-a:bg-emerald-50 transition-colors',
+        'prose-a:text-primary prose-a:no-underline prose-a:border-b prose-a:border-primary/30 hover:prose-a:border-primary hover:prose-a:bg-primary/5 transition-colors',
         // Lists
         'prose-ul:my-4 md:prose-ul:my-6 prose-ol:my-4 md:prose-ol:my-6 prose-li:text-slate-700 prose-li:my-1 md:prose-li:my-2',
         // Blockquotes
-        'prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:bg-slate-50 prose-blockquote:py-3 md:prose-blockquote:py-4 prose-blockquote:px-4 md:prose-blockquote:px-6 prose-blockquote:my-6 md:prose-blockquote:my-8 prose-blockquote:not-italic prose-blockquote:rounded-r-lg',
+        'prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-slate-50 prose-blockquote:py-3 md:prose-blockquote:py-4 prose-blockquote:px-4 md:prose-blockquote:px-6 prose-blockquote:my-6 md:prose-blockquote:my-8 prose-blockquote:not-italic prose-blockquote:rounded-r-lg',
         'prose-blockquote:text-lg md:prose-blockquote:text-xl prose-blockquote:font-serif prose-blockquote:text-slate-800 prose-blockquote:leading-relaxed',
         // Code
-        'prose-code:font-sans prose-code:text-sm prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-emerald-700 prose-code:before:content-none prose-code:after:content-none',
+        'prose-code:font-sans prose-code:text-sm prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-primary prose-code:before:content-none prose-code:after:content-none',
         'prose-pre:bg-slate-900 prose-pre:shadow-lg prose-pre:rounded-xl',
         // Images
         'prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8 md:prose-img:my-10 prose-img:w-full',

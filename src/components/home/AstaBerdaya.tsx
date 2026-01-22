@@ -126,10 +126,7 @@ export const AstaBerdaya: React.FC = React.memo(() => {
             id="asta-heading"
             className="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 uppercase tracking-tight"
           >
-            Asta{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
-              Berdaya
-            </span>
+            Asta <span className="text-primary">Berdaya</span>
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
             Delapan pilar utama yang menjadi pondasi transformasi dan pemberdayaan seluruh mahasiswa
@@ -151,19 +148,19 @@ export const AstaBerdaya: React.FC = React.memo(() => {
                 className="group relative h-full text-left focus:outline-none"
               >
                 <div className="relative h-full overflow-hidden rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 transition-all duration-500 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-2">
-                  {/* Hover Gradient Background */}
+                  {/* Background */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${pillar.color} opacity-0 group-hover:opacity-5 dark:group-hover:opacity-10 transition-opacity duration-500`}
+                    className={`absolute inset-0 bg-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                   />
 
                   {/* Decorative Elements */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-white/5 dark:to-white/0 rounded-bl-[4rem] -z-0 transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 dark:bg-white/5 rounded-bl-[4rem] -z-0 transition-transform duration-500 group-hover:scale-110" />
 
                   <div className="relative z-10 flex flex-col h-full">
                     {/* Header */}
                     <div className="flex justify-between items-start mb-6">
                       <div
-                        className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${pillar.color} text-white shadow-lg shadow-blue-900/20 transform transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110`}
+                        className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-blue-900/20 transform transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110`}
                       >
                         {pillar.icon}
                       </div>
@@ -202,9 +199,7 @@ export const AstaBerdaya: React.FC = React.memo(() => {
           />
           <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
             {/* Modal Header */}
-            <div
-              className={`relative bg-gradient-to-br ${selectedPillar.color} p-8 overflow-hidden`}
-            >
+            <div className={`relative bg-primary p-8 overflow-hidden`}>
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
               <button
@@ -253,7 +248,7 @@ export const AstaBerdaya: React.FC = React.memo(() => {
                       className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-700/50 transition-colors"
                     >
                       <div
-                        className={`mt-0.5 h-5 w-5 rounded-full bg-gradient-to-br ${selectedPillar.color} flex items-center justify-center flex-shrink-0`}
+                        className={`mt-0.5 h-5 w-5 rounded-full bg-primary flex items-center justify-center flex-shrink-0`}
                       >
                         <CheckCircle2 className="h-3 w-3 text-white" />
                       </div>

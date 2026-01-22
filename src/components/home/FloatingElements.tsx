@@ -59,7 +59,7 @@ export const FloatingElements: React.FC = React.memo(() => {
             <div className="flex items-center gap-3 mb-3">
               <div className="relative">
                 <span className="absolute top-0 right-0 h-2.5 w-2.5 bg-green-500 rounded-full ring-2 ring-white dark:ring-slate-900 animate-pulse"></span>
-                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white font-bold">
+                <div className="h-10 w-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold">
                   CS
                 </div>
               </div>
@@ -89,7 +89,7 @@ export const FloatingElements: React.FC = React.memo(() => {
           {/* Main WA Button */}
           <button
             onClick={() => setShowWhatsAppTooltip(!showWhatsAppTooltip)}
-            className="group h-14 w-14 rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] flex items-center justify-center text-white shadow-xl shadow-green-600/30 hover:scale-110 hover:shadow-2xl hover:shadow-green-600/40 transition-all duration-300 relative overflow-hidden"
+            className="group h-14 w-14 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-xl shadow-green-600/30 hover:scale-110 hover:shadow-2xl hover:shadow-green-600/40 transition-all duration-300 relative overflow-hidden"
             aria-label="WhatsApp Chat"
           >
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full" />

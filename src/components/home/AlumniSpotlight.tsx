@@ -112,10 +112,7 @@ export const AlumniSpotlight: React.FC = React.memo(() => {
             id="alumni-heading"
             className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-tight"
           >
-            Jejak{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600 dark:from-amber-400 dark:to-orange-400">
-              Inspirasi
-            </span>
+            Jejak <span className="text-secondary">Inspirasi</span>
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Figur-figur inspiratif jebolan Timur Tengah & Afrika yang kini berkontribusi nyata di
@@ -137,7 +134,7 @@ export const AlumniSpotlight: React.FC = React.memo(() => {
               <div className="flex items-start gap-5 mb-6">
                 <div className="relative">
                   <div className="absolute inset-0 bg-amber-500 blur-xl opacity-20 rounded-full group-hover:opacity-40 transition-opacity" />
-                  <div className="relative h-20 w-20 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center text-3xl font-bold text-slate-600 dark:text-slate-300 shadow-inner overflow-hidden">
+                  <div className="relative h-20 w-20 rounded-2xl bg-muted flex items-center justify-center text-3xl font-bold text-muted-foreground shadow-inner overflow-hidden">
                     {alumni.image ? (
                       <Image src={alumni.image} alt={alumni.name} fill className="object-cover" />
                     ) : (
@@ -199,7 +196,6 @@ export const AlumniSpotlight: React.FC = React.memo(() => {
         {/* CTA */}
         <div className="mt-20 text-center">
           <div className="inline-block relative">
-            <div className="absolute inset-0 bg-amber-500 blur-2xl opacity-20 rounded-full" />
             <div className="relative bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-2xl max-w-3xl mx-auto">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                 Anda Alumni Timur Tengah & Afrika?

@@ -128,10 +128,7 @@ export const Resources: React.FC = React.memo(() => {
             id="resources-heading"
             className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight"
           >
-            Bank{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400">
-              Data & Aset
-            </span>
+            Bank <span className="text-primary">Data & Aset</span>
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Akses publik untuk dokumen resmi, panduan, dan aset digital organisasi.
@@ -179,7 +176,7 @@ export const Resources: React.FC = React.memo(() => {
             >
               <div className="flex items-start justify-between mb-6">
                 <div
-                  className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${resource.color} text-white shadow-lg shadow-violet-900/20 group-hover:scale-110 transition-transform duration-300`}
+                  className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300`}
                 >
                   {resource.icon}
                 </div>
@@ -202,7 +199,7 @@ export const Resources: React.FC = React.memo(() => {
                   <span className="opacity-70">{resource.downloads} Unduhan</span>
                 </div>
 
-                <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:bg-violet-600 group-hover:text-white transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm font-bold text-slate-700 dark:text-slate-200 group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                   <Download className="h-4 w-4" />
                   Unduh
                 </button>

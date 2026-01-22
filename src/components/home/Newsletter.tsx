@@ -18,7 +18,7 @@ export const Newsletter: React.FC = React.memo(() => {
   return (
     <section
       id="newsletter"
-      className="py-16 lg:py-20 bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600"
+      className="py-16 lg:py-20 bg-primary"
       aria-labelledby="newsletter-heading"
     >
       <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
@@ -56,7 +56,7 @@ export const Newsletter: React.FC = React.memo(() => {
             />
             <button
               type="submit"
-              className="h-14 px-8 rounded-xl bg-white text-blue-600 font-semibold hover:bg-blue-50 transition-colors"
+              className="h-14 px-8 rounded-xl bg-background text-primary font-semibold hover:bg-muted transition-colors"
             >
               Subscribe →
             </button>

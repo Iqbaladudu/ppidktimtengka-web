@@ -44,7 +44,7 @@ export const About: React.FC = React.memo(() => {
   return (
     <section
       id="about"
-      className="relative py-24 md:py-32 bg-gradient-to-b from-white to-slate-50"
+      className="relative py-24 md:py-32 bg-background"
       aria-labelledby="about-heading"
     >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-8">
@@ -54,7 +54,7 @@ export const About: React.FC = React.memo(() => {
             id="about-heading"
             className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl mb-5"
           >
-            Kenapa <span className="text-emerald-600">PPIDK TIMTENGKA?</span>
+            Kenapa <span className="text-primary">PPIDK TIMTENGKA?</span>
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
             Kami hadir sebagai wadah pemersatu dan penggerak potensi mahasiswa Indonesia di kawasan
@@ -69,23 +69,23 @@ export const About: React.FC = React.memo(() => {
               key={i}
               className="group relative overflow-hidden rounded-2xl bg-white p-8 lg:p-10 transition-all hover:shadow-2xl hover:shadow-slate-900/5 border border-slate-200/60 hover:border-slate-300/60"
             >
-              {/* Subtle gradient accent on hover */}
+              {/* Bottom Border - Solid */}
               <div
-                className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${item.gradientFrom} ${item.gradientTo} opacity-0 group-hover:opacity-100 transition-opacity`}
+                className={`absolute top-0 left-0 right-0 h-1 bg-primary opacity-0 group-hover:opacity-100 transition-opacity`}
                 aria-hidden="true"
               />
 
               {/* Icon with refined styling */}
               <div className="mb-6">
                 <div
-                  className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${item.gradientFrom} ${item.gradientTo} text-white shadow-lg transition-transform group-hover:scale-105`}
+                  className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-transform group-hover:scale-105`}
                 >
                   {item.icon}
                 </div>
               </div>
 
               {/* Content with better typography */}
-              <h3 className="mb-3 text-xl lg:text-2xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
+              <h3 className="mb-3 text-xl lg:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
                 {item.title}
               </h3>
               <p className="text-slate-600 leading-relaxed text-base">{item.desc}</p>

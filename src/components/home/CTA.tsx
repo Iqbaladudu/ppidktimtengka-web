@@ -54,19 +54,9 @@ export const CTA: React.FC = React.memo(() => {
       className="relative py-24 lg:py-32 overflow-hidden bg-slate-900"
       aria-labelledby="cta-heading"
     >
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-950 opacity-90" />
+      {/* Background Effects - Solidified */}
+      <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-
-      {/* Animated Orbs */}
-      <div
-        className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] animate-pulse-glow"
-        style={{ animationDuration: '4s' }}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] animate-pulse-glow"
-        style={{ animationDuration: '7s' }}
-      />
 
       <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
@@ -81,10 +71,7 @@ export const CTA: React.FC = React.memo(() => {
                 id="cta-heading"
                 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
               >
-                Mari{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-                  Terhubung
-                </span>
+                Mari <span className="text-primary">Terhubung</span>
               </h2>
               <p className="text-lg text-slate-400 leading-relaxed">
                 Punya pertanyaan, usulan kolaborasi, atau sekadar ingin menyapa? Tim kami siap
@@ -162,7 +149,7 @@ export const CTA: React.FC = React.memo(() => {
                   <button
                     type="submit"
                     disabled={formStatus === 'submitting'}
-                    className="w-full inline-flex items-center justify-center gap-2 h-14 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold text-lg shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2 h-14 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg shadow-lg shadow-primary/30 transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     {formStatus === 'submitting' ? (
                       <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -181,9 +168,8 @@ export const CTA: React.FC = React.memo(() => {
           {/* Right: Newsletter & Socials */}
           <div className="flex flex-col justify-center space-y-10">
             {/* Newsletter Box */}
-            <div className="relative overflow-hidden rounded-3xl bg-indigo-600 p-8 lg:p-10 shadow-2xl">
+            <div className="relative overflow-hidden rounded-3xl bg-secondary p-8 lg:p-10 shadow-2xl">
               <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20" />
-              <div className="absolute -top-24 -right-24 h-64 w-64 bg-cyan-400 rounded-full blur-[80px] opacity-50" />
 
               <div className="relative z-10">
                 <h3 className="text-2xl font-bold text-white mb-4">📬 Newsletter</h3>

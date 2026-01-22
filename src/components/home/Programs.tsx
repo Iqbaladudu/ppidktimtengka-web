@@ -106,14 +106,8 @@ export const Programs: React.FC = React.memo(() => {
               >
                 {/* Image/Visual Area with gradient */}
                 <div className="aspect-[16/10] relative overflow-hidden bg-slate-100">
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-90`}
-                    aria-hidden="true"
-                  />
-                  <div
-                    className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.1)_100%)]"
-                    aria-hidden="true"
-                  />
+                  <div className={`absolute inset-0 bg-primary opacity-90`} aria-hidden="true" />
+                  <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
 
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
@@ -138,7 +132,7 @@ export const Programs: React.FC = React.memo(() => {
                     <time>{item.date}</time>
                   </div>
 
-                  <h3 className="text-xl lg:text-2xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">
+                  <h3 className="text-xl lg:text-2xl font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
 
@@ -151,7 +145,7 @@ export const Programs: React.FC = React.memo(() => {
                     <span className="text-sm font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors">
                       Pelajari Lebih Lanjut
                     </span>
-                    <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center transition-all group-hover:bg-emerald-600 group-hover:text-white group-hover:scale-105">
+                    <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105">
                       <ArrowRight className="h-5 w-5" aria-hidden="true" />
                     </div>
                   </div>

@@ -90,7 +90,7 @@ export const LatestNews = async () => {
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-black/60" />
 
                 <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-10">
                   <span className="inline-block px-2 py-1 lg:px-3 lg:py-1 rounded-lg bg-blue-600 text-white text-[10px] lg:text-xs font-bold mb-3 lg:mb-4 uppercase tracking-wider">
@@ -110,7 +110,9 @@ export const LatestNews = async () => {
                     </div>
                     <div className="flex items-center gap-1.5 lg:gap-2">
                       <Calendar className="h-3 w-3 lg:h-4 lg:w-4" />
-                      <span>{formatDate(featuredArticle.publishedAt || featuredArticle.createdAt)}</span>
+                      <span>
+                        {formatDate(featuredArticle.publishedAt || featuredArticle.createdAt)}
+                      </span>
                     </div>
                     {featuredArticle.readingTime && (
                       <div className="flex items-center gap-1.5 lg:gap-2">
@@ -170,7 +172,9 @@ export const LatestNews = async () => {
             <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 lg:p-6 border border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2 mb-4 lg:mb-6">
                 <TrendingUp className="h-4 w-4 lg:h-5 lg:w-5 text-blue-600" />
-                <h3 className="font-bold text-sm lg:text-base text-slate-900 dark:text-white">Sedang Hangat</h3>
+                <h3 className="font-bold text-sm lg:text-base text-slate-900 dark:text-white">
+                  Sedang Hangat
+                </h3>
               </div>
 
               <div className="space-y-4 lg:space-y-6">
@@ -198,10 +202,9 @@ export const LatestNews = async () => {
               </div>
             </div>
 
-            {/* Newsletter Widget */}
-            <div className="relative rounded-2xl overflow-hidden bg-blue-600 p-5 lg:p-6 text-white text-center">
+            {/* Newsletter Widget - Solidified */}
+            <div className="relative rounded-2xl overflow-hidden bg-primary p-5 lg:p-6 text-primary-foreground text-center">
               <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 animate-professional-grid" />
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-400/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
               <div className="relative z-10">
                 <div className="h-10 w-10 lg:h-12 lg:w-12 rounded-xl bg-white/20 flex items-center justify-center mx-auto mb-3 lg:mb-4 backdrop-blur-sm">
@@ -213,7 +216,7 @@ export const LatestNews = async () => {
                 </p>
                 <Link
                   href="#newsletter"
-                  className="block w-full py-2.5 lg:py-3 bg-white text-blue-600 rounded-xl font-bold text-xs lg:text-sm hover:bg-blue-50 transition-colors"
+                  className="block w-full py-2.5 lg:py-3 bg-white text-primary rounded-xl font-bold text-xs lg:text-sm hover:bg-slate-50 transition-colors"
                 >
                   Langganan Newsletter
                 </Link>

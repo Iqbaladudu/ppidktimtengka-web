@@ -92,12 +92,10 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
             Thumbnail
           </div>
           {(thumbnail.caption || thumbnail.credit) && (
-            <figcaption className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-sm text-white">
+            <figcaption className="absolute bottom-0 inset-x-0 bg-black/60 p-4 text-sm text-white">
               {thumbnail.caption && <span>{thumbnail.caption}</span>}
               {thumbnail.caption && thumbnail.credit && <span> · </span>}
-              {thumbnail.credit && (
-                <span className="text-gray-300">Foto: {thumbnail.credit}</span>
-              )}
+              {thumbnail.credit && <span className="text-gray-300">Foto: {thumbnail.credit}</span>}
             </figcaption>
           )}
         </figure>
@@ -115,7 +113,7 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
             priority
           />
           {(featuredImage.caption || featuredImage.credit) && (
-            <figcaption className="absolute bottom-0 inset-x-0 bg-linear-to-t from-black/70 to-transparent p-4 text-sm text-white">
+            <figcaption className="absolute bottom-0 inset-x-0 bg-black/60 p-4 text-sm text-white">
               {featuredImage.caption && <span>{featuredImage.caption}</span>}
               {featuredImage.caption && featuredImage.credit && <span> · </span>}
               {featuredImage.credit && (

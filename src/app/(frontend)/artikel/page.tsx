@@ -93,17 +93,17 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
   return (
     <NewsLayout siteName={siteSettings.siteName || 'PPIDK Timtengka'}>
       {/* Hero Banner */}
-      <div className="relative overflow-hidden border-b border-emerald-900 bg-emerald-950 text-white">
+      <div className="relative overflow-hidden border-b border-primary/20 bg-slate-950 text-white">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="relative mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
-          <div className="flex items-center gap-2 text-emerald-400">
+          <div className="flex items-center gap-2 text-primary">
             <Flame className="h-5 w-5" />
             <span className="text-sm font-bold uppercase tracking-wider">Berita Terkini</span>
           </div>
           <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">
             {q ? `Hasil Pencarian: "${q}"` : 'Kabar Terbaru'}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-emerald-100/80 md:text-xl">
+          <p className="mt-6 max-w-2xl text-lg text-slate-400 md:text-xl">
             {q
               ? `Menampilkan artikel yang memuat kata kunci "${q}"`
               : 'Ikuti perkembangan terkini seputar kegiatan, prestasi, dan informasi dari komunitas pelajar Indonesia di Timur Tengah.'}
@@ -125,7 +125,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                 href="/artikel"
                 className={`shrink-0 rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
                   !kategori
-                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/10'
+                    ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -137,7 +137,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                   href={`/artikel?kategori=${cat.slug}${q ? `&q=${q}` : ''}`}
                   className={`shrink-0 rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
                     kategori === cat.slug
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/10'
+                      ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                   style={kategori === cat.slug ? {} : { color: cat.color || undefined }}
@@ -170,7 +170,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
             <section>
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900">
-                  <TrendingUp className="h-5 w-5 text-emerald-600" />
+                  <TrendingUp className="h-5 w-5 text-primary" />
                   {q
                     ? 'Hasil Pencarian'
                     : isFirstPage

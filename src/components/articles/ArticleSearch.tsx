@@ -35,7 +35,7 @@ export function ArticleSearch() {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Cari artikel, topik, atau berita..."
-          className="w-full h-12 pl-12 pr-4 rounded-xl border-none ring-1 ring-slate-200 bg-white transition-all focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400"
+          className="w-full h-12 pl-12 pr-4 rounded-xl border-none ring-1 ring-slate-200 bg-white transition-all focus:ring-2 focus:ring-primary placeholder:text-slate-400"
         />
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
           <Search className="h-5 w-5" />

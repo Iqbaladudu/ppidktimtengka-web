@@ -109,10 +109,7 @@ export const Stats: React.FC = React.memo(() => {
             <span>Update 2025</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 lg:mb-4">
-            Dashboard{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
-              Real-Time
-            </span>
+            Dashboard <span className="text-primary">Real-Time</span>
           </h2>
           <p className="text-base lg:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Pantau dampak dan pertumbuhan ekosistem pelajar Indonesia di Timur Tengah & Afrika
@@ -133,7 +130,7 @@ export const Stats: React.FC = React.memo(() => {
             >
               {/* Background gradient on hover */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-[0.03] dark:group-hover:opacity-[0.1] transition-opacity duration-500`}
+                className={`absolute inset-0 bg-primary opacity-0 group-hover:opacity-[0.03] dark:group-hover:opacity-[0.1] transition-opacity duration-500`}
                 aria-hidden="true"
               />
 
@@ -169,7 +166,7 @@ export const Stats: React.FC = React.memo(() => {
                 {/* Bottom Bar */}
                 <div className="mt-4 lg:mt-6 h-1 w-12 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                   <div
-                    className={`h-full w-0 group-hover:w-full bg-gradient-to-r ${card.gradient} transition-all duration-700 ease-out`}
+                    className={`h-full w-0 group-hover:w-full bg-primary transition-all duration-700 ease-out`}
                   />
                 </div>
               </div>

@@ -14,7 +14,7 @@ export function ContactForm({ formId }: ContactFormProps) {
     subject: '',
     message: '',
   })
-  
+
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -25,7 +25,7 @@ export function ContactForm({ formId }: ContactFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!formId) {
       setStatus('error')
       setErrorMessage('Form ID belum dikonfigurasi. Silakan hubungi admin.')
@@ -76,8 +76,8 @@ export function ContactForm({ formId }: ContactFormProps) {
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-800 dark:text-emerald-200">
           <CheckCircle className="h-8 w-8" />
         </div>
-        <h3 className="mb-2 text-xl font-bold text-slate-900 dark:text-white">Pesan Terkirim!</h3>
-        <p className="mb-6 text-slate-600 dark:text-slate-300">
+        <h3 className="mb-2 text-xl font-bold text-foreground">Pesan Terkirim!</h3>
+        <p className="mb-6 text-muted-foreground">
           Terima kasih telah menghubungi kami. Tim kami akan segera merespons pesan Anda.
         </p>
         <button
@@ -96,7 +96,8 @@ export function ContactForm({ formId }: ContactFormProps) {
         <div className="rounded-xl bg-amber-50 p-4 text-amber-800 border border-amber-200 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-200 flex items-start gap-3 text-sm">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <div>
-            <strong>Konfigurasi Diperlukan:</strong> ID Form belum diset. Admin perlu membuat form di dashboard dan memasukkan ID-nya di sini.
+            <strong>Konfigurasi Diperlukan:</strong> ID Form belum diset. Admin perlu membuat form
+            di dashboard dan memasukkan ID-nya di sini.
           </div>
         </div>
       )}
@@ -110,7 +111,7 @@ export function ContactForm({ formId }: ContactFormProps) {
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="name" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+          <label htmlFor="name" className="text-sm font-semibold text-foreground/80">
             Nama Lengkap
           </label>
           <input
@@ -120,12 +121,12 @@ export function ContactForm({ formId }: ContactFormProps) {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 text-foreground"
             placeholder="John Doe"
           />
         </div>
         <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+          <label htmlFor="email" className="text-sm font-semibold text-foreground/80">
             Alamat Email
           </label>
           <input
@@ -135,14 +136,14 @@ export function ContactForm({ formId }: ContactFormProps) {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+            className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 text-foreground"
             placeholder="john@example.com"
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="subject" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+        <label htmlFor="subject" className="text-sm font-semibold text-foreground/80">
           Subjek
         </label>
         <input
@@ -152,13 +153,13 @@ export function ContactForm({ formId }: ContactFormProps) {
           value={formData.subject}
           onChange={handleChange}
           required
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+          className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 text-foreground"
           placeholder="Tujuan pesan Anda..."
         />
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+        <label htmlFor="message" className="text-sm font-semibold text-foreground/80">
           Pesan
         </label>
         <textarea
@@ -168,7 +169,7 @@ export function ContactForm({ formId }: ContactFormProps) {
           onChange={handleChange}
           required
           rows={5}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:border-slate-800 dark:bg-slate-900 dark:text-white resize-none"
+          className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-4 focus:ring-primary/10 text-foreground resize-none"
           placeholder="Tulis pesan Anda di sini..."
         />
       </div>
@@ -176,7 +177,7 @@ export function ContactForm({ formId }: ContactFormProps) {
       <button
         type="submit"
         disabled={status === 'submitting' || !formId}
-        className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:bg-blue-700 hover:shadow-blue-600/30 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 hover:shadow-primary/30 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'submitting' ? (
           <>

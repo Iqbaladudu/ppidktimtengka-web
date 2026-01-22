@@ -94,10 +94,7 @@ export const Partners: React.FC = React.memo(() => {
             id="partners-heading"
             className="text-2xl sm:text-3xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4 lg:mb-6 tracking-tight"
           >
-            Sinergi{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              Strategis
-            </span>
+            Sinergi <span className="text-primary">Strategis</span>
           </h2>
           <p className="text-base lg:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Berkolaborasi dengan institusi terkemuka untuk menghadirkan dampak yang lebih luas bagi
@@ -113,7 +110,7 @@ export const Partners: React.FC = React.memo(() => {
               onClick={() => setActiveCategory(cat.id)}
               className={`inline-flex items-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-xs lg:text-sm font-bold transition-all duration-300 whitespace-nowrap shrink-0 ${
                 activeCategory === cat.id
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 scale-105'
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30 scale-105'
                   : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -126,8 +123,8 @@ export const Partners: React.FC = React.memo(() => {
         {/* Infinite Marquee (Only show when 'all' is selected for visual impact) */}
         {activeCategory === 'all' && (
           <div className="relative mb-12 lg:mb-20 py-6 lg:py-8 border-y border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm -mx-4 lg:-mx-8">
-            <div className="absolute inset-y-0 left-0 w-16 lg:w-32 bg-gradient-to-r from-slate-50 dark:from-slate-950 to-transparent z-10" />
-            <div className="absolute inset-y-0 right-0 w-16 lg:w-32 bg-gradient-to-l from-slate-50 dark:from-slate-950 to-transparent z-10" />
+            <div className="absolute inset-y-0 left-0 w-16 lg:w-32 bg-white/80 dark:bg-slate-900/80 z-10" />
+            <div className="absolute inset-y-0 right-0 w-16 lg:w-32 bg-white/80 dark:bg-slate-900/80 z-10" />
 
             <div className="flex overflow-hidden">
               <div className="flex gap-12 lg:gap-16 animate-marquee whitespace-nowrap py-2 px-8">
@@ -194,7 +191,7 @@ export const Partners: React.FC = React.memo(() => {
             <div className="relative z-10 flex flex-col sm:flex-row gap-3 lg:gap-4 w-full md:w-auto">
               <a
                 href="#partnership"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 lg:px-6 lg:py-3.5 rounded-xl bg-indigo-600 text-sm font-bold text-white hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-600/30 hover:-translate-y-1"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 lg:px-6 lg:py-3.5 rounded-xl bg-primary text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30 hover:-translate-y-1"
               >
                 <Handshake className="h-4 w-4" />
                 Ajukan Partnership

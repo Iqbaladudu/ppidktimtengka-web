@@ -110,9 +110,7 @@ export const Leadership: React.FC = React.memo(() => {
               className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-6 leading-tight"
             >
               Kabinet <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
-                Sinergi Berdaya
-              </span>
+              <span className="text-primary">Sinergi Berdaya</span>
             </h2>
 
             <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
@@ -152,7 +150,7 @@ export const Leadership: React.FC = React.memo(() => {
                 >
                   <div className="flex items-start gap-4">
                     <div
-                      className={`flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br ${dir.color} flex items-center justify-center text-white shadow-lg`}
+                      className={`flex-shrink-0 h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg`}
                     >
                       {dir.icon}
                     </div>
@@ -170,7 +168,7 @@ export const Leadership: React.FC = React.memo(() => {
                   </div>
 
                   {/* Decorative corner */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-slate-50 to-transparent dark:from-slate-800/50 dark:to-transparent rounded-bl-3xl -z-10 group-hover:scale-110 transition-transform" />
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-muted/30 rounded-bl-3xl -z-10 group-hover:scale-110 transition-transform" />
                 </div>
               ))}
             </div>

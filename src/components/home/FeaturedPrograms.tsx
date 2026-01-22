@@ -196,11 +196,7 @@ export const FeaturedPrograms: React.FC = React.memo(() => {
               id="programs-heading"
               className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white"
             >
-              Kegiatan{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">
-                Seru
-              </span>{' '}
-              Kami
+              Kegiatan <span className="text-primary">Seru</span> Kami
             </h2>
             <p className="mt-2 lg:mt-3 text-base lg:text-lg text-slate-600 dark:text-slate-400 max-w-xl">
               Berbagai program inovatif yang dirancang untuk pengembangan diri, karir, dan
@@ -225,7 +221,7 @@ export const FeaturedPrograms: React.FC = React.memo(() => {
           >
             {/* Background Image/Gradient */}
             <div
-              className={`absolute inset-0 bg-gradient-to-br ${featuredPrograms[currentSlide].color} transition-colors duration-700 ease-in-out`}
+              className={`absolute inset-0 bg-primary transition-colors duration-700 ease-in-out`}
             />
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 animate-professional-grid" />
 
@@ -315,7 +311,9 @@ export const FeaturedPrograms: React.FC = React.memo(() => {
                   key={i}
                   onClick={() => setCurrentSlide(i)}
                   className={`h-1.5 lg:h-2 rounded-full transition-all duration-500 ${
-                    i === currentSlide ? 'w-6 lg:w-10 bg-white' : 'w-1.5 lg:w-2 bg-white/40 hover:bg-white/60'
+                    i === currentSlide
+                      ? 'w-6 lg:w-10 bg-white'
+                      : 'w-1.5 lg:w-2 bg-white/40 hover:bg-white/60'
                   }`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
@@ -353,12 +351,14 @@ export const FeaturedPrograms: React.FC = React.memo(() => {
               className="group flex flex-col bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-300 hover:-translate-y-2"
             >
               {/* Header */}
-              <div className={`h-32 lg:h-40 relative bg-gradient-to-br ${program.color} overflow-hidden`}>
+              <div className={`h-32 lg:h-40 relative bg-muted overflow-hidden`}>
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 animate-professional-grid" />
                 <div className="absolute -bottom-10 -right-10 w-24 h-24 lg:w-32 lg:h-32 bg-white/10 rounded-full blur-2xl" />
 
                 <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-500">
-                  <span className="text-5xl lg:text-6xl filter drop-shadow-md">{program.emoji}</span>
+                  <span className="text-5xl lg:text-6xl filter drop-shadow-md">
+                    {program.emoji}
+                  </span>
                 </div>
 
                 <div className="absolute top-3 left-3 lg:top-4 lg:left-4">

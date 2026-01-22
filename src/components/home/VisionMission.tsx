@@ -77,18 +77,9 @@ export const VisionMission: React.FC = React.memo(() => {
       className="relative py-24 lg:py-32 overflow-hidden bg-slate-900"
       aria-labelledby="vision-heading"
     >
-      {/* Background with animated gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-slate-950">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 animate-professional-grid" />
-        {/* Animated Orbs */}
-        <div
-          className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[100px] animate-pulse-glow"
-          style={{ animationDuration: '4s' }}
-        />
-        <div
-          className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-600/20 rounded-full blur-[100px] animate-pulse-glow"
-          style={{ animationDuration: '7s' }}
-        />
+      {/* Background with solid color */}
+      <div className="absolute inset-0 bg-background">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
       </div>
 
       <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8">
@@ -108,7 +99,7 @@ export const VisionMission: React.FC = React.memo(() => {
             className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight max-w-5xl mx-auto drop-shadow-lg"
           >
             "Katalisator kegiatan pelajar dan mahasiswa Timur Tengah dan Afrika yang{' '}
-            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">
+            <span className="relative inline-block text-primary">
               transformatif
               <svg
                 className="absolute w-full h-3 -bottom-1 left-0 text-cyan-500/30"
@@ -118,15 +109,8 @@ export const VisionMission: React.FC = React.memo(() => {
                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
               </svg>
             </span>
-            ,{' '}
-            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-orange-200">
-              produktif
-            </span>
-            , dan{' '}
-            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-green-300">
-              inovatif
-            </span>
-            "
+            , <span className="relative inline-block text-secondary">produktif</span>, dan{' '}
+            <span className="relative inline-block text-primary">inovatif</span>"
           </h2>
         </div>
 
@@ -137,11 +121,11 @@ export const VisionMission: React.FC = React.memo(() => {
           }`}
         >
           <div className="flex items-center justify-center gap-4 text-white/60 mb-8 lg:mb-10">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/30" />
+            <div className="h-px w-12 bg-white/30" />
             <span className="text-xs lg:text-sm font-bold uppercase tracking-[0.2em] text-white/80">
               Misi Kami
             </span>
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-white/30" />
+            <div className="h-px w-12 bg-white/30" />
           </div>
 
           {/* Mission Cards - Horizontal Scroll */}
@@ -157,10 +141,7 @@ export const VisionMission: React.FC = React.memo(() => {
                     {/* Icon Container */}
                     <div className="relative mb-4 lg:mb-6">
                       <div
-                        className={`absolute inset-0 bg-gradient-to-br ${mission.color} opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity`}
-                      />
-                      <div
-                        className={`relative inline-flex h-12 w-12 lg:h-16 lg:w-16 items-center justify-center rounded-xl lg:rounded-2xl bg-gradient-to-br ${mission.color} text-white shadow-lg ring-1 ring-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
+                        className={`relative inline-flex h-12 w-12 lg:h-16 lg:w-16 items-center justify-center rounded-xl lg:rounded-2xl bg-secondary text-secondary-foreground shadow-lg ring-1 ring-white/20 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
                       >
                         {mission.icon}
                       </div>

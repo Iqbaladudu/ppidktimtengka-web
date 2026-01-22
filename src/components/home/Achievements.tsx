@@ -163,8 +163,8 @@ export const Achievements: React.FC = React.memo(() => {
       className="relative py-24 lg:py-32 bg-slate-900 overflow-hidden"
       aria-labelledby="achievements-heading"
     >
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900 via-slate-900 to-black opacity-80" />
+      {/* Dynamic Background - Solidified */}
+      <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
 
       {/* Animated Orbs */}
@@ -188,10 +188,7 @@ export const Achievements: React.FC = React.memo(() => {
             id="achievements-heading"
             className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 tracking-tight"
           >
-            Dampak Nyata{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-              Berkelanjutan
-            </span>
+            Dampak Nyata <span className="text-secondary">Berkelanjutan</span>
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Mewujudkan visi besar melalui aksi nyata, kolaborasi strategis, dan dedikasi ribuan
@@ -209,9 +206,9 @@ export const Achievements: React.FC = React.memo(() => {
               }`}
               style={{ transitionDelay: stat.delay }}
             >
-              <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+              <div className="absolute inset-x-0 bottom-0 h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
 
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-600 text-white mb-4 shadow-lg shadow-blue-900/40 group-hover:scale-110 transition-transform duration-300">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground mb-4 shadow-lg shadow-blue-900/40 group-hover:scale-110 transition-transform duration-300">
                 {stat.icon}
               </div>
               <p className="text-3xl lg:text-4xl font-extrabold text-white mb-1 tracking-tight">
@@ -247,7 +244,7 @@ export const Achievements: React.FC = React.memo(() => {
               {/* Avatar */}
               <div className="shrink-0 relative">
                 <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-20 rounded-full" />
-                <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-gradient-to-br from-slate-800 to-slate-900 p-1 ring-2 ring-white/10">
+                <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-slate-800 p-1 ring-2 ring-white/10">
                   <div className="h-full w-full rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
                     <span className="text-4xl font-bold text-blue-500">
                       {testimonials[currentTestimonial].name.charAt(0)}

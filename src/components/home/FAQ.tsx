@@ -87,10 +87,7 @@ export const FAQ: React.FC = React.memo(() => {
             id="faq-heading"
             className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-tight"
           >
-            Pertanyaan{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-400">
-              Umum
-            </span>
+            Pertanyaan <span className="text-secondary">Umum</span>
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
             Temukan jawaban cepat untuk pertanyaan yang sering diajukan oleh anggota dan calon
@@ -102,8 +99,7 @@ export const FAQ: React.FC = React.memo(() => {
         <div className="mb-10 space-y-6">
           {/* Search Bar */}
           <div className="relative max-w-2xl mx-auto group">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity" />
-            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-xl">
+            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800">
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
               <input
                 type="text"

@@ -48,59 +48,60 @@ export const Footer: React.FC = React.memo(() => {
   }
 
   return (
-    <footer className="relative bg-slate-950 text-slate-300 overflow-hidden" aria-label="Footer">
-      {/* Background Decor */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
-      <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none" />
+    <footer
+      className="relative bg-muted/80 backdrop-blur-sm dark:bg-slate-950 text-muted-foreground overflow-hidden"
+      aria-label="Footer"
+    >
+      {/* Background Decor - Solidified */}
+      <div className="absolute top-0 inset-x-0 h-px bg-border" />
 
       {/* Main Footer Content */}
       <div className="relative mx-auto max-w-[1440px] px-6 lg:px-8 pt-20 pb-12">
         {/* Quote Section (Bung Karno) */}
         <div className="mb-20 text-center relative max-w-4xl mx-auto">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 text-9xl font-serif text-white/5 font-bold leading-none select-none">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-12 text-9xl font-serif text-foreground/5 font-bold leading-none select-none">
             "
           </div>
           <blockquote className="relative z-10">
-            <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6 leading-relaxed font-serif tracking-tight">
-              <span className="text-blue-500">"</span>Warisi Apinya, Jangan Abunya
-              <span className="text-cyan-500">"</span>
+            <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-relaxed font-serif tracking-tight">
+              <span className="text-primary">"</span>Warisi Apinya, Jangan Abunya
+              <span className="text-secondary">"</span>
             </p>
-            <footer className="text-base font-semibold text-slate-500 uppercase tracking-widest flex items-center justify-center gap-4">
-              <span className="h-px w-8 bg-slate-700"></span>
+            <footer className="text-base font-semibold text-muted-foreground uppercase tracking-widest flex items-center justify-center gap-4">
+              <span className="h-px w-8 bg-border"></span>
               Ir. Soekarno
-              <span className="h-px w-8 bg-slate-700"></span>
+              <span className="h-px w-8 bg-border"></span>
             </footer>
           </blockquote>
         </div>
 
         {/* Links & Brand Grid */}
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 border-t border-slate-800/60 pt-16">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 border-t border-border pt-16">
           {/* Brand Column (4 Cols) */}
           <div className="lg:col-span-4 flex flex-col items-start">
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white font-bold text-2xl shadow-lg shadow-blue-500/20">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-2xl shadow-lg shadow-primary/20">
                 P
               </div>
               <div>
-                <span className="block text-xl font-bold text-white tracking-tight leading-none mb-1">
+                <span className="block text-xl font-bold text-foreground tracking-tight leading-none mb-1">
                   {siteName}
                 </span>
-                <span className="block text-xs font-medium text-blue-400 uppercase tracking-wider">
+                <span className="block text-xs font-medium text-primary uppercase tracking-wider">
                   Periode 2025-2026
                 </span>
               </div>
             </div>
 
-            <p className="text-sm text-slate-400 leading-relaxed mb-8 max-w-sm">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-sm">
               {siteNameFull}. Wadah pemersatu dan penggerak mahasiswa Indonesia di kawasan Timur
               Tengah dan Afrika.
             </p>
 
-            <div className="flex items-start gap-3 mb-8 text-sm text-slate-400">
-              <MapPin className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3 mb-8 text-sm text-muted-foreground">
+              <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-white mb-1">Sekretariat Pusat Koordinasi:</p>
+                <p className="font-semibold text-foreground mb-1">Sekretariat Pusat Koordinasi:</p>
                 <p>Kairo, Mesir</p>
               </div>
             </div>
@@ -138,7 +139,7 @@ export const Footer: React.FC = React.memo(() => {
                   key={idx}
                   href={social.href}
                   target="_blank"
-                  className="h-10 w-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white hover:border-slate-600 transition-all"
+                  className="h-10 w-10 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground hover:bg-muted hover:text-primary hover:border-primary transition-all"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -151,15 +152,15 @@ export const Footer: React.FC = React.memo(() => {
           <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
             {/* Column 1 */}
             <div>
-              <h4 className="font-bold text-white mb-6">Tentang</h4>
+              <h4 className="font-bold text-foreground mb-6">Tentang</h4>
               <ul className="space-y-4 text-sm">
                 {footerLinks.tentang.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 hover:text-blue-400 transition-colors inline-flex items-center gap-1 group"
+                      className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
                     >
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity -ml-3 mr-1 text-blue-500">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity -ml-3 mr-1 text-primary">
                         ›
                       </span>
                       {link.label}
@@ -171,15 +172,15 @@ export const Footer: React.FC = React.memo(() => {
 
             {/* Column 2 */}
             <div>
-              <h4 className="font-bold text-white mb-6">Program</h4>
+              <h4 className="font-bold text-foreground mb-6">Program</h4>
               <ul className="space-y-4 text-sm">
                 {footerLinks.program.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 hover:text-cyan-400 transition-colors inline-flex items-center gap-1 group"
+                      className="text-muted-foreground hover:text-secondary transition-colors inline-flex items-center gap-1 group"
                     >
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity -ml-3 mr-1 text-cyan-500">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity -ml-3 mr-1 text-secondary">
                         ›
                       </span>
                       {link.label}
@@ -191,15 +192,15 @@ export const Footer: React.FC = React.memo(() => {
 
             {/* Column 3 */}
             <div>
-              <h4 className="font-bold text-white mb-6">Anggota</h4>
+              <h4 className="font-bold text-foreground mb-6">Anggota</h4>
               <ul className="space-y-4 text-sm">
                 {footerLinks.anggota.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 hover:text-teal-400 transition-colors inline-flex items-center gap-1 group"
+                      className="text-muted-foreground hover:text-secondary transition-colors inline-flex items-center gap-1 group"
                     >
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity -ml-3 mr-1 text-teal-500">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity -ml-3 mr-1 text-secondary">
                         ›
                       </span>
                       {link.label}
@@ -211,13 +212,13 @@ export const Footer: React.FC = React.memo(() => {
 
             {/* Column 4 */}
             <div>
-              <h4 className="font-bold text-white mb-6">Legal</h4>
+              <h4 className="font-bold text-foreground mb-6">Legal</h4>
               <ul className="space-y-4 text-sm">
                 {footerLinks.legal.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1"
+                      className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
                     >
                       {link.label}
                     </Link>
@@ -225,10 +226,10 @@ export const Footer: React.FC = React.memo(() => {
                 ))}
               </ul>
 
-              <div className="mt-8 pt-8 border-t border-slate-800">
+              <div className="mt-8 pt-8 border-t border-border">
                 <Link
                   href="/linktree"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider hover:text-blue-400 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-foreground uppercase tracking-wider hover:text-primary transition-colors"
                 >
                   Official Linktree
                   <ExternalLink className="h-3 w-3" />
@@ -239,7 +240,7 @@ export const Footer: React.FC = React.memo(() => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>© 2025 PPIDK Timtengka. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-1">
@@ -248,7 +249,7 @@ export const Footer: React.FC = React.memo(() => {
             </div>
             <div className="flex items-center gap-1">
               <span>Made with</span>
-              <Heart className="h-3 w-3 text-red-500 fill-current animate-pulse" />
+              <Heart className="h-3 w-3 text-primary fill-current animate-pulse" />
               <span>by DIRKOMINFO</span>
             </div>
           </div>

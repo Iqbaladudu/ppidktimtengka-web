@@ -29,7 +29,7 @@ export function ReadingProgressBar() {
 
   return (
     <motion.div
-      className="fixed left-0 top-0 z-50 h-1 w-full bg-emerald-600 origin-left"
+      className="fixed left-0 top-0 z-50 h-1 w-full bg-primary origin-left"
       style={{ scaleX }}
     />
   )
