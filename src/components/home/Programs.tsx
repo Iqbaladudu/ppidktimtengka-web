@@ -67,7 +67,7 @@ export const Programs: React.FC = React.memo(() => {
       className="relative py-24 md:py-32 bg-white"
       aria-labelledby="programs-heading"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
           <div className="max-w-2xl">

@@ -2,6 +2,11 @@ import React from 'react'
 import { Merriweather, Plus_Jakarta_Sans } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import './styles.css'
+import { SiteProvider } from '../../context/SiteContext'
+import { ThemeProvider } from '../../context/ThemeContext'
+import { Header } from '../../components/home/Header'
+import { Footer } from '../../components/home/Footer'
+import { FloatingElements } from '../../components/home/FloatingElements'
 
 const merriweather = Merriweather({
   subsets: ['latin'],
@@ -23,8 +28,24 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="id" className={cn(merriweather.variable, plusJakarta.variable)}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="id" className={cn(merriweather.variable, plusJakarta.variable)} suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SiteProvider>
+            <div className="min-h-screen bg-background font-sans text-foreground flex flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <FloatingElements />
+            </div>
+          </SiteProvider>
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

@@ -17,6 +17,8 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
   const categories = (article.categories || []) as Category[]
   const rubric = article.rubric as Rubric | undefined
   const featuredImage = article.featuredImage as Media | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const thumbnail = (article as any).thumbnail as Media | undefined
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString('id-ID', {
@@ -75,6 +77,31 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
           )}
         </div>
       </div>
+
+      {/* Thumbnail Image (if exists) */}
+      {showImage && thumbnail?.url && (
+        <figure className="relative mb-6 aspect-video overflow-hidden rounded-xl border border-slate-100 bg-slate-50 md:aspect-16/9">
+          <Image
+            src={thumbnail.url}
+            alt={`Thumbnail: ${thumbnail.alt || article.title}`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 1024px"
+          />
+          <div className="absolute top-4 left-4 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+            Thumbnail
+          </div>
+          {(thumbnail.caption || thumbnail.credit) && (
+            <figcaption className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-sm text-white">
+              {thumbnail.caption && <span>{thumbnail.caption}</span>}
+              {thumbnail.caption && thumbnail.credit && <span> · </span>}
+              {thumbnail.credit && (
+                <span className="text-gray-300">Foto: {thumbnail.credit}</span>
+              )}
+            </figcaption>
+          )}
+        </figure>
+      )}
 
       {/* Featured Image */}
       {showImage && featuredImage?.url && (

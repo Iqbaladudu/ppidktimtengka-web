@@ -229,6 +229,92 @@ async function seed() {
   await payload.delete({ collection: 'categories', where: {} })
   await payload.delete({ collection: 'rubrics', where: {} })
   await payload.delete({ collection: 'tags', where: {} })
+  await payload.delete({ collection: 'forms', where: {} })
+  await payload.delete({ collection: 'form-submissions', where: {} })
+
+  // Seed Contact Form
+  console.log('📝 Creating contact form...')
+  const contactForm = await payload.create({
+    collection: 'forms',
+    data: {
+      title: 'Hubungi Kami',
+      fields: [
+        {
+          name: 'name',
+          label: 'Nama',
+          required: true,
+          blockType: 'text',
+        },
+        {
+          name: 'email',
+          label: 'Email',
+          required: true,
+          blockType: 'email',
+        },
+        {
+          name: 'subject',
+          label: 'Judul pesan',
+          required: true,
+          blockType: 'text',
+        },
+        {
+          name: 'message',
+          label: 'Isi Pesan',
+          required: true,
+          blockType: 'textarea',
+        },
+      ],
+      submitButtonLabel: 'Kirim',
+      confirmationType: 'message',
+      confirmationMessage: {
+        root: {
+          type: 'root',
+          format: '',
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'paragraph',
+              format: '',
+              indent: 0,
+              version: 1,
+              children: [
+                {
+                  mode: 'normal',
+                  text: 'Terima kasih, pesan anda akan segera kami balas.',
+                  type: 'text',
+                  style: '',
+                  detail: 0,
+                  format: 0,
+                  version: 1,
+                },
+              ],
+              direction: null,
+              textStyle: '',
+              textFormat: 0,
+            },
+          ],
+          direction: null,
+        },
+      },
+    },
+  })
+  console.log(`  ✓ Created form with ID: ${contactForm.id}`)
+
+  // Seed Site Settings
+  console.log('⚙️ Updating site settings...')
+  await payload.updateGlobal({
+    slug: 'site-settings',
+    data: {
+      siteName: 'PPIDK Timtengka',
+      siteDescription: 'Sinergi Pelajar Indonesia Timur Tengah & Afrika',
+      contactEmail: 'info@ppdktimtengka.org',
+      contactPhone: '+62 812 3456 7890',
+      contactAddress: 'Kairo, Mesir',
+      contactFormId: String(contactForm.id),
+    },
+  })
+  console.log('  ✓ Updated site settings')
 
   // Seed Authors
   console.log('👤 Creating authors...')

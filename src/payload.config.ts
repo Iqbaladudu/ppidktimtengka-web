@@ -4,6 +4,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
 // Collections
 import { Users } from './collections/Users'
@@ -13,6 +14,8 @@ import { Categories } from './collections/Categories'
 import { Rubrics } from './collections/Rubrics'
 import { Tags } from './collections/Tags'
 import { Articles } from './collections/Articles'
+import { Programs } from './collections/Programs'
+import { Missions } from './collections/Missions'
 
 // Globals
 import { SiteSettings } from './globals/SiteSettings'
@@ -31,7 +34,7 @@ export default buildConfig({
       titleSuffix: ' | PPIDK Timtengka',
     },
   },
-  collections: [Users, Media, Authors, Categories, Rubrics, Tags, Articles],
+  collections: [Users, Media, Authors, Categories, Rubrics, Tags, Articles, Programs, Missions],
   globals: [SiteSettings, Navigation],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -44,5 +47,29 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    formBuilderPlugin({
+      fields: {
+        payment: false,
+      },
+      formOverrides: {
+        labels: {
+          singular: 'Formulir',
+          plural: 'Formulir',
+        },
+        admin: {
+          group: 'Konten',
+        },
+      },
+      formSubmissionOverrides: {
+        labels: {
+          singular: 'Data Masuk',
+          plural: 'Data Masuk',
+        },
+        admin: {
+          group: 'Admin',
+        },
+      },
+    }),
+  ],
 })

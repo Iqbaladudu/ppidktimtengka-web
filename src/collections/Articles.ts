@@ -84,6 +84,15 @@ export const Articles: CollectionConfig = {
       relationTo: 'media',
     },
     {
+      name: 'thumbnail',
+      label: 'Thumbnail',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Gambar kecil untuk tampilan daftar (opsional, jika kosong akan menggunakan Gambar Utama)',
+      },
+    },
+    {
       name: 'gallery',
       label: 'Galeri Foto',
       type: 'array',

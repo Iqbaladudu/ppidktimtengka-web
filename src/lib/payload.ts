@@ -19,6 +19,7 @@ export async function getPayloadClient() {
 export interface GetArticlesOptions {
   page?: number
   limit?: number
+  query?: string
   categorySlug?: string
   rubricSlug?: string
   authorSlug?: string
@@ -31,10 +32,16 @@ export interface GetArticlesOptions {
 
 export async function getArticles(options: GetArticlesOptions = {}) {
   const payload = await getPayloadClient()
-  const { page = 1, limit = 10, sort = '-publishedAt', ...filters } = options
+  const { page = 1, limit = 10, sort = '-publishedAt', query, ...filters } = options
 
   // Build where conditions array
   const conditions: Where[] = [{ status: { equals: 'published' } }]
+
+  if (query) {
+    conditions.push({
+      or: [{ title: { contains: query } }, { excerpt: { contains: query } }],
+    })
+  }
 
   if (filters.categorySlug) {
     conditions.push({ 'categories.slug': { equals: filters.categorySlug } })

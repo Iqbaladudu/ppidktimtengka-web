@@ -1,13 +1,9 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { SiteProvider } from '../../context/SiteContext'
-import { Header } from '../../components/home/Header'
 import { Stats } from '../../components/home/Stats'
-import { About } from '../../components/home/About'
-import { Programs } from '../../components/home/Programs'
-import { CTA } from '../../components/home/CTA'
-import { Footer } from '../../components/home/Footer'
 import { LatestNews } from '../../components/home/LatestNews'
+import { Partners } from '../../components/home/Partners'
+import { Newsletter } from '../../components/home/Newsletter'
 
 // Lazy load hero (large visual) to improve initial parsing for non-critical content
 const Hero = dynamic(() => import('../../components/home/Hero').then((m) => m.Hero), {
@@ -16,27 +12,20 @@ const Hero = dynamic(() => import('../../components/home/Hero').then((m) => m.He
 
 export default function HomePage() {
   return (
-    <SiteProvider>
-      <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-        <Header />
+    <div className="min-h-screen bg-background font-sans text-foreground">
+      <main className="flex-1">
+        {/* Section 2: Hero - Full Screen with Parallax */}
+        <Hero />
 
-        <main className="flex-1">
-          <Hero />
+        {/* Section 3: Dashboard Stats - Interactive Cards */}
+        <Stats />
 
-          <Stats />
+        {/* Section 9: Berita & Kegiatan Terkini */}
+        <LatestNews />
 
-          <About />
-
-          {/* Latest News from Berita */}
-          <LatestNews />
-
-          <Programs />
-
-          <CTA />
-        </main>
-
-        <Footer />
-      </div>
-    </SiteProvider>
+        {/* Section 11: Mitra & Kerja Sama */}
+        <Partners />
+      </main>
+    </div>
   )
 }

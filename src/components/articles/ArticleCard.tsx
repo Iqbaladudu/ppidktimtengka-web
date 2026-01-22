@@ -21,6 +21,10 @@ export function ArticleCard({
   priority = false,
 }: ArticleCardProps) {
   const featuredImage = article.featuredImage as Media | undefined
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const thumbnail = (article as any).thumbnail as Media | undefined
+  const displayImage = thumbnail || featuredImage
+
   const author = article.author as Author | undefined
   const categories = (article.categories || []) as Category[]
 
@@ -44,10 +48,10 @@ export function ArticleCard({
           href={`/artikel/${article.slug}`}
           className="relative aspect-4/3 w-32 shrink-0 overflow-hidden rounded-lg sm:w-40"
         >
-          {featuredImage?.url ? (
+          {displayImage?.url ? (
             <Image
-              src={featuredImage.url}
-              alt={featuredImage.alt || article.title}
+              src={displayImage.url}
+              alt={displayImage.alt || article.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 128px, 160px"
@@ -99,10 +103,10 @@ export function ArticleCard({
           href={`/artikel/${article.slug}`}
           className="relative block aspect-video w-full overflow-hidden"
         >
-          {featuredImage?.url ? (
+          {displayImage?.url ? (
             <Image
-              src={featuredImage.url}
-              alt={featuredImage.alt || article.title}
+              src={displayImage.url}
+              alt={displayImage.alt || article.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 80vw"
@@ -167,10 +171,10 @@ export function ArticleCard({
         href={`/artikel/${article.slug}`}
         className="relative block aspect-16/10 w-full overflow-hidden"
       >
-        {featuredImage?.url ? (
+        {displayImage?.url ? (
           <Image
-            src={featuredImage.url}
-            alt={featuredImage.alt || article.title}
+            src={displayImage.url}
+            alt={displayImage.alt || article.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

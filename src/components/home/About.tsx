@@ -47,7 +47,7 @@ export const About: React.FC = React.memo(() => {
       className="relative py-24 md:py-32 bg-gradient-to-b from-white to-slate-50"
       aria-labelledby="about-heading"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-8">
         {/* Section header with better spacing */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <h2

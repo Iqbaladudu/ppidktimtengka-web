@@ -86,6 +86,14 @@ export const SiteSettings: GlobalConfig = {
               label: 'Alamat',
               type: 'textarea',
             },
+            {
+              name: 'contactFormId',
+              label: 'ID Formulir Kontak',
+              type: 'text',
+              admin: {
+                description: 'Masukkan ID dari formulir yang dibuat di menu Formulir (Form Builder).',
+              },
+            },
           ],
         },
         {
