@@ -110,7 +110,7 @@ export const Leadership: React.FC = React.memo(() => {
               className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-6 leading-tight"
             >
               Kabinet <br />
-              <span className="text-primary">Sinergi Berdaya</span>
+              <span className="text-primary">Timtengka Progresif</span>
             </h2>
 
             <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">

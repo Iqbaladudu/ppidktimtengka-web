@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import {
   ArrowRight,
@@ -12,7 +12,14 @@ import {
   Calendar,
   Award,
 } from 'lucide-react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CairoSkyline } from './CairoSkyline'
 import { useSite } from '../../context/SiteContext'
+
+// Register GSAP plugins
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 interface StatItem {
   id: string
@@ -21,13 +28,95 @@ interface StatItem {
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }
 
-export const Hero = React.memo(function Hero() {
-  const { siteName, siteNameFull, tagline, period, stats } = useSite()
-  const [isVisible, setIsVisible] = useState(false)
+// Utility: Split text into character spans (Word-safe wrapping)
+const SplitText = ({ text, className }: { text: string; className?: string }) => {
+  return (
+    <span className={`inline-block leading-[1.05] ${className || ''}`}>
+      {text.split(' ').map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block whitespace-nowrap">
+          {word.split('').map((char, charIndex) => (
+            <span key={charIndex} className="char inline-block" style={{ display: 'inline-block' }}>
+              {char}
+            </span>
+          ))}
+          {/* Add space after word unless it's the last one */}
+          {wordIndex < text.split(' ').length - 1 && (
+            <span className="char inline-block">&nbsp;</span>
+          )}
+        </span>
+      ))}
+    </span>
+  )
+}
+
+// Magnetic Button Component
+const MagneticButton = ({
+  children,
+  href,
+  className,
+  ...props
+}: {
+  children: React.ReactNode
+  href: string
+  className: string
+}) => {
+  const buttonRef = useRef<HTMLAnchorElement>(null)
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!buttonRef.current) return
+    const rect = buttonRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+
+    gsap.to(buttonRef.current, {
+      x: x * 0.3,
+      y: y * 0.3,
+      duration: 0.3,
+      ease: 'power2.out',
+    })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    if (!buttonRef.current) return
+    gsap.to(buttonRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.5,
+      ease: 'elastic.out(1, 0.3)',
+    })
+  }, [])
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    const button = buttonRef.current
+    if (!button) return
+
+    // Only enable magnetic effect on devices with hover capability (mouse)
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)')
+
+    if (mediaQuery.matches) {
+      button.addEventListener('mousemove', handleMouseMove)
+      button.addEventListener('mouseleave', handleMouseLeave)
+    }
+
+    return () => {
+      button.removeEventListener('mousemove', handleMouseMove)
+      button.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [handleMouseMove, handleMouseLeave])
+
+  return (
+    <Link ref={buttonRef} href={href} className={className} {...props}>
+      {children}
+    </Link>
+  )
+}
+
+export const Hero = React.memo(function Hero() {
+  const { siteName, siteNameFull, tagline, period, stats } = useSite()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const heroContentRef = useRef<HTMLDivElement>(null)
+  const statsBarRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
 
   const floatingStats: StatItem[] = [
     { id: 'members', label: 'Mahasiswa', value: stats.members, Icon: Users },
@@ -37,171 +126,277 @@ export const Hero = React.memo(function Hero() {
     { id: 'programs', label: 'Program Aktif', value: stats.programs, Icon: Award },
   ]
 
+  // Main GSAP Animation Timeline
+  useGSAP(
+    () => {
+      if (!containerRef.current) return
+
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (prefersReducedMotion) {
+        // Instantly show everything without animation
+        gsap.set(
+          '.hero-badge, .hero-subtitle, .hero-title .char, .hero-period, .hero-tagline, .hero-cta-wrapper, .stat-item',
+          {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            rotateY: 0,
+          },
+        )
+        return
+      }
+
+      // Create master timeline
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+      })
+
+      // 1. Badge entrance
+      tl.from('.hero-badge', {
+        y: -30,
+        opacity: 0,
+        duration: 0.8,
+        scale: 0.9,
+      })
+
+        // 2. Subtitle entrance
+        .from(
+          '.hero-subtitle',
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.6,
+          },
+          '-=0.4',
+        )
+
+        // 3. Title characters staggered entrance (SplitText effect)
+        .from(
+          '.hero-title .char',
+          {
+            y: 80,
+            opacity: 0,
+            rotateX: -90,
+            stagger: 0.03,
+            duration: 0.8,
+            ease: 'back.out(1.7)',
+          },
+          '-=0.3',
+        )
+
+        // 4. Period entrance
+        .from(
+          '.hero-period',
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.5,
+          },
+          '-=0.4',
+        )
+
+        // 5. Tagline entrance with scale
+        .from(
+          '.hero-tagline',
+          {
+            y: 30,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.7,
+          },
+          '-=0.3',
+        )
+
+        // 6. CTA buttons staggered entrance (targeting wrappers to avoid conflict with magnetic effect)
+        .from(
+          '.hero-cta-wrapper',
+          {
+            y: 40,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.6,
+            ease: 'back.out(1.5)',
+          },
+          '-=0.4',
+        )
+
+        // 7. Stats bar 3D flip entrance
+        .from(
+          '.stat-item',
+          {
+            rotateY: 90,
+            opacity: 0,
+            transformPerspective: 1000,
+            transformOrigin: 'left center',
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+          '-=0.3',
+        )
+
+      // Counter animation for stats (ScrollTrigger)
+      const statValues = gsap.utils.toArray<HTMLElement>('.stat-value')
+      statValues.forEach((statEl) => {
+        const targetText = statEl.textContent || '0'
+        // Extract numeric value (e.g., "500+" → 500)
+        const numericMatch = targetText.match(/(\d+)/)
+        if (!numericMatch) return
+
+        const targetNum = parseInt(numericMatch[1], 10)
+        const suffix = targetText.replace(/\d+/, '') // Get non-numeric parts like "+"
+
+        const counter = { value: 0 }
+
+        gsap.to(counter, {
+          value: targetNum,
+          duration: 2,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: statsBarRef.current,
+            start: 'top 90%',
+            once: true,
+          },
+          onUpdate: () => {
+            statEl.textContent = Math.round(counter.value) + suffix
+          },
+        })
+      })
+
+      // Parallax effect for Cairo skyline on scroll
+      gsap.to('.cairo-skyline-wrapper', {
+        y: -80,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      })
+
+      // Grid fade on scroll
+      gsap.to('.hero-grid', {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: '30% top',
+          end: '80% top',
+          scrub: true,
+        },
+      })
+    },
+    { scope: containerRef },
+  )
+
   return (
-    <section
-      className="relative min-h-[calc(100vh-4rem)] lg:min-h-screen flex flex-col justify-center overflow-hidden bg-background pt-24 pb-12 lg:pt-0 lg:pb-0"
-      aria-labelledby="hero-heading"
-    >
-      {/* Background decorative elements */}
-      {/* Background decorative elements - Removed orbs for solid look */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Grid pattern with animation */}
-        <div
-          className="absolute inset-0 bg-[url('/grid.svg')] animate-professional-grid pointer-events-none"
-          style={{
-            maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
-            WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
-          }}
-        />
-      </div>
-
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 w-full z-10 pb-32 lg:pb-0">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left column: Content (60%) */}
+    <>
+      <section
+        ref={containerRef}
+        className="relative h-[85vh] w-full flex flex-col justify-center overflow-hidden bg-background"
+        aria-labelledby="hero-heading"
+      >
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Grid pattern with animation */}
           <div
-            className={`lg:col-span-7 flex flex-col justify-center space-y-6 lg:space-y-8 transition-all duration-1000 ease-out ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/60 backdrop-blur-md px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-semibold text-primary shadow-sm w-fit transition-all hover:bg-background/80">
-              <span className="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 lg:h-2.5 lg:w-2.5 bg-primary"></span>
-              </span>
-              <span className="truncate max-w-[200px] sm:max-w-none">
-                Sinergi Pelajar Indonesia Timur Tengah & Afrika
-              </span>
-            </div>
-
-            <div className="space-y-2 lg:space-y-4">
-              <p className="text-sm lg:text-lg font-bold text-primary uppercase tracking-widest">
-                {siteNameFull}
-              </p>
-              <h1
-                id="hero-heading"
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-foreground leading-[1.1]"
-              >
-                {siteName}
-              </h1>
-              <p className="text-base lg:text-xl text-muted-foreground">
-                Periode{' '}
-                <span className="font-bold text-foreground border-b-2 border-primary/30">
-                  {period}
-                </span>
-              </p>
-            </div>
-
-            {/* Tagline */}
-            <div className="relative pl-4 lg:pl-6 py-2 border-l-4 border-primary rounded-sm">
-              <p className="text-lg lg:text-2xl font-serif font-medium text-foreground/80 italic leading-relaxed">
-                "{tagline}"
-              </p>
-            </div>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:gap-4 pt-2 lg:pt-4">
-              <Link
-                href="#gabung"
-                className="group relative inline-flex h-12 lg:h-14 items-center justify-center gap-2 rounded-xl bg-primary px-6 lg:px-8 text-sm lg:text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 overflow-hidden transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <Rocket className="h-4 w-4 lg:h-5 lg:w-5 relative z-10" />
-                <span className="relative z-10">Bergabung Sekarang</span>
-                <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5 transition-transform group-hover:translate-x-1 relative z-10" />
-              </Link>
-
-              <Link
-                href="#about"
-                className="group inline-flex h-12 lg:h-14 items-center justify-center gap-2 rounded-xl border-2 border-input bg-background/50 backdrop-blur-sm px-6 lg:px-8 text-sm lg:text-base font-bold text-foreground shadow-sm transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <BookOpen className="h-4 w-4 lg:h-5 lg:w-5" />
-                Pelajari Lebih Lanjut
-              </Link>
-            </div>
+            className="hero-grid absolute inset-0 bg-[url('/grid.svg')] animate-professional-grid pointer-events-none"
+            style={{
+              maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
+              WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
+            }}
+          />
+          <div className="cairo-skyline-wrapper absolute inset-0 w-full h-full pointer-events-none">
+            <CairoSkyline />
           </div>
+        </div>
 
-          {/* Right column: Visual (40%) */}
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 w-full z-10 pb-32 lg:pb-0">
           <div
-            className={`lg:col-span-5 relative mt-8 lg:mt-0 transition-all duration-1000 delay-300 ease-out ${
-              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-            }`}
+            ref={heroContentRef}
+            className="flex flex-col items-center justify-center text-center space-y-8 lg:space-y-10"
           >
-            {/* Main visual card */}
-            <div className="relative mx-auto max-w-sm lg:max-w-none perspective-1000">
-              <figure
-                className="relative aspect-square overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-primary shadow-2xl shadow-primary/30 group hover:rotate-1 transition-transform duration-500"
-                role="img"
-                aria-label="Ilustrasi komunitas mahasiswa global"
-              >
-                {/* Decorative patterns */}
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_25%,rgba(255,255,255,0.1)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[length:60px_60px] opacity-50" />
+            <div className="flex flex-col items-center justify-center space-y-6 lg:space-y-8">
+              {/* Badge */}
+              <div className="hero-badge inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/60 backdrop-blur-md px-3 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-semibold text-primary shadow-sm w-fit transition-all hover:bg-background/80">
+                <span className="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 lg:h-2.5 lg:w-2.5 bg-primary"></span>
+                </span>
+                <span className="truncate max-w-[280px] sm:max-w-none">
+                  Sinergi Pelajar Indonesia Timur Tengah & Afrika
+                </span>
+              </div>
 
-                {/* Globe illustration */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    {/* Animated rings */}
-                    <div className="absolute w-[80%] h-[80%] border-2 border-white/20 rounded-full animate-[spin_20s_linear_infinite]" />
-                    <div className="absolute w-[60%] h-[60%] border-2 border-white/30 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+              <div className="space-y-4 lg:space-y-6 max-w-4xl mx-auto">
+                <p className="hero-subtitle text-sm lg:text-xl font-bold text-primary uppercase tracking-[0.2em]">
+                  {siteNameFull}
+                </p>
+                <h1
+                  ref={titleRef}
+                  id="hero-heading"
+                  className="hero-title text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight text-foreground leading-[1.05]"
+                  style={{ perspective: '1000px' }}
+                >
+                  <SplitText text={siteName} />
+                </h1>
+                <p className="hero-period text-lg lg:text-2xl text-muted-foreground max-w-2xl mx-auto">
+                  Periode{' '}
+                  <span className="font-bold text-foreground border-b-2 border-primary/30">
+                    {period}
+                  </span>
+                </p>
+              </div>
 
-                    <div className="relative animate-float transform-gpu">
-                      <Globe2
-                        className="h-32 w-32 lg:h-48 lg:w-48 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
-                        strokeWidth={0.5}
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center text-white">
-                          <p className="text-4xl lg:text-6xl font-extrabold tracking-tighter drop-shadow-md">
-                            {stats.countries}
-                          </p>
-                          <p className="text-sm lg:text-lg font-bold opacity-90 uppercase tracking-widest text-primary-foreground">
-                            Negara
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              {/* Tagline */}
+              <div className="hero-tagline relative py-2 max-w-3xl mx-auto">
+                <p className="text-xl lg:text-3xl font-serif font-medium text-foreground/80 italic leading-relaxed">
+                  "{tagline}"
+                </p>
+              </div>
+
+              {/* CTAs - Wrapped in div for entrance animation separation */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 lg:pt-8 w-full sm:w-auto">
+                <div className="hero-cta-wrapper">
+                  <MagneticButton
+                    href="#gabung"
+                    className="hero-cta group relative inline-flex h-12 lg:h-14 items-center justify-center gap-2 rounded-xl bg-primary px-8 lg:px-10 text-base lg:text-lg font-bold text-primary-foreground shadow-lg shadow-primary/25 overflow-hidden transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <Rocket className="h-5 w-5 lg:h-6 lg:w-6 relative z-10" />
+                    <span className="relative z-10">Bergabung Sekarang</span>
+                    <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5 transition-transform group-hover:translate-x-1 relative z-10" />
+                  </MagneticButton>
                 </div>
 
-                {/* Floating cards */}
-                <div className="absolute top-6 right-6 lg:top-8 lg:right-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 lg:px-5 lg:py-3 text-white shadow-lg transform transition-transform group-hover:translate-x-2 group-hover:-translate-y-2">
-                  <p className="text-xs lg:text-sm font-bold flex items-center gap-2">
-                    <span className="text-amber-300">★</span> Sejak 1967
-                  </p>
+                <div className="hero-cta-wrapper">
+                  <MagneticButton
+                    href="#about"
+                    className="hero-cta group inline-flex h-12 lg:h-14 items-center justify-center gap-2 rounded-xl border-2 border-input bg-background/50 backdrop-blur-sm px-8 lg:px-10 text-base lg:text-lg font-bold text-foreground shadow-sm transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <BookOpen className="h-5 w-5 lg:h-6 lg:w-6" />
+                    Pelajari Lebih Lanjut
+                  </MagneticButton>
                 </div>
-
-                <div className="absolute bottom-6 left-6 lg:bottom-8 lg:left-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 lg:px-5 lg:py-3 text-white shadow-lg transform transition-transform group-hover:-translate-x-2 group-hover:translate-y-2">
-                  <p className="text-xs lg:text-sm font-bold flex items-center gap-2">
-                    <Globe2 className="h-3 w-3 lg:h-4 lg:w-4 text-secondary-foreground" /> Cairo -
-                    Cape Town
-                  </p>
-                </div>
-              </figure>
-
-              {/* Back glow */}
-              <div className="absolute -inset-4 bg-primary rounded-[3rem] blur-2xl -z-10 opacity-20" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
+      </section>
       {/* Floating Statistics Bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-20">
+      <div ref={statsBarRef} className="absolute bottom-0 left-0 right-0 z-20">
         <div className="bg-background/80 backdrop-blur-xl border-t border-border shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
           <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
             <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-between items-center gap-x-4 gap-y-6 md:gap-x-8">
-              {floatingStats.map((stat, idx) => (
-                <div
-                  key={stat.id}
-                  className={`flex items-center gap-2 lg:gap-3 transition-all duration-700 delay-[${idx * 100}ms] ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                  }`}
-                >
+              {floatingStats.map((stat) => (
+                <div key={stat.id} className="stat-item flex items-center gap-2 lg:gap-3">
                   <div className="flex h-8 w-8 lg:h-12 lg:w-12 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
                     <stat.Icon className="h-4 w-4 lg:h-6 lg:w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-lg lg:text-2xl font-extrabold text-foreground leading-none">
+                    <p className="stat-value text-lg lg:text-2xl font-extrabold text-foreground leading-none">
                       {stat.value}
                     </p>
                     <p className="text-[10px] lg:text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-0.5 lg:mt-1">
@@ -214,7 +409,7 @@ export const Hero = React.memo(function Hero() {
           </div>
         </div>
       </div>
-    </section>
+    </>
   )
 })
 

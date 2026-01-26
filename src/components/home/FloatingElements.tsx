@@ -12,15 +12,9 @@ export const FloatingElements: React.FC = React.memo(() => {
       setShowBackToTop(window.scrollY > 500)
     }
 
-    // Auto show tooltip after 5 seconds
-    const timer = setTimeout(() => {
-      setShowWhatsAppTooltip(true)
-    }, 5000)
-
     window.addEventListener('scroll', handleScroll)
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      clearTimeout(timer)
     }
   }, [])
 

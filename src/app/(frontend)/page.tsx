@@ -18,13 +18,13 @@ export default function HomePage() {
         <Hero />
 
         {/* Section 3: Dashboard Stats - Interactive Cards */}
-        <Stats />
+        {/* <Stats /> */}
 
         {/* Section 9: Berita & Kegiatan Terkini */}
         <LatestNews />
 
         {/* Section 11: Mitra & Kerja Sama */}
-        <Partners />
+        {/* <Partners /> */}
       </main>
     </div>
   )
