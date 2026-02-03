@@ -93,17 +93,17 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
   return (
     <NewsLayout siteName={siteSettings.siteName || 'PPIDK Timtengka'}>
       {/* Hero Banner */}
-      <div className="relative overflow-hidden border-b border-primary/20 bg-slate-950 text-white">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="relative overflow-hidden border-b border-primary/20 bg-linear-to-br from-[#a30404] via-[#590707] to-[#2b0303] text-white">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-size-[40px_40px]" />
         <div className="relative mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
-          <div className="flex items-center gap-2 text-primary">
+          <div className="flex items-center gap-2 text-white/80">
             <Flame className="h-5 w-5" />
             <span className="text-sm font-bold uppercase tracking-wider">Berita Terkini</span>
           </div>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl">
+          <h1 className="mt-4 text-4xl font-bold tracking-tight md:text-6xl text-white">
             {q ? `Hasil Pencarian: "${q}"` : 'Kabar Terbaru'}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-slate-400 md:text-xl">
+          <p className="mt-6 max-w-2xl text-lg text-white/80 md:text-xl">
             {q
               ? `Menampilkan artikel yang memuat kata kunci "${q}"`
               : 'Ikuti perkembangan terkini seputar kegiatan, prestasi, dan informasi dari komunitas pelajar Indonesia di Timur Tengah.'}
@@ -113,7 +113,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
 
       <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
         {/* Search Bar (Mobile/Desktop) */}
-        <div className="mb-10 max-w-2xl mx-auto -mt-16 relative z-10 shadow-xl rounded-2xl bg-white p-2">
+        <div className="mb-10 max-w-2xl mx-auto -mt-16 relative z-10 shadow-xl rounded-2xl bg-white p-2 border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
           <ArticleSearch />
         </div>
 
@@ -125,8 +125,8 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                 href="/artikel"
                 className={`shrink-0 rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
                   !kategori
-                    ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-secondary/20 hover:text-secondary-foreground hover:border-secondary/30 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300'
                 }`}
               >
                 Semua
@@ -137,10 +137,10 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                   href={`/artikel?kategori=${cat.slug}${q ? `&q=${q}` : ''}`}
                   className={`shrink-0 rounded-full px-6 py-2.5 text-sm font-semibold transition-all ${
                     kategori === cat.slug
-                      ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-primary text-primary-foreground shadow-md shadow-primary/20'
+                      : 'bg-white border border-slate-200 text-slate-600 hover:bg-secondary/20 hover:text-secondary-foreground hover:border-secondary/30 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300'
                   }`}
-                  style={kategori === cat.slug ? {} : { color: cat.color || undefined }}
+                  style={kategori === cat.slug ? {} : { color: undefined }}
                 >
                   {cat.name}
                 </Link>
@@ -216,6 +216,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                 trendingArticles={trendingResult.docs as Article[]}
                 tags={tagsResult.docs as TagType[]}
                 authors={authorsResult.docs as Author[]}
+                rubrics={rubricsResult.docs as Rubric[]}
               />
             </div>
           </div>

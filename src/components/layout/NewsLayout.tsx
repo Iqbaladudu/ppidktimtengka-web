@@ -7,7 +7,7 @@ interface NewsLayoutProps {
 
 export function NewsLayout({ children, siteName }: NewsLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50">
+    <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
       <main className="flex-1">{children}</main>
     </div>
   )

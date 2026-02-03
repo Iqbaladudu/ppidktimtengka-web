@@ -23,7 +23,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md',
+        'sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md',
         className,
       )}
     >
@@ -34,7 +34,9 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-teal-600 text-xl font-bold text-white shadow-lg shadow-emerald-200">
             P
           </div>
-          <span className="text-lg font-bold tracking-tight text-slate-900">{siteName}</span>
+          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+            {siteName}
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -46,8 +48,8 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
               className={cn(
                 'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                 item.active
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white',
               )}
             >
               {item.label}
@@ -59,7 +61,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
         <div className="flex items-center gap-2">
           <Link
             href="/cari"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             aria-label="Cari artikel"
           >
             <Search className="h-5 w-5" />
@@ -68,7 +70,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 md:hidden"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -78,7 +80,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-slate-200 bg-white px-4 py-4 md:hidden">
+        <div className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 md:hidden">
           <nav className="flex flex-col gap-1">
             {mainNav.map((item) => (
               <Link
@@ -88,8 +90,8 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
                 className={cn(
                   'rounded-lg px-4 py-3 text-sm font-medium transition-colors',
                   item.active
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white',
                 )}
               >
                 {item.label}

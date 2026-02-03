@@ -35,7 +35,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
   ]
 
   return (
-    <footer className="border-t border-slate-200 bg-slate-50">
+    <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
@@ -44,9 +44,11 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-teal-600 text-xl font-bold text-white shadow-lg shadow-emerald-200">
                 P
               </div>
-              <span className="text-lg font-bold tracking-tight text-slate-900">{siteName}</span>
+              <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+                {siteName}
+              </span>
             </Link>
-            <p className="mt-4 text-sm text-slate-600">
+            <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">
               Media informasi dan komunikasi Perhimpunan Pelajar Indonesia di Timur Tengah dan
               Kawasan.
             </p>
@@ -57,7 +59,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
                 <a
                   key={social.label}
                   href={social.href}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-slate-600 shadow-sm transition-colors hover:bg-emerald-50 hover:text-emerald-600"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 shadow-sm transition-colors hover:bg-emerald-50 dark:hover:bg-emerald-900/30 hover:text-emerald-600 dark:hover:text-emerald-400"
                   aria-label={social.label}
                 >
                   <social.icon className="h-4 w-4" />
@@ -68,7 +70,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
 
           {/* Links */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-900">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-900 dark:text-white">
               Tentang
             </h3>
             <ul className="space-y-3">
@@ -76,7 +78,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 transition-colors hover:text-emerald-600"
+                    className="text-sm text-slate-600 dark:text-slate-400 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
                   >
                     {link.label}
                   </Link>
@@ -86,7 +88,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-900">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-900 dark:text-white">
               Berita
             </h3>
             <ul className="space-y-3">
@@ -94,7 +96,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 transition-colors hover:text-emerald-600"
+                    className="text-sm text-slate-600 dark:text-slate-400 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
                   >
                     {link.label}
                   </Link>
@@ -104,7 +106,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
           </div>
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-900">
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-900 dark:text-white">
               Lain-lain
             </h3>
             <ul className="space-y-3">
@@ -112,7 +114,7 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 transition-colors hover:text-emerald-600"
+                    className="text-sm text-slate-600 dark:text-slate-400 transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
                   >
                     {link.label}
                   </Link>
@@ -123,8 +125,8 @@ export function NewsFooter({ siteName = 'PPIDK Timtengka', className }: NewsFoot
         </div>
 
         {/* Bottom */}
-        <div className="mt-12 border-t border-slate-200 pt-8">
-          <p className="text-center text-sm text-slate-600">
+        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-8">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-400">
             © {currentYear} {siteName}. Seluruh hak cipta dilindungi.
           </p>
         </div>

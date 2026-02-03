@@ -78,7 +78,7 @@ export const VisionMission: React.FC = React.memo(() => {
       aria-labelledby="vision-heading"
     >
       {/* Background with solid color */}
-      <div className="absolute inset-0 bg-background">
+      <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
       </div>
 

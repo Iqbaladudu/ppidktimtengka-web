@@ -79,7 +79,9 @@ export function Pagination({ currentPage, totalPages, className }: PaginationPro
         href={currentPage > 1 ? createPageUrl(currentPage - 1) : '#'}
         className={cn(
           'inline-flex h-10 w-10 items-center justify-center rounded-lg border transition-colors',
-          currentPage <= 1 ? 'pointer-events-none opacity-50' : 'hover:bg-muted',
+          currentPage <= 1
+            ? 'pointer-events-none opacity-50 text-muted-foreground'
+            : 'bg-background text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent',
         )}
         aria-disabled={currentPage <= 1}
       >
@@ -101,7 +103,9 @@ export function Pagination({ currentPage, totalPages, className }: PaginationPro
             href={createPageUrl(page)}
             className={cn(
               'inline-flex h-10 w-10 items-center justify-center rounded-lg border text-sm font-medium transition-colors',
-              page === currentPage ? 'bg-primary text-primary-foreground' : 'hover:bg-muted',
+              page === currentPage
+                ? 'border-primary bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm'
+                : 'bg-background text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent',
             )}
             aria-current={page === currentPage ? 'page' : undefined}
           >
@@ -114,7 +118,9 @@ export function Pagination({ currentPage, totalPages, className }: PaginationPro
         href={currentPage < totalPages ? createPageUrl(currentPage + 1) : '#'}
         className={cn(
           'inline-flex h-10 w-10 items-center justify-center rounded-lg border transition-colors',
-          currentPage >= totalPages ? 'pointer-events-none opacity-50' : 'hover:bg-muted',
+          currentPage >= totalPages
+            ? 'pointer-events-none opacity-50 text-muted-foreground'
+            : 'bg-background text-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent',
         )}
         aria-disabled={currentPage >= totalPages}
       >

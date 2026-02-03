@@ -3,8 +3,9 @@
 import React, { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from 'lucide-react'
 import type { Article, Media, Rubric, Author } from '@/payload-types'
+import { cn } from '@/lib/utils'
 
 interface RubricHighlightProps {
   rubric: Rubric
@@ -28,107 +29,159 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
 
   if (articles.length === 0) return null
 
+  const rubricColor = rubric.color || 'var(--primary)'
+
   return (
-    <div className="my-12 py-8 border-y border-slate-100 bg-slate-50/50 dark:bg-slate-900/30 dark:border-slate-800">
-      <div className="flex items-center justify-between mb-6 px-1">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            Pilihan Redaksi
-          </span>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <span className="w-2 h-8 rounded-full bg-primary block"></span>
-            {rubric.name}
-          </h2>
-        </div>
-
-        <div className="flex gap-2">
-          <button
-            onClick={() => scroll('left')}
-            className="p-2 rounded-full border border-slate-200 hover:bg-white hover:shadow-sm transition-all dark:border-slate-700 dark:hover:bg-slate-800"
-            aria-label="Scroll left"
-          >
-            <ChevronLeft className="h-5 w-5 text-slate-600 dark:text-slate-300" />
-          </button>
-          <button
-            onClick={() => scroll('right')}
-            className="p-2 rounded-full border border-slate-200 hover:bg-white hover:shadow-sm transition-all dark:border-slate-700 dark:hover:bg-slate-800"
-            aria-label="Scroll right"
-          >
-            <ChevronRight className="h-5 w-5 text-slate-600 dark:text-slate-300" />
-          </button>
-        </div>
-      </div>
-
-      <div
-        ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x w-full"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        {articles.map((article) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const thumbnail = (article as any).thumbnail as Media | undefined
-          const featuredImage = article.featuredImage as Media | undefined
-          const displayImage = thumbnail || featuredImage
-          const author = article.author as Author
-
-          return (
-            <Link
-              key={article.id}
-              href={`/artikel/${article.slug}`}
-              className="snap-start shrink-0 w-[260px] group border border-slate-100 rounded-xl p-3 bg-white dark:bg-slate-800 dark:border-slate-700 hover:shadow-md transition-all"
+    <div className="relative my-12 py-4">
+      <div className="relative px-4 md:px-0">
+        <div className="flex items-end justify-between mb-8 pb-4 border-b-2 border-slate-100 dark:border-slate-800">
+          <div>
+            <div
+              className="inline-flex items-center gap-2 mb-4 rounded-full px-4 py-2"
+              style={{ backgroundColor: `${rubricColor}15` }}
             >
-              <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3 bg-slate-200 dark:bg-slate-700">
-                {displayImage?.url ? (
-                  <Image
-                    src={displayImage.url}
-                    alt={displayImage.alt || article.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="260px"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-slate-400">
-                    No Image
-                  </div>
-                )}
-              </div>
-
-              <span className="text-xs font-bold text-primary mb-1 block">
-                {(article.categories as any)?.[0]?.name || 'Umum'}
+              <Sparkles className="h-4 w-4" style={{ color: rubricColor }} />
+              <span
+                className="text-sm font-black uppercase tracking-wide"
+                style={{ color: rubricColor }}
+              >
+                Pilihan Redaksi
               </span>
-
-              <h3 className="font-bold text-base leading-snug text-slate-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                {article.title}
-              </h3>
-
-              <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-auto">
-                <div className="h-5 w-5 rounded-full bg-slate-200 overflow-hidden relative">
-                  {(author.avatar as Media)?.url && (
-                    <Image
-                      src={(author.avatar as Media).url!}
-                      alt={author.name}
-                      fill
-                      className="object-cover"
-                    />
-                  )}
-                </div>
-                <span className="truncate max-w-[120px]">{author.name}</span>
-              </div>
-            </Link>
-          )
-        })}
-
-        {/* 'See All' Card */}
-        <Link
-          href={`/rubrik/${rubric.slug}`}
-          className="snap-start shrink-0 w-[150px] flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 hover:border-primary hover:bg-primary/5 transition-all group"
-        >
-          <div className="h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-            <ArrowRight className="h-5 w-5" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+              {rubric.name}
+            </h2>
           </div>
-          <span className="font-bold text-sm text-primary">Lihat Semua</span>
-          <span className="text-xs text-slate-500">{rubric.name}</span>
-        </Link>
+
+          <div className="hidden md:flex gap-3">
+            <button
+              onClick={() => scroll('left')}
+              className="p-3 rounded-xl bg-white dark:bg-slate-900 shadow-lg border-2 border-slate-200 dark:border-slate-800 hover:scale-105 hover:shadow-xl transition-all text-slate-700 dark:text-slate-300 hover:-translate-y-0.5"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              className="p-3 rounded-xl bg-white dark:bg-slate-900 shadow-lg border-2 border-slate-200 dark:border-slate-800 hover:scale-105 hover:shadow-xl transition-all text-slate-700 dark:text-slate-300 hover:-translate-y-0.5"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-6 overflow-x-auto pb-12 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide snap-x pt-2"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {articles.map((article) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const thumbnail = (article as any).thumbnail as Media | undefined
+            const featuredImage = article.featuredImage as Media | undefined
+            const displayImage = thumbnail || featuredImage
+            const author = article.author as Author
+
+            return (
+              <div key={article.id} className="snap-start shrink-0 w-[280px] md:w-[320px] group">
+                <Link
+                  href={`/artikel/${article.slug}`}
+                  className="flex flex-col h-full bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
+                    {displayImage?.url ? (
+                      <Image
+                        src={displayImage.url}
+                        alt={displayImage.alt || article.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 280px, 320px"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100 dark:bg-slate-800 font-semibold">
+                        No Image
+                      </div>
+                    )}
+
+                    <div className="absolute top-4 left-4">
+                      <span
+                        className="px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wide shadow-lg backdrop-blur-md bg-white/90 dark:bg-slate-900/90"
+                        style={{ color: rubricColor }}
+                      >
+                        {(article.categories as any)?.[0]?.name || 'Artikel'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col flex-1 p-5 md:p-6">
+                    <h3 className="text-lg md:text-xl font-black leading-tight text-slate-900 dark:text-white mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                      {article.title}
+                    </h3>
+
+                    <div className="mt-auto flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                      <div className="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden relative ring-1 ring-slate-200 dark:ring-slate-700 shrink-0">
+                        {(author.avatar as Media)?.url ? (
+                          <Image
+                            src={(author.avatar as Media).url!}
+                            alt={author.name}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs font-bold">
+                            {author.name.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate">
+                          {author.name}
+                        </span>
+                        <time className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
+                          {new Date(article.publishedAt || article.createdAt).toLocaleDateString(
+                            'id-ID',
+                            {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric',
+                            },
+                          )}
+                        </time>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            )
+          })}
+
+          {/* 'See All' Card */}
+          <Link
+            href={`/rubrik/${rubric.slug}`}
+            className="snap-start shrink-0 w-[240px] flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900 hover:border-solid hover:shadow-xl transition-all duration-500 group relative overflow-hidden hover:-translate-y-2"
+          >
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity"
+              style={{ backgroundColor: rubricColor }}
+            />
+            <div
+              className="h-14 w-14 rounded-2xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110 shadow-lg border bg-white dark:bg-slate-800"
+              style={{
+                color: rubricColor,
+                borderColor: `${rubricColor}40`,
+              }}
+            >
+              <ArrowRight className="h-6 w-6" />
+            </div>
+            <span className="font-black text-lg text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+              Lihat Semua
+            </span>
+            <span className="text-sm text-slate-500 dark:text-slate-400 text-center px-6 mt-2 font-semibold">
+              Artikel di {rubric.name}
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -2,6 +2,8 @@ import 'dotenv/config'
 import { getPayload } from 'payload'
 import config from './payload.config'
 import { faker } from '@faker-js/faker/locale/id_ID'
+import path from 'path'
+import fs from 'fs'
 
 // Lexical content helpers
 function createHeadingNode(text: string, tag: 'h1' | 'h2' | 'h3' = 'h2') {
@@ -217,6 +219,16 @@ function generateRichContent() {
   }
 }
 
+// Generate SVG Buffer
+function generateSvgBuffer(text: string, color: string) {
+  const svg = `
+  <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100%" height="100%" fill="${color}"/>
+    <text x="50%" y="50%" font-family="Arial" font-size="40" fill="white" text-anchor="middle" dy=".3em">${text}</text>
+  </svg>`
+  return Buffer.from(svg)
+}
+
 async function seed() {
   console.log('🌱 Starting seed...')
 
@@ -231,6 +243,37 @@ async function seed() {
   await payload.delete({ collection: 'tags', where: {} })
   await payload.delete({ collection: 'forms', where: {} })
   await payload.delete({ collection: 'form-submissions', where: {} })
+  await payload.delete({ collection: 'media', where: {} })
+  await payload.delete({ collection: 'missions', where: {} })
+  await payload.delete({ collection: 'programs', where: {} })
+
+  // Seed Media
+  console.log('🖼️  Creating media...')
+  const mediaItems = []
+  const colors = ['#1a365d', '#2d3748', '#2c5282', '#276749', '#c53030', '#b7791f']
+  
+  for (let i = 0; i < 10; i++) {
+    const color = colors[i % colors.length]
+    const text = `Sample Image ${i + 1}`
+    const buffer = generateSvgBuffer(text, color)
+    
+    const media = await payload.create({
+      collection: 'media',
+      data: {
+        alt: text,
+        caption: `This is a caption for ${text}`,
+        category: 'photo',
+      },
+      file: {
+        data: buffer,
+        mimetype: 'image/svg+xml',
+        name: `sample-${i + 1}.svg`,
+        size: buffer.length,
+      },
+    })
+    mediaItems.push(media)
+  }
+  console.log(`  ✓ Created ${mediaItems.length} media items`)
 
   // Seed Contact Form
   console.log('📝 Creating contact form...')
@@ -316,6 +359,103 @@ async function seed() {
   })
   console.log('  ✓ Updated site settings')
 
+  // Seed Missions
+  console.log('🎯 Creating missions...')
+  const missionData = [
+    {
+      title: 'Kemandirian Ekonomi',
+      description: 'Menciptakan ekosistem ekonomi yang mandiri bagi pelajar Indonesia di kawasan Timur Tengah dan Afrika melalui pelatihan kewirausahaan dan pemberdayaan potensi lokal.',
+      iconName: 'Compass',
+      color: 'from-blue-500 to-blue-600',
+    },
+    {
+      title: 'Prestasi Akademik',
+      description: 'Mendorong peningkatan kualitas akademik mahasiswa Indonesia melalui program bimbingan, seminar internasional, dan publikasi karya ilmiah.',
+      iconName: 'BookOpen',
+      color: 'from-cyan-500 to-teal-600',
+    },
+    {
+      title: 'Jaringan Global',
+      description: 'Memperluas jaringan kerjasama antar pelajar dan institusi di kawasan Timur Tengah, Afrika, dan Indonesia untuk kolaborasi yang berkelanjutan.',
+      iconName: 'Globe',
+      color: 'from-emerald-500 to-green-600',
+    },
+    {
+      title: 'Pengabdian Sosial',
+      description: 'Mengimplementasikan nilai-nilai kepedulian sosial melalui program kemanusiaan dan pemberdayaan masyarakat di negara tempat studi.',
+      iconName: 'Heart',
+      color: 'from-rose-500 to-pink-600',
+    },
+  ] as const
+
+  const missions = await Promise.all(
+    missionData.map((mission, idx) =>
+      payload.create({
+        collection: 'missions',
+        data: {
+          ...mission,
+          order: idx + 1,
+        },
+      }),
+    ),
+  )
+  console.log(`  ✓ Created ${missions.length} missions`)
+
+  // Seed Programs
+  console.log('📅 Creating programs...')
+  const programData = [
+    {
+      title: 'Simposium Kawasan Timtengka',
+      description: 'Pertemuan tahunan pelajar Indonesia se-Timur Tengah dan Afrika untuk membahas isu-isu strategis kawasan dan peran pelajar.',
+      emoji: '🌍',
+      category: 'Networking',
+      schedule: 'Tahunan (Juli)',
+      attendees: '500+',
+      color: 'from-blue-500 to-blue-600',
+      featured: true,
+    },
+    {
+      title: 'Timtengka Career Fair',
+      description: 'Bursa kerja khusus bagi lulusan Timur Tengah dan Afrika yang menghubungkan alumni dengan perusahaan multinasional.',
+      emoji: '💼',
+      category: 'Karir',
+      schedule: 'Tahunan (Desember)',
+      attendees: '1000+',
+      color: 'from-purple-500 to-violet-600',
+      featured: true,
+    },
+    {
+      title: 'Kajian Strategis Online',
+      description: 'Diskusi rutin bulanan membahas dinamika politik dan sosial di kawasan Timur Tengah bersama pakar.',
+      emoji: '📚',
+      category: 'Literasi',
+      schedule: 'Bulanan',
+      attendees: '200+',
+      color: 'from-emerald-500 to-teal-600',
+      featured: false,
+    },
+    {
+      title: 'Timtengka Peduli',
+      description: 'Program penggalangan dana dan bantuan sosial untuk masyarakat yang membutuhkan di kawasan konflik.',
+      emoji: '🤝',
+      category: 'Sosial',
+      schedule: 'Insidental',
+      attendees: 'Donatur & Relawan',
+      color: 'from-red-500 to-rose-600',
+      featured: true,
+    },
+  ] as const
+
+  const programs = await Promise.all(
+    programData.map((prog) =>
+      payload.create({
+        collection: 'programs',
+        data: prog,
+      }),
+    ),
+  )
+  console.log(`  ✓ Created ${programs.length} programs`)
+
   // Seed Authors
   console.log('👤 Creating authors...')
   const authorData = [
@@ -349,12 +489,12 @@ async function seed() {
   // Seed Categories
   console.log('📁 Creating categories...')
   const categoryData = [
-    { name: 'Berita', color: '#3B82F6', description: 'Berita terkini dan aktual' },
-    { name: 'Pendidikan', color: '#10B981', description: 'Informasi seputar pendidikan' },
-    { name: 'Budaya', color: '#F59E0B', description: 'Budaya dan tradisi Indonesia' },
-    { name: 'Opini', color: '#8B5CF6', description: 'Opini dan pandangan' },
-    { name: 'Kegiatan', color: '#EC4899', description: 'Kegiatan organisasi' },
-    { name: 'Teknologi', color: '#06B6D4', description: 'Teknologi dan inovasi' },
+    { name: 'Berita', color: '#3B82F6', description: 'Berita terkini dan aktual dari kawasan' },
+    { name: 'Pendidikan', color: '#10B981', description: 'Informasi beasiswa dan kampus' },
+    { name: 'Budaya', color: '#F59E0B', description: 'Ragam budaya Indonesia dan Timur Tengah' },
+    { name: 'Opini', color: '#8B5CF6', description: 'Buah pemikiran pelajar Indonesia' },
+    { name: 'Kajian', color: '#EC4899', description: 'Analisis mendalam isu strategis' },
+    { name: 'Teknologi', color: '#06B6D4', description: 'Inovasi dan perkembangan digital' },
   ]
 
   const categories = await Promise.all(
@@ -377,10 +517,11 @@ async function seed() {
   // Seed Rubrics
   console.log('📰 Creating rubrics...')
   const rubricData = [
-    { name: 'Berita Utama', template: 'standard' as const, color: '#EF4444' },
-    { name: 'Feature', template: 'longform' as const, color: '#3B82F6' },
-    { name: 'Wawancara', template: 'interview' as const, color: '#10B981' },
-    { name: 'Kolom', template: 'opinion' as const, color: '#8B5CF6' },
+    { name: 'Laporan Utama', template: 'standard' as const, color: '#EF4444' },
+    { name: 'Sosok', template: 'interview' as const, color: '#3B82F6' },
+    { name: 'Catatan Kairo', template: 'opinion' as const, color: '#10B981' },
+    { name: 'Resensi Buku', template: 'standard' as const, color: '#8B5CF6' },
+    { name: 'Jelajah', template: 'longform' as const, color: '#F59E0B' },
   ]
 
   const rubrics = await Promise.all(
@@ -402,16 +543,18 @@ async function seed() {
   // Seed Tags
   console.log('🏷️  Creating tags...')
   const tagNames = [
-    'PPIDK',
+    'Mesir',
+    'Arab Saudi',
+    'Turki',
+    'Yaman',
+    'Sudan',
+    'Maroko',
     'Mahasiswa',
-    'Indonesia',
-    'Timur Tengah',
-    'Kuliah',
     'Beasiswa',
-    'Komunitas',
-    'Event',
-    'Workshop',
-    'Seminar',
+    'Diplomasi',
+    'Sejarah',
+    'Sastra',
+    'Ekonomi Syariah',
   ]
 
   const tags = await Promise.all(
@@ -431,18 +574,21 @@ async function seed() {
   console.log('📝 Creating articles...')
 
   const articleTitles = [
-    'Mahasiswa Indonesia Raih Prestasi di Kompetisi Internasional',
-    'Workshop Kewirausahaan untuk Diaspora Indonesia',
-    'Menjaga Identitas Budaya di Negeri Orang',
-    'Tips Sukses Kuliah di Luar Negeri',
-    'Peran Komunitas dalam Mendukung Mahasiswa Baru',
-    'Inovasi Teknologi dari Anak Bangsa',
-    'Membangun Jaringan Profesional di Timur Tengah',
-    'Cerita Inspiratif: Dari Beasiswa hingga Karir Cemerlang',
-    'Kuliner Indonesia yang Dirindukan di Perantauan',
-    'Kolaborasi Lintas Negara untuk Kemajuan Bersama',
-    'Panduan Lengkap Mengurus Visa Pelajar',
-    'Kegiatan Ramadhan Bersama Komunitas Indonesia',
+    'Diplomasi Kuliner: Memperkenalkan Masakan Nusantara di Kairo',
+    'Jejak Ulama Nusantara di Tanah Haram: Sebuah Napak Tilas',
+    'Tantangan Mahasiswa Indonesia Menghadapi Musim Dingin di Ankara',
+    'Peluang Ekonomi Syariah di Afrika Utara: Perspektif Mahasiswa',
+    'Festival Budaya Indonesia Pukau Ribuan Warga Khartoum',
+    'Wawancara Eksklusif: Dubes RI untuk Mesir Bicara Soal Pendidikan',
+    'Tips Lolos Seleksi Beasiswa Timur Tengah Tahun Ini',
+    'Membangun Startup di Negeri Piramida: Kisah Sukses Alumni',
+    'Peran PPI dalam Menjaga Kondusivitas WNI di Wilayah Konflik',
+    'Review Buku: "Menemukan Kembali Islam yang Hilang"',
+    'Puasa di Negeri Orang: Rindu Kolak dan Suara Bedug',
+    'Sinergi Pelajar ASEAN di Madinah: Menguatkan Ukhuwah',
+    'Mengenal Lebih Dekat Arsitektur Islam di Maroko',
+    'Geliat Literasi Mahasiswa Indonesia di Yaman',
+    'Catatan Perjalanan: Menembus Padang Pasir Sahara',
   ]
 
   const statuses = ['published', 'published', 'published', 'published', 'draft'] as const
@@ -454,9 +600,10 @@ async function seed() {
     const rubric = rubrics[Math.floor(Math.random() * rubrics.length)]
     const articleTags = faker.helpers.arrayElements(tags, { min: 2, max: 4 })
     const status = statuses[Math.floor(Math.random() * statuses.length)]
+    const featuredImage = mediaItems[i % mediaItems.length] // Rotate through media items
 
     const publishedAt =
-      status === 'published' ? faker.date.recent({ days: 30 }).toISOString() : undefined
+      status === 'published' ? faker.date.recent({ days: 60 }).toISOString() : undefined
 
     await payload.create({
       collection: 'articles',
@@ -476,6 +623,7 @@ async function seed() {
         tags: articleTags.map((t) => t.id),
         status,
         publishedAt,
+        featuredImage: featuredImage.id,
         isFeatured: i < 3, // First 3 are featured
         isHeadline: i === 0, // First one is headline
         viewCount: faker.number.int({ min: 10, max: 5000 }),
@@ -489,6 +637,9 @@ async function seed() {
   console.log('\n✅ Seed completed successfully!')
   console.log(`
 📊 Summary:
+   - Media: ${mediaItems.length}
+   - Missions: ${missions.length}
+   - Programs: ${programs.length}
    - Authors: ${authors.length}
    - Categories: ${categories.length}
    - Rubrics: ${rubrics.length}

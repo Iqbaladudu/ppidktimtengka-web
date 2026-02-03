@@ -1,20 +1,21 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { TrendingUp, Clock, Tag, ArrowRight, Mail, User } from 'lucide-react'
-import type { Article, Category, Tag as TagType, Author, Media } from '@/payload-types'
+import { TrendingUp, Clock, Tag, ArrowRight, Mail, User, Sparkles } from 'lucide-react'
+import type { Article, Category, Tag as TagType, Author, Media, Rubric } from '@/payload-types'
 
 interface SidebarProps {
   trendingArticles: Article[]
   tags: TagType[]
   authors: Author[]
+  rubrics: Rubric[]
 }
 
-export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
+export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarProps) {
   return (
     <aside className="space-y-8">
       {/* Newsletter Widget */}
-      <div className="rounded-2xl bg-primary p-6 text-primary-foreground shadow-lg relative overflow-hidden">
+      <div className="rounded-2xl bg-linear-to-br from-[#a30404] to-[#590707] p-6 text-white shadow-lg relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -23,7 +24,7 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
             <Mail className="h-5 w-5" />
             <h3 className="font-bold text-lg">Newsletter</h3>
           </div>
-          <p className="text-primary-foreground/90 text-sm mb-4">
+          <p className="text-white/90 text-sm mb-4">
             Dapatkan ringkasan berita terpopuler dan info beasiswa langsung di inbox kamu.
           </p>
           <div className="space-y-2">
@@ -32,7 +33,7 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
               placeholder="Email kamu"
               className="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:outline-hidden focus:bg-white/20 transition-all text-sm"
             />
-            <button className="w-full py-2.5 rounded-xl bg-white text-primary font-bold text-sm hover:bg-slate-50 transition-colors">
+            <button className="w-full py-2.5 rounded-xl bg-white text-[#a30404] font-bold text-sm hover:bg-slate-50 transition-colors cursor-pointer">
               Langganan
             </button>
           </div>
@@ -49,7 +50,7 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
         <div className="space-y-6">
           {trendingArticles.map((article, idx) => (
             <div key={article.id} className="group flex items-start gap-4">
-              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 {idx + 1}
               </span>
               <div>
@@ -74,6 +75,38 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
         </div>
       </div>
 
+      {/* Rubrics Widget */}
+      {rubrics.length > 0 && (
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 dark:border-slate-800">
+            <Sparkles className="h-5 w-5 text-primary" />
+            <h3 className="font-bold text-slate-900 dark:text-white">Rubrik Pilihan</h3>
+          </div>
+          <div className="space-y-3">
+            {rubrics.map((rubric) => (
+              <Link
+                key={rubric.id}
+                href={`/rubrik/${rubric.slug}`}
+                className="flex items-center justify-between group p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all border border-transparent hover:border-slate-100 dark:hover:border-slate-800"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className="h-2 w-2 rounded-full ring-2 ring-white dark:ring-slate-900 shadow-sm"
+                    style={{ backgroundColor: rubric.color || 'var(--primary)' }}
+                  />
+                  <span className="font-semibold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors text-sm">
+                    {rubric.name}
+                  </span>
+                </div>
+                <div className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                  <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-primary" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Featured Authors Widget */}
       {authors.length > 0 && (
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
@@ -90,7 +123,7 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
                   href={`/penulis/${author.slug}`}
                   className="flex items-center gap-3 group"
                 >
-                  <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-100 relative">
+                  <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-100 relative ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
                     {avatar?.url ? (
                       <Image
                         src={avatar.url}
@@ -130,7 +163,7 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
             <Link
               key={tag.id}
               href={`/artikel?tag=${tag.slug}`}
-              className="rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-primary/10 hover:text-primary dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-primary/20 dark:hover:text-primary"
+              className="rounded-lg bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-600 transition-all hover:bg-secondary/20 hover:text-secondary-foreground hover:scale-105 border border-slate-100 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-secondary/20"
             >
               #{tag.name}
             </Link>
@@ -139,18 +172,21 @@ export function Sidebar({ trendingArticles, tags, authors }: SidebarProps) {
       </div>
 
       {/* Archive Link (Simple) */}
-      <div className="rounded-2xl bg-slate-900 p-6 text-white shadow-lg">
-        <h3 className="mb-2 text-lg font-bold">Punya tulisan menarik?</h3>
-        <p className="mb-4 text-sm text-slate-300 opacity-90">
-          Kirimkan artikel atau opini kamu untuk dimuat di website PPIDK Timtengka.
-        </p>
-        <Link
-          href="/contact"
-          className="inline-flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/30"
-        >
-          Kirim Tulisan
-          <ArrowRight className="h-4 w-4" />
-        </Link>
+      <div className="rounded-2xl bg-slate-900 p-6 text-white shadow-lg overflow-hidden relative">
+        <div className="absolute inset-0 bg-linear-to-br from-slate-900 to-slate-800" />
+        <div className="relative z-10">
+          <h3 className="mb-2 text-lg font-bold">Punya tulisan menarik?</h3>
+          <p className="mb-4 text-sm text-slate-300 opacity-90">
+            Kirimkan artikel atau opini kamu untuk dimuat di website PPIDK Timtengka.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/20 border border-white/10"
+          >
+            Kirim Tulisan
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </aside>
   )
