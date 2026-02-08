@@ -1,11 +1,19 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { MessageCircle, ArrowUp, X } from 'lucide-react'
+import { MessageCircle, ArrowUp, X, Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { cn } from '@/lib/utils'
 
 export const FloatingElements: React.FC = React.memo(() => {
+  const { setTheme, theme } = useTheme()
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [showWhatsAppTooltip, setShowWhatsAppTooltip] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +25,9 @@ export const FloatingElements: React.FC = React.memo(() => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  // Early return AFTER all hooks
+  if (!mounted) return null
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -94,14 +105,25 @@ export const FloatingElements: React.FC = React.memo(() => {
         {/* Back to Top Button */}
         <button
           onClick={scrollToTop}
-          className={`h-12 w-12 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center text-white shadow-lg hover:bg-black dark:hover:bg-slate-600 hover:scale-110 transition-all duration-500 transform ${
+          className={cn(
+            'h-12 w-12 rounded-full bg-slate-800 dark:bg-slate-700 flex items-center justify-center text-white shadow-lg hover:bg-black dark:hover:bg-slate-600 hover:scale-110 transition-all duration-500 transform',
             showBackToTop
               ? 'opacity-100 translate-y-0 rotate-0'
-              : 'opacity-0 translate-y-12 rotate-180 pointer-events-none'
-          }`}
+              : 'opacity-0 translate-y-12 rotate-180 pointer-events-none',
+          )}
           aria-label="Back to top"
         >
           <ArrowUp className="h-5 w-5" />
+        </button>
+
+        {/* Mobile Theme Toggle */}
+        <button
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className="md:hidden h-12 w-12 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center text-white dark:text-slate-900 shadow-lg border border-slate-700 dark:border-slate-200 transition-all duration-300"
+          aria-label="Toggle theme"
+        >
+          <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </button>
       </div>
     </div>

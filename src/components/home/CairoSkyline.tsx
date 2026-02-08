@@ -24,8 +24,6 @@ export const CairoSkyline = React.memo(function CairoSkyline() {
 
       // Infinite horizontal loop (Left to Right)
       gsap.to(wrapperRef.current, {
-        xPlaceholder: '0%', // Just to comment: starting from -50% to 0% creates L->R
-        xPercent: 50, // Move from current (0 or -50) to +50? No.
         // Logic:
         // We have 2 SVGs side by side: [SVG1][SVG2] inside wrapper.
         // To move L->R (objects move right), we can animate wrapper x from -50% to 0%.

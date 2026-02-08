@@ -4,7 +4,7 @@ export const Articles: CollectionConfig = {
   slug: 'articles',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'author', 'status', 'publishedAt', 'isFeatured'],
+    defaultColumns: ['title', 'author', 'status', 'publishedAt', 'viewCount', 'isFeatured'],
     listSearchableFields: ['title', 'excerpt'],
   },
   access: {
@@ -89,7 +89,8 @@ export const Articles: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       admin: {
-        description: 'Gambar kecil untuk tampilan daftar (opsional, jika kosong akan menggunakan Gambar Utama)',
+        description:
+          'Gambar kecil untuk tampilan daftar (opsional, jika kosong akan menggunakan Gambar Utama)',
       },
     },
     {

@@ -83,7 +83,7 @@ export const LatestNews = async () => {
           <div className="lg:col-span-8">
             {/* Featured Article - Enhanced Solid Design */}
             {featuredArticle && (
-              <div className="group relative rounded-3xl overflow-hidden aspect-[16/10] mb-10 lg:mb-12 shadow-2xl hover:shadow-3xl transition-shadow duration-500 ring-1 ring-slate-200 dark:ring-slate-800">
+              <div className="group relative rounded-2xl lg:rounded-3xl overflow-hidden aspect-4/5 sm:aspect-16/10 mb-8 lg:mb-12 shadow-2xl hover:shadow-3xl transition-shadow duration-500 ring-1 ring-slate-200 dark:ring-slate-800">
                 <Image
                   src={getImageUrl(featuredArticle)}
                   alt={featuredArticle.title}
@@ -92,31 +92,31 @@ export const LatestNews = async () => {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
-                  <span className="inline-block px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-black mb-4 uppercase tracking-wider shadow-lg">
+                <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-12">
+                  <span className="inline-block px-3 py-1.5 lg:px-4 lg:py-2 rounded-xl bg-primary text-primary-foreground text-xs font-black mb-3 lg:mb-4 uppercase tracking-wider shadow-lg">
                     {getCategoryName(featuredArticle)}
                   </span>
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-4 leading-tight group-hover:text-blue-300 transition-colors">
+                  <h3 className="text-xl sm:text-3xl lg:text-4xl font-black text-white mb-3 lg:mb-4 leading-tight group-hover:text-blue-300 transition-colors">
                     <Link href={`/artikel/${featuredArticle.slug}`}>{featuredArticle.title}</Link>
                   </h3>
-                  <p className="text-slate-100 text-sm sm:text-base lg:text-lg line-clamp-2 mb-6 max-w-3xl font-medium">
+                  <p className="text-slate-100 text-sm sm:text-base lg:text-lg line-clamp-2 mb-4 lg:mb-6 max-w-3xl font-medium">
                     {featuredArticle.excerpt}
                   </p>
 
-                  <div className="flex flex-wrap items-center gap-4 lg:gap-6 text-white/90 text-sm font-semibold">
-                    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-                      <User className="h-4 w-4" />
+                  <div className="flex flex-wrap items-center gap-3 lg:gap-6 text-white/90 text-sm font-semibold">
+                    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-lg">
+                      <User className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                       <span>{getAuthorName(featuredArticle)}</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-                      <Calendar className="h-4 w-4" />
+                    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-lg">
+                      <Calendar className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                       <span>
                         {formatDate(featuredArticle.publishedAt || featuredArticle.createdAt)}
                       </span>
                     </div>
                     {featuredArticle.readingTime && (
-                      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-                        <Clock className="h-4 w-4" />
+                      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-lg">
+                        <Clock className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                         <span>{featuredArticle.readingTime} min baca</span>
                       </div>
                     )}

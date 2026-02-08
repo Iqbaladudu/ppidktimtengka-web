@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, Clock, Eye } from 'lucide-react'
+import { Calendar, Clock } from 'lucide-react'
 import type { Article, Author, Category, Rubric, Media } from '@/payload-types'
 import { CategoryBadge } from '@/components/ui/CategoryBadge'
 import { RubricTag } from '@/components/ui/RubricTag'
@@ -67,12 +67,6 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
             <div className="flex items-center gap-1.5">
               <Clock className="h-4 w-4" />
               <span>{article.readingTime} menit baca</span>
-            </div>
-          )}
-          {typeof article.viewCount === 'number' && article.viewCount > 0 && (
-            <div className="flex items-center gap-1.5">
-              <Eye className="h-4 w-4" />
-              <span>{article.viewCount.toLocaleString('id-ID')} dilihat</span>
             </div>
           )}
         </div>

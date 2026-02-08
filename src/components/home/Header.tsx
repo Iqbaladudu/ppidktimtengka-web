@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import { useSite } from '../../context/SiteContext'
 import { Menu, X, Search, ChevronDown, Globe, Moon, Sun, Phone } from 'lucide-react'
@@ -59,13 +59,42 @@ const navItems: NavItem[] = [
 export const Header: React.FC = React.memo(() => {
   const { siteName } = useSite()
   const pathname = usePathname()
+  const router = useRouter()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null)
 
   const isHome = pathname === '/'
+
+  // Handle hash anchor scrolling
+  const handleHashNavigation = useCallback(
+    (href: string) => {
+      const [path, hash] = href.split('#')
+      const targetPath = path || pathname
+
+      if (hash) {
+        // If we're already on the target page, just scroll
+        if (targetPath === pathname || (targetPath === '/' && pathname === '/')) {
+          const element = document.getElementById(hash)
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' })
+            window.history.pushState(null, '', `#${hash}`)
+          }
+        } else {
+          // Navigate to the page first, then scroll
+          router.push(href)
+        }
+      } else {
+        router.push(href)
+      }
+      setIsMobileMenuOpen(false)
+      setExpandedMobileMenu(null)
+    },
+    [pathname, router],
+  )
 
   useEffect(() => {
     setMounted(true)
@@ -230,25 +259,47 @@ export const Header: React.FC = React.memo(() => {
             <nav className="px-4 py-4 space-y-1">
               {navItems.map((item) => (
                 <div key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 transition-colors"
-                  >
-                    {item.label}
-                    {item.children && <ChevronDown className="h-5 w-5 text-slate-400" />}
-                  </Link>
-                  {item.children && (
+                  {item.children ? (
+                    // Parent with children: toggle submenu on click
+                    <button
+                      onClick={() =>
+                        setExpandedMobileMenu(expandedMobileMenu === item.label ? null : item.label)
+                      }
+                      className="flex w-full items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 transition-colors"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-5 w-5 text-slate-400 transition-transform ${
+                          expandedMobileMenu === item.label ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                  ) : (
+                    // No children: direct navigation
+                    <button
+                      onClick={() => handleHashNavigation(item.href)}
+                      className="flex w-full items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 transition-colors text-left"
+                    >
+                      {item.label}
+                    </button>
+                  )}
+                  {item.children && expandedMobileMenu === item.label && (
                     <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-100 dark:border-slate-800 pl-4">
+                      {/* Link to main page */}
+                      <button
+                        onClick={() => handleHashNavigation(item.href)}
+                        className="block w-full px-4 py-2 text-sm font-medium text-primary dark:text-primary-foreground hover:text-primary/80 transition-colors text-left"
+                      >
+                        Lihat Semua {item.label}
+                      </button>
                       {item.children.map((child) => (
-                        <Link
+                        <button
                           key={child.label}
-                          href={child.href}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary dark:hover:text-primary-foreground transition-colors"
+                          onClick={() => handleHashNavigation(child.href)}
+                          className="block w-full px-4 py-2 text-sm text-muted-foreground hover:text-primary dark:hover:text-primary-foreground transition-colors text-left"
                         >
                           {child.label}
-                        </Link>
+                        </button>
                       ))}
                     </div>
                   )}

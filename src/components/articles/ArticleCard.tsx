@@ -67,7 +67,7 @@ export function ArticleCard({
         </Link>
         <div className="flex flex-1 flex-col py-1">
           <div className="mb-2">
-             {categories.length > 0 && (
+            {categories.length > 0 && (
               <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-primary mb-2">
                 {categories[0].name}
               </span>
@@ -78,9 +78,12 @@ export function ArticleCard({
               </h3>
             </Link>
           </div>
-          
+
           <div className="mt-auto flex items-center gap-3 text-xs text-muted-foreground">
-            <time dateTime={article.publishedAt || article.createdAt} className="flex items-center gap-1">
+            <time
+              dateTime={article.publishedAt || article.createdAt}
+              className="flex items-center gap-1"
+            >
               <Clock className="w-3 h-3" />
               {formatDate(article.publishedAt || article.createdAt)}
             </time>
@@ -94,11 +97,14 @@ export function ArticleCard({
   if (variant === 'featured') {
     return (
       <article
-        className={cn('group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-white/5', className)}
+        className={cn(
+          'group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-white/5',
+          className,
+        )}
       >
         <Link
           href={`/artikel/${article.slug}`}
-          className="relative block aspect-[16/9] w-full overflow-hidden"
+          className="relative block aspect-4/5 md:aspect-video w-full overflow-hidden"
         >
           {displayImage?.url ? (
             <Image
@@ -116,43 +122,52 @@ export function ArticleCard({
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </Link>
-        
+
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 text-white z-10">
           {categories.length > 0 && (
-            <div className="mb-4 flex flex-wrap gap-2">
+            <div className="mb-3 md:mb-4 flex flex-wrap gap-2">
               {categories.slice(0, 2).map((cat) => (
-                <CategoryBadge key={cat.id} category={cat} size="sm" variant="solid" className="shadow-lg backdrop-blur-md" />
+                <CategoryBadge
+                  key={cat.id}
+                  category={cat}
+                  size="sm"
+                  variant="solid"
+                  className="shadow-lg backdrop-blur-md"
+                />
               ))}
             </div>
           )}
           <Link href={`/artikel/${article.slug}`}>
-            <h2 className="mb-4 line-clamp-2 text-2xl md:text-4xl font-extrabold leading-tight tracking-tight text-white transition-colors group-hover:text-primary-foreground/90">
+            <h2 className="mb-3 md:mb-4 line-clamp-2 text-xl sm:text-2xl md:text-4xl font-extrabold leading-tight tracking-tight text-white transition-colors group-hover:text-primary-foreground/90">
               {article.title}
             </h2>
           </Link>
-          
+
           {article.excerpt && (
-            <p className="mb-6 line-clamp-2 text-sm md:text-lg text-white/80 max-w-3xl">
+            <p className="mb-4 md:mb-6 line-clamp-2 text-sm md:text-lg text-white/80 max-w-3xl">
               {article.excerpt}
             </p>
           )}
-          
+
           <div className="flex items-center gap-4 text-sm text-white/70 font-medium">
             {author && (
               <div className="flex items-center gap-2">
-                 <div className="h-6 w-6 rounded-full bg-white/20 overflow-hidden relative border border-white/10">
-                    {(author.avatar as Media)?.url ? (
-                      <Image
-                        src={(author.avatar as Media).url!}
-                        alt={author.name}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <User className="h-4 w-4 m-auto text-white/70" />
-                    )}
+                <div className="h-6 w-6 rounded-full bg-white/20 overflow-hidden relative border border-white/10">
+                  {(author.avatar as Media)?.url ? (
+                    <Image
+                      src={(author.avatar as Media).url!}
+                      alt={author.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <User className="h-4 w-4 m-auto text-white/70" />
+                  )}
                 </div>
-                <Link href={`/penulis/${author.slug}`} className="hover:text-white transition-colors">
+                <Link
+                  href={`/penulis/${author.slug}`}
+                  className="hover:text-white transition-colors"
+                >
                   {author.name}
                 </Link>
               </div>
@@ -193,13 +208,13 @@ export function ArticleCard({
             No image
           </div>
         )}
-        
+
         {/* Floating Categories */}
         {categories.length > 0 && (
           <div className="absolute top-4 left-4 flex flex-wrap gap-1 z-10">
             {categories.slice(0, 1).map((cat) => (
-              <span 
-                key={cat.id} 
+              <span
+                key={cat.id}
                 className="px-3 py-1 text-[10px] font-bold uppercase tracking-wide bg-background/90 backdrop-blur-md text-primary rounded-full shadow-lg border border-border/50"
               >
                 {cat.name}
@@ -215,38 +230,41 @@ export function ArticleCard({
             {article.title}
           </h3>
         </Link>
-        
+
         {article.excerpt && (
           <p className="mb-4 line-clamp-2 text-sm text-muted-foreground leading-relaxed">
             {article.excerpt}
           </p>
         )}
-        
+
         <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
-           <div className="flex items-center gap-2">
-             <div className="h-6 w-6 rounded-full bg-muted overflow-hidden relative border border-border">
-                {(author?.avatar as Media)?.url ? (
-                  <Image
-                    src={(author!.avatar as Media).url!}
-                    alt={author!.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-                     <User className="h-3 w-3" />
-                  </div>
-                )}
-             </div>
-             <span className="text-xs font-semibold text-foreground/80">
-                {author?.name || 'Admin'}
-             </span>
-           </div>
-           
-           <time className="text-[10px] md:text-xs text-muted-foreground font-medium flex items-center gap-1">
-             <Clock className="w-3 h-3" />
-             {new Date(article.publishedAt || article.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
-           </time>
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded-full bg-muted overflow-hidden relative border border-border">
+              {(author?.avatar as Media)?.url ? (
+                <Image
+                  src={(author!.avatar as Media).url!}
+                  alt={author!.name}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
+                  <User className="h-3 w-3" />
+                </div>
+              )}
+            </div>
+            <span className="text-xs font-semibold text-foreground/80">
+              {author?.name || 'Admin'}
+            </span>
+          </div>
+
+          <time className="text-[10px] md:text-xs text-muted-foreground font-medium flex items-center gap-1">
+            <Clock className="w-3 h-3" />
+            {new Date(article.publishedAt || article.createdAt).toLocaleDateString('id-ID', {
+              day: 'numeric',
+              month: 'short',
+            })}
+          </time>
         </div>
       </div>
     </article>

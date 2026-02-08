@@ -295,7 +295,7 @@ export const Hero = React.memo(function Hero() {
     <>
       <section
         ref={containerRef}
-        className="relative h-[85vh] w-full flex flex-col justify-center overflow-hidden bg-background"
+        className="relative h-[85vh] pt-20 md:pt-0 w-full flex flex-col justify-center overflow-hidden bg-background"
         aria-labelledby="hero-heading"
       >
         {/* Background decorative elements */}
@@ -352,7 +352,7 @@ export const Hero = React.memo(function Hero() {
 
               {/* Tagline */}
               <div className="hero-tagline relative py-2 max-w-3xl mx-auto">
-                <p className="text-xl lg:text-3xl font-serif font-medium text-foreground/80 italic leading-relaxed">
+                <p className="text-xl lg:text-3xl font-serif text-foreground/80 italic leading-relaxed">
                   "{tagline}"
                 </p>
               </div>
@@ -385,30 +385,6 @@ export const Hero = React.memo(function Hero() {
           </div>
         </div>
       </section>
-      {/* Floating Statistics Bar */}
-      <div ref={statsBarRef} className="absolute bottom-0 left-0 right-0 z-20">
-        <div className="bg-background/80 backdrop-blur-xl border-t border-border shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
-          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
-            <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-between items-center gap-x-4 gap-y-6 md:gap-x-8">
-              {floatingStats.map((stat) => (
-                <div key={stat.id} className="stat-item flex items-center gap-2 lg:gap-3">
-                  <div className="flex h-8 w-8 lg:h-12 lg:w-12 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
-                    <stat.Icon className="h-4 w-4 lg:h-6 lg:w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="stat-value text-lg lg:text-2xl font-extrabold text-foreground leading-none">
-                      {stat.value}
-                    </p>
-                    <p className="text-[10px] lg:text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-0.5 lg:mt-1">
-                      {stat.label}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   )
 })

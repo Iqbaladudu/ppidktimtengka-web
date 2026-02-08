@@ -58,20 +58,21 @@ export default async function RubricPage({ params, searchParams }: RubricPagePro
   return (
     <NewsLayout siteName={siteSettings.siteName || 'PPIDK Timtengka'}>
       {/* Rubric Header */}
-      <div className="border-b border-slate-200 bg-linear-to-br from-white to-slate-50">
+      {/* Rubric Header */}
+      <div className="border-b border-border bg-slate-50 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl px-4 py-12 md:px-6 md:py-16">
-          <div className="flex items-center gap-2 text-slate-600">
-            <Newspaper className="h-5 w-5" />
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Newspaper className="h-5 w-5 text-primary" />
             <span className="text-sm font-medium">Rubrik</span>
           </div>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-900 dark:text-white md:text-5xl">
             {rubric.name}
           </h1>
           {rubric.description && (
-            <p className="mt-4 max-w-2xl text-lg text-slate-600">{rubric.description}</p>
+            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">{rubric.description}</p>
           )}
-          <div className="mt-6 inline-flex items-center gap-2 text-sm text-slate-500">
-            <span className="font-medium">{articles.totalDocs}</span>
+          <div className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{articles.totalDocs}</span>
             <span>artikel</span>
           </div>
         </div>
