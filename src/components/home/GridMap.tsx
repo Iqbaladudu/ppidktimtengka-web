@@ -70,28 +70,12 @@ const ppiCountries: PPICountry[] = [
     flag: '🇲🇦',
   },
   {
-    id: 'turki',
-    name: 'PPI Turki',
-    fullName: 'Perhimpunan Pelajar Indonesia di Turki',
-    members: 350,
-    region: 'Timur Tengah',
-    flag: '🇹🇷',
-  },
-  {
     id: 'iran',
     name: 'PPI Iran',
     fullName: 'Perhimpunan Pelajar Indonesia di Iran',
     members: 180,
     region: 'Timur Tengah',
     flag: '🇮🇷',
-  },
-  {
-    id: 'irak',
-    name: 'PPI Irak',
-    fullName: 'Perhimpunan Pelajar Indonesia di Irak',
-    members: 95,
-    region: 'Timur Tengah',
-    flag: '🇮🇶',
   },
   {
     id: 'suriah',
@@ -116,14 +100,6 @@ const ppiCountries: PPICountry[] = [
     members: 25,
     region: 'Afrika Utara',
     flag: '🇱🇾',
-  },
-  {
-    id: 'sudan',
-    name: 'PPI Sudan',
-    fullName: 'Perhimpunan Pelajar Indonesia di Sudan',
-    members: 20,
-    region: 'Afrika Utara',
-    flag: '🇸🇩',
   },
   {
     id: 'uea',
@@ -179,9 +155,12 @@ export const GridMap: React.FC = React.memo(() => {
   const totalMembers = ppiCountries.reduce((sum, c) => sum + c.members, 0)
 
   return (
-    <section id="grid-map" className="py-24 lg:py-32 relative overflow-hidden bg-slate-50 dark:bg-slate-950">
+    <section
+      id="grid-map"
+      className="py-24 lg:py-32 relative overflow-hidden bg-slate-50 dark:bg-slate-950"
+    >
       <div className="absolute inset-0 bg-[url('/grid.svg')] animate-professional-grid pointer-events-none" />
-      
+
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
@@ -193,7 +172,8 @@ export const GridMap: React.FC = React.memo(() => {
             19 Negara, 1 Komunitas
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400">
-            Menghubungkan {totalMembers.toLocaleString()} mahasiswa Indonesia di Timur Tengah dan Afrika.
+            Menghubungkan {totalMembers.toLocaleString()} mahasiswa Indonesia di Timur Tengah dan
+            Afrika.
           </p>
         </div>
 
@@ -226,7 +206,7 @@ export const GridMap: React.FC = React.memo(() => {
                 <Users className="h-3 w-3" />
                 {country.members.toLocaleString()}
               </div>
-              
+
               {/* Tooltip-like details on hover could go here, or just keep it clean */}
             </div>
           ))}
