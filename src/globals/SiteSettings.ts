@@ -1,8 +1,12 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateCollection } from '../collections/hooks/revalidateCollection'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'Pengaturan Situs',
+  hooks: {
+    afterChange: [revalidateCollection(['/'], true)],
+  },
   access: {
     read: () => true,
   },

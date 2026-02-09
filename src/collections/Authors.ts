@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateWithSlug } from './hooks/revalidateCollection'
 
 export const Authors: CollectionConfig = {
   slug: 'authors',
@@ -9,6 +10,9 @@ export const Authors: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateWithSlug('/penulis')],
   },
   fields: [
     {

@@ -1,8 +1,12 @@
 import type { GlobalConfig } from 'payload'
+import { revalidateCollection } from '../collections/hooks/revalidateCollection'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
   label: 'Navigasi',
+  hooks: {
+    afterChange: [revalidateCollection(['/'], true)],
+  },
   access: {
     read: () => true,
   },

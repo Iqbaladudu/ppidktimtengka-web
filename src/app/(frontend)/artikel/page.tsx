@@ -21,6 +21,9 @@ import { NewsLayout } from '@/components/layout/NewsLayout'
 import { TrendingUp, Clock, Flame } from 'lucide-react'
 import type { Article, Tag as TagType, Author, Rubric } from '@/payload-types'
 
+// Revalidate this page every 60 seconds
+export const revalidate = 60
+
 interface BeritaPageProps {
   searchParams: Promise<{ page?: string; kategori?: string; q?: string }>
 }

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateCollection } from './hooks/revalidateCollection'
 
 export const Missions: CollectionConfig = {
   slug: 'missions',
@@ -9,6 +10,9 @@ export const Missions: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateCollection(['/about', '/'])],
   },
   fields: [
     {

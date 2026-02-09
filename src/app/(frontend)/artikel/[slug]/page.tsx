@@ -13,6 +13,13 @@ import {
 } from '@/components/articles'
 import { NewsLayout } from '@/components/layout/NewsLayout'
 
+// Allow ISR (Incremental Static Regeneration)
+// Revalidate this page every 60 seconds
+export const revalidate = 60
+
+// Allow dynamic params for articles not generated at build time
+export const dynamicParams = true
+
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
 }

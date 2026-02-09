@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateWithSlug } from './hooks/revalidateCollection'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -9,6 +10,9 @@ export const Categories: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateWithSlug('/kategori')],
   },
   fields: [
     {

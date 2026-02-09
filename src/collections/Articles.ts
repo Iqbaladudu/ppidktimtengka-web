@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateArticle } from './hooks/revalidateArticle'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -20,6 +21,7 @@ export const Articles: CollectionConfig = {
     },
   },
   hooks: {
+    afterChange: [revalidateArticle],
     beforeChange: [
       ({ data }) => {
         // Calculate reading time based on content
