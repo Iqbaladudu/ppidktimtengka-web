@@ -186,11 +186,12 @@ export const Achievements: React.FC = React.memo(() => {
           </div>
           <h2
             id="achievements-heading"
-            className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 tracking-tight"
+            className="text-4xl lg:text-5xl xl:text-6xl font-bold text-slate-900 dark:text-slate-100 mb-6 tracking-tight"
           >
-            Dampak Nyata <span className="text-secondary">Berkelanjutan</span>
+            Dampak Nyata{' '}
+            <span className="text-primary dark:text-primary-foreground">Berkelanjutan</span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Mewujudkan visi besar melalui aksi nyata, kolaborasi strategis, dan dedikasi ribuan
             mahasiswa Indonesia di Timur Tengah & Afrika.
           </p>
@@ -211,110 +212,18 @@ export const Achievements: React.FC = React.memo(() => {
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground mb-4 shadow-lg shadow-blue-900/40 group-hover:scale-110 transition-transform duration-300">
                 {stat.icon}
               </div>
-              <p className="text-3xl lg:text-4xl font-extrabold text-white mb-1 tracking-tight">
+              <p className="text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-slate-100 mb-1 tracking-tight">
                 <AnimatedCounter
                   target={stat.value}
                   suffix={stat.suffix}
                   isVisible={countersVisible}
                 />
               </p>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider group-hover:text-blue-300 transition-colors">
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider group-hover:text-primary transition-colors">
                 {stat.label}
               </p>
             </div>
           ))}
-        </div>
-
-        {/* Testimonials Slider */}
-        <div
-          className="relative max-w-4xl mx-auto"
-          onMouseEnter={() => setIsAutoPlaying(false)}
-          onMouseLeave={() => setIsAutoPlaying(true)}
-        >
-          {/* Decorative quotes */}
-          <div className="absolute -top-12 -left-12 text-9xl text-white/5 font-serif select-none">
-            “
-          </div>
-          <div className="absolute -bottom-12 -right-12 text-9xl text-white/5 font-serif select-none rotate-180">
-            “
-          </div>
-
-          <div className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              {/* Avatar */}
-              <div className="shrink-0 relative">
-                <div className="absolute inset-0 bg-blue-500 blur-2xl opacity-20 rounded-full" />
-                <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-full bg-slate-800 p-1 ring-2 ring-white/10">
-                  <div className="h-full w-full rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
-                    <span className="text-4xl font-bold text-blue-500">
-                      {testimonials[currentTestimonial].name.charAt(0)}
-                    </span>
-                  </div>
-                </div>
-                <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white p-2 rounded-full border-4 border-slate-900">
-                  <Quote className="h-4 w-4 fill-current" />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 text-center md:text-left">
-                <div className="min-h-[120px] mb-6 flex items-center justify-center md:justify-start">
-                  <p
-                    key={currentTestimonial}
-                    className="text-xl md:text-2xl text-slate-200 font-medium leading-relaxed italic animate-in fade-in slide-in-from-right-4 duration-500"
-                  >
-                    "{testimonials[currentTestimonial].quote}"
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-lg font-bold text-white mb-1">
-                    {testimonials[currentTestimonial].name}
-                  </h4>
-                  <p className="text-sm font-medium text-blue-400 mb-0.5">
-                    {testimonials[currentTestimonial].role}
-                  </p>
-                  <p className="text-xs text-slate-500 uppercase tracking-widest">
-                    {testimonials[currentTestimonial].company}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Navigation Buttons */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-4 md:-left-16 z-10 hidden md:block">
-              <button
-                onClick={prevTestimonial}
-                className="h-12 w-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-all hover:-translate-x-1"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="absolute top-1/2 -translate-y-1/2 right-4 md:-right-16 z-10 hidden md:block">
-              <button
-                onClick={nextTestimonial}
-                className="h-12 w-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-all hover:translate-x-1"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
-            </div>
-
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-8 md:mt-0 md:absolute md:top-8 md:right-8">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentTestimonial(i)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    i === currentTestimonial ? 'w-8 bg-blue-500' : 'w-2 bg-slate-600'
-                  }`}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>

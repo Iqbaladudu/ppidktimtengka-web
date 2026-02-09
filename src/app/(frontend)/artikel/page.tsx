@@ -151,7 +151,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                 {/* Articles Grid */}
                 <section>
                   <div className="mb-6 flex items-center justify-between">
-                    <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900">
+                    <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-slate-100">
                       <TrendingUp className="h-5 w-5 text-primary" />
                       {q
                         ? 'Hasil Pencarian'

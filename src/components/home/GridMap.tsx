@@ -169,7 +169,7 @@ export const GridMap: React.FC = React.memo(() => {
             <span>Jaringan Global</span>
           </div>
           <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
-            19 Negara, 1 Komunitas
+            16 Negara, 1 Komunitas
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400">
             Menghubungkan {totalMembers.toLocaleString()} mahasiswa Indonesia di Timur Tengah dan

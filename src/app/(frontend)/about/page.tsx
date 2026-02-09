@@ -26,7 +26,7 @@ export default function AboutPage() {
       <GridMap />
       <Leadership />
       <Achievements />
-      <AlumniSpotlight />
+      {/* <AlumniSpotlight /> */}
     </div>
   )
 }
