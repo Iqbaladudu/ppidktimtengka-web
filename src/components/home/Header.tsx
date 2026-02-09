@@ -265,7 +265,7 @@ export const Header: React.FC = React.memo(() => {
                       onClick={() =>
                         setExpandedMobileMenu(expandedMobileMenu === item.label ? null : item.label)
                       }
-                      className="flex w-full items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 transition-colors"
+                      className="flex w-full items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 active:bg-primary/10 dark:active:bg-primary/20 active:scale-[0.98] transition-all"
                     >
                       {item.label}
                       <ChevronDown
@@ -278,7 +278,7 @@ export const Header: React.FC = React.memo(() => {
                     // No children: direct navigation
                     <button
                       onClick={() => handleHashNavigation(item.href)}
-                      className="flex w-full items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 transition-colors text-left"
+                      className="flex w-full items-center justify-between px-4 py-3 text-base font-medium text-foreground rounded-lg hover:bg-muted dark:hover:bg-muted/50 active:bg-primary/10 dark:active:bg-primary/20 active:scale-[0.98] transition-all text-left"
                     >
                       {item.label}
                     </button>
@@ -288,7 +288,7 @@ export const Header: React.FC = React.memo(() => {
                       {/* Link to main page */}
                       <button
                         onClick={() => handleHashNavigation(item.href)}
-                        className="block w-full px-4 py-2 text-sm font-medium text-primary dark:text-primary-foreground hover:text-primary/80 transition-colors text-left"
+                        className="block w-full px-4 py-2 text-sm font-medium text-primary dark:text-primary-foreground hover:text-primary/80 active:bg-primary/10 dark:active:bg-primary/20 active:scale-[0.98] transition-all text-left rounded-lg"
                       >
                         Lihat Semua {item.label}
                       </button>
@@ -296,7 +296,7 @@ export const Header: React.FC = React.memo(() => {
                         <button
                           key={child.label}
                           onClick={() => handleHashNavigation(child.href)}
-                          className="block w-full px-4 py-2 text-sm text-muted-foreground hover:text-primary dark:hover:text-primary-foreground transition-colors text-left"
+                          className="block w-full px-4 py-2 text-sm text-muted-foreground hover:text-primary dark:hover:text-primary-foreground active:bg-primary/10 dark:active:bg-primary/20 active:scale-[0.98] transition-all text-left rounded-lg"
                         >
                           {child.label}
                         </button>

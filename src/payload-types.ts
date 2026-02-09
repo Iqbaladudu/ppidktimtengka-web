@@ -177,6 +177,7 @@ export interface Media {
    */
   credit?: string | null;
   category?: ('photo' | 'infographic' | 'illustration') | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -770,6 +771,7 @@ export interface MediaSelect<T extends boolean = true> {
   caption?: T;
   credit?: T;
   category?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
