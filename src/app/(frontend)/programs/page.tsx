@@ -1,5 +1,5 @@
 import React from 'react'
-import { AstaBerdaya } from '../../../components/home/AstaBerdaya'
+import { getPrograms, getFeaturedPrograms } from '../../../lib/payload'
 import { FeaturedPrograms } from '../../../components/home/FeaturedPrograms'
 
 export const metadata = {
@@ -7,7 +7,14 @@ export const metadata = {
   description: 'Program unggulan dan kegiatan mahasiswa Indonesia di Timur Tengah & Afrika',
 }
 
-export default function ProgramsPage() {
+export default async function ProgramsPage() {
+  const [programsResult, featuredPrograms] = await Promise.all([
+    getPrograms(),
+    getFeaturedPrograms(),
+  ])
+
+  const programs = programsResult.docs
+
   return (
     <div className="bg-background">
       <div className="py-20 lg:py-28 text-center space-y-4 px-6">
@@ -19,8 +26,7 @@ export default function ProgramsPage() {
         </p>
       </div>
 
-      <AstaBerdaya />
-      <FeaturedPrograms />
+      <FeaturedPrograms programs={programs} featuredPrograms={featuredPrograms} />
     </div>
   )
 }

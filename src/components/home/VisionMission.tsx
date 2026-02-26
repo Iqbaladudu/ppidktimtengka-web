@@ -1,7 +1,18 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { Target, Compass, Users, Globe, Heart, ChevronRight, Sparkles } from 'lucide-react'
+import {
+  Target,
+  Compass,
+  Users,
+  Globe,
+  Heart,
+  ChevronRight,
+  Sparkles,
+  Handshake,
+  MessageCircle,
+  Flag,
+} from 'lucide-react'
 
 interface MissionCard {
   id: string
@@ -34,39 +45,59 @@ export const VisionMission: React.FC = React.memo(() => {
 
   const missions: MissionCard[] = [
     {
+      id: 'koordinasi',
+      icon: <Handshake className="h-8 w-8" />,
+      title: 'KOORDINASI',
+      description:
+        'Menguatkan fungsi PPIDK Timtengka sebagai ujung tombak koordinasi dan wadah aspirasi bagi PPI Negara.',
+      color: 'from-blue-500 to-blue-600',
+    },
+    {
       id: 'sinergi',
       icon: <Users className="h-8 w-8" />,
       title: 'SINERGI',
-      description: 'Kanalisasi aspirasi PPI Negara untuk membangun kekuatan bersama',
-      color: 'from-blue-500 to-blue-600',
+      description:
+        'Membangun sinergitas lintas PPI Negara agar terciptanya komunikasi dan kolaborasi yang efektif.',
+      color: 'from-indigo-500 to-indigo-600',
+    },
+    {
+      id: 'aspirasi',
+      icon: <MessageCircle className="h-8 w-8" />,
+      title: 'ASPIRASI',
+      description:
+        'Mengoptimalkan peran dan kontribusi pelajar dalam isu-isu strategis melalui pendekatan edukatif, dialogis, dan advokatif.',
+      color: 'from-cyan-500 to-teal-600',
     },
     {
       id: 'eksplorasi',
       icon: <Compass className="h-8 w-8" />,
       title: 'EKSPLORASI',
-      description: 'Wadah eksplorasi partisipatif untuk pengembangan potensi',
-      color: 'from-cyan-500 to-teal-600',
+      description:
+        'Menciptakan platform inovatif untuk mendukung pengembangan potensi dan pemberdayaan pelajar.',
+      color: 'from-emerald-500 to-green-600',
     },
     {
       id: 'kaderisasi',
       icon: <Target className="h-8 w-8" />,
       title: 'KADERISASI',
-      description: 'Pengkaderan progresif dan adaptif untuk generasi masa depan',
-      color: 'from-emerald-500 to-green-600',
+      description: 'Memperkuat nilai-nilai intelektual, kepemimpinan, dan profesionalisme pelajar.',
+      color: 'from-amber-500 to-orange-600',
     },
     {
       id: 'diplomasi',
       icon: <Globe className="h-8 w-8" />,
       title: 'DIPLOMASI',
-      description: 'Memperluas jejaring strategis nasional dan internasional',
-      color: 'from-amber-500 to-orange-600',
+      description:
+        'Memperluas jejaring antara pelajar, alumni, dan mitra strategis untuk menjalin kerjasama yang berkelanjutan.',
+      color: 'from-rose-500 to-pink-600',
     },
     {
-      id: 'berdampak',
-      icon: <Heart className="h-8 w-8" />,
-      title: 'BERDAMPAK',
-      description: 'Aksi Peduli Sekitar untuk masyarakat yang membutuhkan',
-      color: 'from-rose-500 to-pink-600',
+      id: 'representasi',
+      icon: <Flag className="h-8 w-8" />,
+      title: 'REPRESENTASI',
+      description:
+        'Mendorong keterlibatan aktif pelajar dalam forum regional dan internasional sebagai wujud diplomasi intelektual dan kebudayaan Indonesia.',
+      color: 'from-purple-500 to-violet-600',
     },
   ]
 
@@ -98,9 +129,9 @@ export const VisionMission: React.FC = React.memo(() => {
             id="vision-heading"
             className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight max-w-5xl mx-auto drop-shadow-lg"
           >
-            "Katalisator kegiatan pelajar dan mahasiswa Timur Tengah dan Afrika yang{' '}
+            Poros kolaborasi pelajar dan mahasiswa Timur Tengah &amp; Afrika yang{' '}
             <span className="relative inline-block text-primary">
-              transformatif
+              inklusif
               <svg
                 className="absolute w-full h-3 -bottom-1 left-0 text-cyan-500/30"
                 viewBox="0 0 100 10"
@@ -109,8 +140,9 @@ export const VisionMission: React.FC = React.memo(() => {
                 <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
               </svg>
             </span>
-            , <span className="relative inline-block text-secondary">produktif</span>, dan{' '}
-            <span className="relative inline-block text-primary">inovatif</span>"
+            , <span className="relative inline-block text-secondary">progresif</span>, dan{' '}
+            <span className="relative inline-block text-primary">strategis</span> dalam diplomasi
+            keilmuan, kebangsaan, dan kemanusiaan.
           </h2>
         </div>
 
@@ -130,7 +162,7 @@ export const VisionMission: React.FC = React.memo(() => {
 
           {/* Mission Cards - Horizontal Scroll */}
           <div className="relative group/container">
-            <div className="flex gap-4 lg:gap-6 overflow-x-auto pb-4 lg:pb-8 w-full snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-5 lg:overflow-visible">
+            <div className="flex gap-4 lg:gap-6 overflow-x-auto pb-4 lg:pb-8 w-full snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 xl:grid-cols-7 lg:overflow-visible">
               {missions.map((mission, idx) => (
                 <div
                   key={mission.id}

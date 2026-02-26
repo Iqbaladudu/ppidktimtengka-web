@@ -1,6 +1,6 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
-import type { Article, Author, Category, Rubric, Tag } from '@/payload-types'
+import type { Article, Author, Category, Program, Rubric, Tag } from '@/payload-types'
 
 // Singleton pattern for Payload instance
 let payloadInstance: Awaited<ReturnType<typeof getPayload>> | null = null
@@ -284,6 +284,35 @@ export async function searchArticles(query: string, page = 1, limit = 10) {
     sort: '-publishedAt',
     depth: 1,
   })
+}
+
+// ============================================
+// Program Queries
+// ============================================
+
+export async function getPrograms() {
+  const payload = await getPayloadClient()
+
+  return payload.find({
+    collection: 'programs',
+    limit: 100,
+    depth: 1,
+  })
+}
+
+export async function getFeaturedPrograms() {
+  const payload = await getPayloadClient()
+
+  const result = await payload.find({
+    collection: 'programs',
+    where: {
+      featured: { equals: true },
+    },
+    limit: 100,
+    depth: 1,
+  })
+
+  return result.docs
 }
 
 // ============================================

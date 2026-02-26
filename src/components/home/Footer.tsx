@@ -28,7 +28,7 @@ export const Footer: React.FC = React.memo(() => {
       { label: 'Hubungan Alumni', href: '#alumni' },
     ],
     program: [
-      { label: 'Asta Berdaya', href: '#asta-berdaya' },
+      // { label: 'Asta Berdaya', href: '#asta-berdaya' },
       { label: 'Program Unggulan', href: '#programs' },
       { label: 'Kaderisasi', href: '#kaderisasi' },
       { label: 'Info Beasiswa', href: '#beasiswa' },

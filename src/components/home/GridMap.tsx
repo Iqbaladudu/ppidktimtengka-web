@@ -7,9 +7,10 @@ interface PPICountry {
   id: string
   name: string
   fullName: string
-  members: number
+  members: number | null
   region: string
   flag: string
+  status?: string
 }
 
 const ppiCountries: PPICountry[] = [
@@ -54,6 +55,14 @@ const ppiCountries: PPICountry[] = [
     flag: '🇵🇰',
   },
   {
+    id: 'qatar',
+    name: 'PPI Qatar',
+    fullName: 'Perhimpunan Pelajar Indonesia di Qatar',
+    members: 500,
+    region: 'Timur Tengah',
+    flag: '🇶🇦',
+  },
+  {
     id: 'tunisia',
     name: 'PPI Tunisia',
     fullName: 'Perhimpunan Pelajar Indonesia di Tunisia',
@@ -70,68 +79,68 @@ const ppiCountries: PPICountry[] = [
     flag: '🇲🇦',
   },
   {
-    id: 'iran',
-    name: 'PPI Iran',
-    fullName: 'Perhimpunan Pelajar Indonesia di Iran',
-    members: 180,
-    region: 'Timur Tengah',
-    flag: '🇮🇷',
+    id: 'libya',
+    name: 'KKMI Libya',
+    fullName: 'Keluarga Kecil Mahasiswa Indonesia di Libya',
+    members: 202,
+    region: 'Afrika Utara',
+    flag: '🇱🇾',
   },
   {
     id: 'suriah',
     name: 'PPI Suriah',
     fullName: 'Perhimpunan Pelajar Indonesia di Suriah',
-    members: 50,
+    members: 190,
     region: 'Timur Tengah',
     flag: '🇸🇾',
   },
   {
-    id: 'aljazair',
-    name: 'PPI Aljazair',
-    fullName: 'Perhimpunan Pelajar Indonesia di Aljazair',
-    members: 35,
-    region: 'Afrika Utara',
-    flag: '🇩🇿',
-  },
-  {
-    id: 'libya',
-    name: 'PPI Libya',
-    fullName: 'Perhimpunan Pelajar Indonesia di Libya',
-    members: 25,
-    region: 'Afrika Utara',
-    flag: '🇱🇾',
-  },
-  {
     id: 'uea',
-    name: 'PPI Uni Emirat',
+    name: 'PPI Uni Emirat Arab',
     fullName: 'Perhimpunan Pelajar Indonesia di Uni Emirat Arab',
-    members: 15,
+    members: 175,
     region: 'Timur Tengah',
     flag: '🇦🇪',
+  },
+  {
+    id: 'iran',
+    name: 'PPI Iran',
+    fullName: 'Perhimpunan Pelajar Indonesia di Iran',
+    members: 113,
+    region: 'Timur Tengah',
+    flag: '🇮🇷',
+  },
+  {
+    id: 'afrika-selatan',
+    name: 'PPI Afrika Selatan',
+    fullName: 'Perhimpunan Pelajar Indonesia di Afrika Selatan',
+    members: 96,
+    region: 'Afrika',
+    flag: '🇿🇦',
+  },
+  {
+    id: 'mauritania',
+    name: 'PPI Mauritania',
+    fullName: 'Perhimpunan Pelajar Indonesia di Mauritania',
+    members: 18,
+    region: 'Afrika Utara',
+    flag: '🇲🇷',
+  },
+  {
+    id: 'lebanon',
+    name: 'PPI Lebanon',
+    fullName: 'Perhimpunan Pelajar Indonesia di Lebanon',
+    members: 14,
+    region: 'Timur Tengah',
+    flag: '🇱🇧',
   },
   {
     id: 'kuwait',
     name: 'PPI Kuwait',
     fullName: 'Perhimpunan Pelajar Indonesia di Kuwait',
-    members: 10,
+    members: 11,
     region: 'Timur Tengah',
     flag: '🇰🇼',
-  },
-  {
-    id: 'qatar',
-    name: 'PPI Qatar',
-    fullName: 'Perhimpunan Pelajar Indonesia di Qatar',
-    members: 8,
-    region: 'Timur Tengah',
-    flag: '🇶🇦',
-  },
-  {
-    id: 'bahrain',
-    name: 'PPI Bahrain',
-    fullName: 'Perhimpunan Pelajar Indonesia di Bahrain',
-    members: 5,
-    region: 'Timur Tengah',
-    flag: '🇧🇭',
   },
   {
     id: 'oman',
@@ -140,6 +149,23 @@ const ppiCountries: PPICountry[] = [
     members: 3,
     region: 'Timur Tengah',
     flag: '🇴🇲',
+  },
+  {
+    id: 'aljazair',
+    name: 'PPI Aljazair',
+    fullName: 'Perhimpunan Pelajar Indonesia di Aljazair',
+    members: 7,
+    region: 'Afrika Utara',
+    flag: '🇩🇿',
+  },
+  {
+    id: 'sudan',
+    name: 'PPI Sudan',
+    fullName: 'Perhimpunan Pelajar Indonesia di Sudan',
+    members: null,
+    region: 'Afrika',
+    flag: '🇸🇩',
+    status: 'Evakuasi',
   },
 ]
 
@@ -152,7 +178,7 @@ export const GridMap: React.FC = React.memo(() => {
       c.fullName.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const totalMembers = ppiCountries.reduce((sum, c) => sum + c.members, 0)
+  const totalMembers = ppiCountries.reduce((sum, c) => sum + (c.members ?? 0), 0)
 
   return (
     <section
@@ -169,7 +195,7 @@ export const GridMap: React.FC = React.memo(() => {
             <span>Jaringan Global</span>
           </div>
           <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
-            16 Negara, 1 Komunitas
+            19 Negara, 1 Komunitas
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400">
             Menghubungkan {totalMembers.toLocaleString()} mahasiswa Indonesia di Timur Tengah dan
@@ -204,7 +230,7 @@ export const GridMap: React.FC = React.memo(() => {
               </h3>
               <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md mt-2 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors">
                 <Users className="h-3 w-3" />
-                {country.members.toLocaleString()}
+                {country.members !== null ? country.members.toLocaleString() : country.status}
               </div>
 
               {/* Tooltip-like details on hover could go here, or just keep it clean */}

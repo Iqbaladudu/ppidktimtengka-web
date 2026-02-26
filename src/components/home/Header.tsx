@@ -19,17 +19,17 @@ const navItems: NavItem[] = [
     label: 'Tentang Kami',
     href: '/about',
     children: [
-      { label: 'Sejarah', href: '/about#sejarah', description: 'Perjalanan 58+ tahun organisasi' },
+      { label: 'Sejarah', href: '/about#sejarah', description: 'Sejarah PPIDK Timtengka' },
+      {
+        label: 'Profil',
+        href: '/about#profil',
+        description: 'Profil PPIDK Timtengka',
+      },
       { label: 'Visi & Misi', href: '/about#visi-misi', description: 'Tujuan dan cita-cita kami' },
       {
         label: 'Struktur Organisasi',
         href: '/about#struktur',
         description: 'Kepemimpinan 2025-2026',
-      },
-      {
-        label: 'Asta Berdaya',
-        href: '/programs#asta-berdaya',
-        description: '8 Pilar program unggulan',
       },
     ],
   },
@@ -37,9 +37,13 @@ const navItems: NavItem[] = [
     label: 'Program',
     href: '/programs',
     children: [
-      { label: 'Program Unggulan', href: '/programs', description: 'Kegiatan utama kami' },
-      { label: 'Kaderisasi', href: '/programs#kaderisasi', description: 'Pengembangan kader' },
-      { label: 'Beasiswa', href: '/resources#beasiswa', description: 'Informasi beasiswa' },
+      { label: 'Program', href: '/programs', description: 'Kegiatan utama kami' },
+      // { label: 'Kaderisasi', href: '/programs#kaderisasi', description: 'Pengembangan kader' },
+      {
+        label: 'Informasi Pendidikan & Beasiswa',
+        href: '/resources#beasiswa',
+        description: 'Informasi beasiswa',
+      },
       { label: 'Webinar & Seminar', href: '/programs#webinar', description: 'Acara edukatif' },
     ],
   },
