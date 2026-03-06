@@ -69,11 +69,14 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    documents: Document;
     authors: Author;
     categories: Category;
     rubrics: Rubric;
     tags: Tag;
     articles: Article;
+    'press-releases': PressRelease;
+    events: Event;
     programs: Program;
     missions: Mission;
     forms: Form;
@@ -87,11 +90,14 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     rubrics: RubricsSelect<false> | RubricsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    'press-releases': PressReleasesSelect<false> | PressReleasesSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     missions: MissionsSelect<false> | MissionsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -218,6 +224,28 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  title: string;
+  description?: string | null;
+  category?: ('press-release' | 'report' | 'letter' | 'other') | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "authors".
  */
 export interface Author {
@@ -341,6 +369,15 @@ export interface Article {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Unggah file PDF sebagai lampiran artikel
+   */
+  attachments?:
+    | {
+        document: number | Document;
+        id?: string | null;
+      }[]
+    | null;
   author: number | Author;
   categories?: (number | Category)[] | null;
   rubric?: (number | null) | Rubric;
@@ -363,6 +400,129 @@ export interface Article {
     /**
      * Kosongkan untuk menggunakan gambar utama
      */
+    ogImage?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "press-releases".
+ */
+export interface PressRelease {
+  id: number;
+  title: string;
+  slug: string;
+  /**
+   * Ringkasan singkat press release
+   */
+  excerpt?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Unggah file PDF press release
+   */
+  document?: (number | null) | Document;
+  featuredImage?: (number | null) | Media;
+  author?: (number | null) | Author;
+  categories?: (number | Category)[] | null;
+  status: 'draft' | 'published' | 'archived';
+  publishedAt?: string | null;
+  seo?: {
+    /**
+     * Kosongkan untuk menggunakan judul
+     */
+    metaTitle?: string | null;
+    /**
+     * Kosongkan untuk menggunakan ringkasan
+     */
+    metaDescription?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  slug: string;
+  eventType: 'webinar' | 'talkshow' | 'seminar' | 'workshop' | 'conference' | 'other';
+  /**
+   * Ringkasan singkat acara untuk preview
+   */
+  excerpt?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Tanggal dan jam mulai acara
+   */
+  eventDate: string;
+  /**
+   * Tanggal dan jam selesai (opsional)
+   */
+  eventEndDate?: string | null;
+  /**
+   * URL formulir pendaftaran (Google Form, Eventbrite, dll)
+   */
+  registrationLink?: string | null;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Poster, flyer, atau dokumentasi acara
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Booklet, materi presentasi, atau dokumen lainnya
+   */
+  documents?:
+    | {
+        document: number | Document;
+        /**
+         * Contoh: Booklet, Materi, Rundown
+         */
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  status: 'draft' | 'published' | 'archived';
+  isFeatured?: boolean | null;
+  seo?: {
+    metaTitle?: string | null;
+    metaDescription?: string | null;
     ogImage?: (number | null) | Media;
   };
   updatedAt: string;
@@ -663,6 +823,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
         relationTo: 'authors';
         value: number | Author;
       } | null)
@@ -681,6 +845,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'articles';
         value: number | Article;
+      } | null)
+    | ({
+        relationTo: 'press-releases';
+        value: number | PressRelease;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
       } | null)
     | ({
         relationTo: 'programs';
@@ -820,6 +992,27 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "authors_select".
  */
 export interface AuthorsSelect<T extends boolean = true> {
@@ -898,6 +1091,12 @@ export interface ArticlesSelect<T extends boolean = true> {
         caption?: T;
         id?: T;
       };
+  attachments?:
+    | T
+    | {
+        document?: T;
+        id?: T;
+      };
   author?: T;
   categories?: T;
   rubric?: T;
@@ -908,6 +1107,70 @@ export interface ArticlesSelect<T extends boolean = true> {
   isHeadline?: T;
   viewCount?: T;
   readingTime?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "press-releases_select".
+ */
+export interface PressReleasesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  document?: T;
+  featuredImage?: T;
+  author?: T;
+  categories?: T;
+  status?: T;
+  publishedAt?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  eventType?: T;
+  excerpt?: T;
+  description?: T;
+  eventDate?: T;
+  eventEndDate?: T;
+  registrationLink?: T;
+  featuredImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  documents?:
+    | T
+    | {
+        document?: T;
+        label?: T;
+        id?: T;
+      };
+  status?: T;
+  isFeatured?: T;
   seo?:
     | T
     | {

@@ -17,6 +17,9 @@ import { Tags } from './collections/Tags'
 import { Articles } from './collections/Articles'
 import { Programs } from './collections/Programs'
 import { Missions } from './collections/Missions'
+import { Documents } from './collections/Documents'
+import { PressReleases } from './collections/PressReleases'
+import { Events } from './collections/Events'
 
 // Globals
 import { SiteSettings } from './globals/SiteSettings'
@@ -35,7 +38,7 @@ export default buildConfig({
       titleSuffix: ' | PPIDK Timtengka',
     },
   },
-  collections: [Users, Media, Authors, Categories, Rubrics, Tags, Articles, Programs, Missions],
+  collections: [Users, Media, Documents, Authors, Categories, Rubrics, Tags, Articles, PressReleases, Events, Programs, Missions],
   globals: [SiteSettings, Navigation],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -77,6 +80,10 @@ export default buildConfig({
         media: {
           disableLocalStorage: true,
           prefix: 'media',
+        },
+        documents: {
+          disableLocalStorage: true,
+          prefix: 'documents',
         },
       },
       bucket: process.env.R2_BUCKET || '',

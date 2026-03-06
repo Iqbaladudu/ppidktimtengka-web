@@ -115,6 +115,25 @@ export const Articles: CollectionConfig = {
       ],
     },
 
+    // Attachments
+    {
+      name: 'attachments',
+      label: 'Lampiran PDF',
+      type: 'array',
+      fields: [
+        {
+          name: 'document',
+          label: 'Dokumen',
+          type: 'upload',
+          relationTo: 'documents',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Unggah file PDF sebagai lampiran artikel',
+      },
+    },
+
     // Relationships
     {
       name: 'author',

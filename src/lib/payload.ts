@@ -1,6 +1,6 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
-import type { Article, Author, Category, Program, Rubric, Tag } from '@/payload-types'
+import type { Article, Author, Category, Event, Program, Rubric, Tag } from '@/payload-types'
 
 // Singleton pattern for Payload instance
 let payloadInstance: Awaited<ReturnType<typeof getPayload>> | null = null
@@ -313,6 +313,87 @@ export async function getFeaturedPrograms() {
   })
 
   return result.docs
+}
+
+// ============================================
+// Event Queries
+// ============================================
+
+export interface GetEventsOptions {
+  page?: number
+  limit?: number
+  query?: string
+  eventType?: string
+  upcoming?: boolean
+  featured?: boolean
+  sort?: '-eventDate' | 'eventDate' | '-createdAt'
+}
+
+export async function getEvents(options: GetEventsOptions = {}) {
+  const payload = await getPayloadClient()
+  const { page = 1, limit = 12, sort = '-eventDate', query, ...filters } = options
+
+  const conditions: Where[] = [{ status: { equals: 'published' } }]
+
+  if (query) {
+    conditions.push({
+      or: [{ title: { contains: query } }, { excerpt: { contains: query } }],
+    })
+  }
+
+  if (filters.eventType) {
+    conditions.push({ eventType: { equals: filters.eventType } })
+  }
+
+  if (filters.upcoming) {
+    conditions.push({ eventDate: { greater_than_equal: new Date().toISOString() } })
+  }
+
+  if (filters.featured) {
+    conditions.push({ isFeatured: { equals: true } })
+  }
+
+  return payload.find({
+    collection: 'events',
+    page,
+    limit,
+    sort,
+    where: { and: conditions },
+    depth: 2,
+  })
+}
+
+export async function getEventBySlug(slug: string) {
+  const payload = await getPayloadClient()
+
+  const result = await payload.find({
+    collection: 'events',
+    where: {
+      slug: { equals: slug },
+      status: { equals: 'published' },
+    },
+    limit: 1,
+    depth: 2,
+  })
+
+  return result.docs[0] as Event | undefined
+}
+
+export async function getUpcomingEvents(limit = 5) {
+  const payload = await getPayloadClient()
+
+  return payload.find({
+    collection: 'events',
+    where: {
+      and: [
+        { status: { equals: 'published' } },
+        { eventDate: { greater_than_equal: new Date().toISOString() } },
+      ],
+    },
+    sort: 'eventDate',
+    limit,
+    depth: 2,
+  })
 }
 
 // ============================================
