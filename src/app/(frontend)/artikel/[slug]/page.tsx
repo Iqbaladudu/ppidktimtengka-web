@@ -76,14 +76,19 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 // Generate static params for SSG
 export async function generateStaticParams() {
-  const [articles, pressReleases] = await Promise.all([
-    getArticles({ limit: 100 }),
-    getPressReleases({ limit: 100 }),
-  ])
-  return [
-    ...articles.docs.map((article) => ({ slug: article.slug })),
-    ...pressReleases.docs.map((pr) => ({ slug: pr.slug })),
-  ]
+  try {
+    const [articles, pressReleases] = await Promise.all([
+      getArticles({ limit: 100 }),
+      getPressReleases({ limit: 100 }),
+    ])
+    return [
+      ...articles.docs.map((article) => ({ slug: article.slug })),
+      ...pressReleases.docs.map((pr) => ({ slug: pr.slug })),
+    ]
+  } catch (error) {
+    console.error('Error generating static params for articles:', error)
+    return []
+  }
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
@@ -91,7 +96,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const articleDoc = await getArticleBySlug(slug)
   const pressReleaseDoc = !articleDoc ? await getPressReleaseBySlug(slug) : undefined
 
-  const article = articleDoc ?? (pressReleaseDoc ? normalizePressReleaseAsArticle(pressReleaseDoc) : undefined)
+  const article =
+    articleDoc ?? (pressReleaseDoc ? normalizePressReleaseAsArticle(pressReleaseDoc) : undefined)
 
   if (!article) {
     notFound()

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateWithSlug } from './hooks/revalidateCollection'
 
 export const PressReleases: CollectionConfig = {
   slug: 'press-releases',
@@ -31,6 +32,7 @@ export const PressReleases: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [revalidateWithSlug('/artikel')],
   },
   fields: [
     {

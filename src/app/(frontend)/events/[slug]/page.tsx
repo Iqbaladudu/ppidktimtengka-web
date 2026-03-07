@@ -58,8 +58,7 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
 
   const title = event.seo?.metaTitle || event.title
   const description = event.seo?.metaDescription || event.excerpt || `Detail acara ${event.title}`
-  const ogImage =
-    (event.seo?.ogImage as Media)?.url || (event.featuredImage as Media)?.url
+  const ogImage = (event.seo?.ogImage as Media)?.url || (event.featuredImage as Media)?.url
 
   return {
     title: `${title} | PPIDK Timtengka`,
@@ -74,8 +73,13 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
 }
 
 export async function generateStaticParams() {
-  const events = await getEvents({ limit: 100 })
-  return events.docs.map((event) => ({ slug: event.slug }))
+  try {
+    const events = await getEvents({ limit: 100 })
+    return events.docs.map((event) => ({ slug: event.slug }))
+  } catch (error) {
+    console.error('Error generating static params for events:', error)
+    return []
+  }
 }
 
 export default async function EventPage({ params }: EventPageProps) {
@@ -159,9 +163,7 @@ export default async function EventPage({ params }: EventPageProps) {
           </h1>
 
           {event.excerpt && (
-            <p className="mt-4 text-lg text-muted-foreground md:text-xl">
-              {event.excerpt}
-            </p>
+            <p className="mt-4 text-lg text-muted-foreground md:text-xl">{event.excerpt}</p>
           )}
         </header>
 
@@ -172,9 +174,7 @@ export default async function EventPage({ params }: EventPageProps) {
               <Calendar className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
               <div>
                 <p className="text-sm font-semibold text-foreground">Tanggal</p>
-                <p className="text-sm text-muted-foreground">
-                  {formatEventDate(event.eventDate)}
-                </p>
+                <p className="text-sm text-muted-foreground">{formatEventDate(event.eventDate)}</p>
               </div>
             </div>
 

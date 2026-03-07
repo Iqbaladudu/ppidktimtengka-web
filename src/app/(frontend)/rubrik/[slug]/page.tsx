@@ -30,10 +30,15 @@ export async function generateMetadata({ params }: RubricPageProps): Promise<Met
 }
 
 export async function generateStaticParams() {
-  const rubrics = await getRubrics()
-  return rubrics.docs.map((rub) => ({
-    slug: rub.slug,
-  }))
+  try {
+    const rubrics = await getRubrics()
+    return rubrics.docs.map((rub) => ({
+      slug: rub.slug,
+    }))
+  } catch (error) {
+    console.error('Error generating static params for rubrics:', error)
+    return []
+  }
 }
 
 export default async function RubricPage({ params, searchParams }: RubricPageProps) {

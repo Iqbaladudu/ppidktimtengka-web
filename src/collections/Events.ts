@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateWithSlug } from './hooks/revalidateCollection'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -30,6 +31,7 @@ export const Events: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [revalidateWithSlug('/events')],
   },
   fields: [
     {

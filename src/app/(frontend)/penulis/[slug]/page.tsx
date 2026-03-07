@@ -44,10 +44,15 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
 }
 
 export async function generateStaticParams() {
-  const authors = await getAuthors()
-  return authors.docs.map((auth) => ({
-    slug: auth.slug,
-  }))
+  try {
+    const authors = await getAuthors()
+    return authors.docs.map((auth) => ({
+      slug: auth.slug,
+    }))
+  } catch (error) {
+    console.error('Error generating static params for authors:', error)
+    return []
+  }
 }
 
 export default async function AuthorPage({ params, searchParams }: AuthorPageProps) {

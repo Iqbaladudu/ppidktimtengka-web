@@ -30,10 +30,15 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export async function generateStaticParams() {
-  const categories = await getCategories()
-  return categories.docs.map((cat) => ({
-    slug: cat.slug,
-  }))
+  try {
+    const categories = await getCategories()
+    return categories.docs.map((cat) => ({
+      slug: cat.slug,
+    }))
+  } catch (error) {
+    console.error('Error generating static params for categories:', error)
+    return []
+  }
 }
 
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
