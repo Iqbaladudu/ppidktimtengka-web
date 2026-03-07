@@ -18,6 +18,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
     { label: 'Artikel', href: '/artikel', active: true },
     { label: 'Tentang', href: '/#about' },
     { label: 'Program', href: '/#programs' },
+    { label: 'Acara', href: '/events' },
   ]
 
   return (

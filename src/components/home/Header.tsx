@@ -56,6 +56,7 @@ const navItems: NavItem[] = [
       { label: 'Alumni', href: '/about#alumni', description: 'Jaringan alumni sukses' },
     ],
   },
+  { label: 'Acara', href: '/events' },
   { label: 'Berita & Artikel', href: '/artikel' },
   { label: 'Gabung', href: '/contact' },
 ]
