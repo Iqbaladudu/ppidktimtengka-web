@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { Article, Media, Author, Category } from '@/payload-types'
 import { CategoryBadge } from '@/components/ui/CategoryBadge'
-import { Clock, User } from 'lucide-react'
+import { Clock, User, FileText } from 'lucide-react'
 
 interface ArticleCardProps {
   article: Article
@@ -25,6 +25,8 @@ export function ArticleCard({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const thumbnail = (article as any).thumbnail as Media | undefined
   const displayImage = thumbnail || featuredImage
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isPressRelease = (article as any)._contentType === 'press-release'
 
   const author = article.author as Author | undefined
   const categories = (article.categories || []) as Category[]
@@ -67,6 +69,12 @@ export function ArticleCard({
         </Link>
         <div className="flex flex-1 flex-col py-1">
           <div className="mb-2">
+            {isPressRelease && (
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 mb-2 mr-2">
+                <FileText className="w-3 h-3" />
+                Siaran Pers
+              </span>
+            )}
             {categories.length > 0 && (
               <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-primary mb-2">
                 {categories[0].name}
@@ -210,8 +218,14 @@ export function ArticleCard({
         )}
 
         {/* Floating Categories */}
-        {categories.length > 0 && (
+        {(categories.length > 0 || isPressRelease) && (
           <div className="absolute top-4 left-4 flex flex-wrap gap-1 z-10">
+            {isPressRelease && (
+              <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-wide bg-amber-500/90 backdrop-blur-md text-white rounded-full shadow-lg border border-amber-400/50 flex items-center gap-1">
+                <FileText className="w-3 h-3" />
+                Siaran Pers
+              </span>
+            )}
             {categories.slice(0, 1).map((cat) => (
               <span
                 key={cat.id}

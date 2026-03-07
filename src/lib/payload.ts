@@ -1,6 +1,15 @@
 import { getPayload, Where } from 'payload'
 import config from '@/payload.config'
-import type { Article, Author, Category, Event, Program, Rubric, Tag } from '@/payload-types'
+import type {
+  Article,
+  Author,
+  Category,
+  Event,
+  PressRelease,
+  Program,
+  Rubric,
+  Tag,
+} from '@/payload-types'
 
 // Singleton pattern for Payload instance
 let payloadInstance: Awaited<ReturnType<typeof getPayload>> | null = null
@@ -284,6 +293,77 @@ export async function searchArticles(query: string, page = 1, limit = 10) {
     sort: '-publishedAt',
     depth: 1,
   })
+}
+
+// ============================================
+// Press Release Queries
+// ============================================
+
+export interface GetPressReleasesOptions {
+  page?: number
+  limit?: number
+  query?: string
+  categorySlug?: string
+  sort?: '-publishedAt' | '-createdAt'
+}
+
+export async function getPressReleases(options: GetPressReleasesOptions = {}) {
+  const payload = await getPayloadClient()
+  const { page = 1, limit = 10, sort = '-publishedAt', query, ...filters } = options
+
+  const conditions: Where[] = [{ status: { equals: 'published' } }]
+
+  if (query) {
+    conditions.push({
+      or: [{ title: { contains: query } }, { excerpt: { contains: query } }],
+    })
+  }
+
+  if (filters.categorySlug) {
+    conditions.push({ 'categories.slug': { equals: filters.categorySlug } })
+  }
+
+  return payload.find({
+    collection: 'press-releases',
+    page,
+    limit,
+    sort,
+    where: { and: conditions },
+    depth: 2,
+  })
+}
+
+export async function getPressReleaseBySlug(slug: string) {
+  const payload = await getPayloadClient()
+
+  const result = await payload.find({
+    collection: 'press-releases',
+    where: {
+      slug: { equals: slug },
+      status: { equals: 'published' },
+    },
+    limit: 1,
+    depth: 2,
+  })
+
+  return result.docs[0] as PressRelease | undefined
+}
+
+/** Normalizes a PressRelease into an Article-compatible shape for unified display. */
+export function normalizePressReleaseAsArticle(
+  pr: PressRelease,
+): Article & { _contentType: 'press-release' } {
+  return {
+    ...pr,
+    _contentType: 'press-release' as const,
+    // Fields that don't exist on PressRelease but ArticleCard may access
+    rubric: undefined as unknown as Article['rubric'],
+    tags: undefined as unknown as Article['tags'],
+    isFeatured: false,
+    isHeadline: false,
+    viewCount: 0,
+    readingTime: undefined as unknown as Article['readingTime'],
+  } as Article & { _contentType: 'press-release' }
 }
 
 // ============================================

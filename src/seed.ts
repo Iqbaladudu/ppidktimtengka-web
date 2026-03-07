@@ -237,6 +237,7 @@ async function seed() {
   // Clear existing data
   console.log('🗑️  Clearing existing data...')
   await payload.delete({ collection: 'articles', where: {} })
+  await payload.delete({ collection: 'press-releases', where: {} })
   await payload.delete({ collection: 'events', where: {} })
   await payload.delete({ collection: 'documents', where: {} })
   await payload.delete({ collection: 'authors', where: {} })
@@ -636,6 +637,50 @@ async function seed() {
     console.log(`  ✓ Created article: "${title.substring(0, 40)}..."`)
   }
 
+  // Seed Press Releases
+  console.log('📢 Creating press releases...')
+
+  const pressReleaseTitles = [
+    'PPIDK Timtengka Gelar Musyawarah Besar Ke-5 di Istanbul',
+    'Pernyataan Sikap PPIDK Timtengka tentang Situasi Kemanusiaan di Gaza',
+    'Kerjasama PPIDK Timtengka dan KBRI Kairo dalam Program Beasiswa Lanjutan',
+    'Peluncuran Program Mentoring Akademik Lintas Negara 2026',
+    'PPIDK Timtengka Raih Penghargaan Diaspora Award dari Kemenlu RI',
+    'Laporan Tahunan: Kontribusi Pelajar Indonesia di Kawasan Timur Tengah',
+  ]
+
+  const pressReleases = []
+  for (let i = 0; i < pressReleaseTitles.length; i++) {
+    const title = pressReleaseTitles[i]
+    const author = authors[Math.floor(Math.random() * authors.length)]
+    const category = categories[Math.floor(Math.random() * categories.length)]
+    const status = i < 5 ? 'published' : ('draft' as const)
+    const featuredImage = mediaItems[i % mediaItems.length]
+    const publishedAt =
+      status === 'published' ? faker.date.recent({ days: 45 }).toISOString() : undefined
+
+    const pr = await payload.create({
+      collection: 'press-releases',
+      data: {
+        title,
+        slug: title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, ''),
+        excerpt: faker.lorem.paragraph(),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        content: generateRichContent() as any,
+        author: author.id,
+        categories: [category.id],
+        featuredImage: featuredImage.id,
+        status,
+        publishedAt,
+      },
+    })
+    pressReleases.push(pr)
+    console.log(`  ✓ Created press release: "${title.substring(0, 45)}..."`)
+  }
+
   // Seed Documents (PDF)
   console.log('📄 Creating documents...')
 
@@ -848,6 +893,7 @@ startxref
    - Rubrics: ${rubrics.length}
    - Tags: ${tags.length}
    - Articles: ${articleTitles.length}
+   - Press Releases: ${pressReleases.length}
    - Events: ${events.length}
   `)
 

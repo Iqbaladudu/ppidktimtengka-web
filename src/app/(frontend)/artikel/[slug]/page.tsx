@@ -1,7 +1,15 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getArticleBySlug, getRelatedArticles, getArticles, getSiteSettings } from '@/lib/payload'
+import {
+  getArticleBySlug,
+  getRelatedArticles,
+  getArticles,
+  getSiteSettings,
+  getPressReleaseBySlug,
+  getPressReleases,
+  normalizePressReleaseAsArticle,
+} from '@/lib/payload'
 import type { Category, Author, Rubric } from '@/payload-types'
 import {
   ArticleMeta,
@@ -27,7 +35,7 @@ interface ArticlePageProps {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params
-  const article = await getArticleBySlug(slug)
+  const article = (await getArticleBySlug(slug)) ?? (await getPressReleaseBySlug(slug))
 
   if (!article) {
     return {
@@ -43,7 +51,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     article.seo?.metaDescription || article.excerpt || `Baca artikel ${article.title}`
 
   const ogImage =
-    (article.seo?.ogImage as { url?: string })?.url ||
+    ((article.seo as Record<string, unknown>)?.ogImage as { url?: string })?.url ||
     (article.featuredImage as { url?: string })?.url
 
   return {
@@ -68,15 +76,22 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 // Generate static params for SSG
 export async function generateStaticParams() {
-  const articles = await getArticles({ limit: 100 })
-  return articles.docs.map((article) => ({
-    slug: article.slug,
-  }))
+  const [articles, pressReleases] = await Promise.all([
+    getArticles({ limit: 100 }),
+    getPressReleases({ limit: 100 }),
+  ])
+  return [
+    ...articles.docs.map((article) => ({ slug: article.slug })),
+    ...pressReleases.docs.map((pr) => ({ slug: pr.slug })),
+  ]
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params
-  const article = await getArticleBySlug(slug)
+  const articleDoc = await getArticleBySlug(slug)
+  const pressReleaseDoc = !articleDoc ? await getPressReleaseBySlug(slug) : undefined
+
+  const article = articleDoc ?? (pressReleaseDoc ? normalizePressReleaseAsArticle(pressReleaseDoc) : undefined)
 
   if (!article) {
     notFound()

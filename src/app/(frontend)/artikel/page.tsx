@@ -8,6 +8,8 @@ import {
   getAuthors,
   getRubrics,
   getSiteSettings,
+  getPressReleases,
+  normalizePressReleaseAsArticle,
 } from '@/lib/payload'
 import { ArticleGrid, HeadlineSection } from '@/components/articles'
 import { Sidebar } from '@/components/articles/Sidebar'
@@ -47,6 +49,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
   // Parallel fetching for performance
   const [
     articlesResult,
+    pressReleasesResult,
     categoriesResult,
     tagsResult,
     trendingResult,
@@ -59,12 +62,27 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
       categorySlug: kategori,
       query: q,
     }),
+    getPressReleases({
+      page,
+      limit: 12,
+      categorySlug: kategori,
+      query: q,
+    }),
     getCategories(),
     getTags(),
     getArticles({ sort: '-viewCount', limit: 5 }),
     getAuthors(),
     getRubrics(),
   ])
+
+  // Merge articles and press releases, sorted by publishedAt descending
+  const normalizedPressReleases = pressReleasesResult.docs.map(normalizePressReleaseAsArticle)
+  const mergedDocs = [...articlesResult.docs, ...normalizedPressReleases].sort((a, b) => {
+    const dateA = new Date(a.publishedAt || a.createdAt).getTime()
+    const dateB = new Date(b.publishedAt || b.createdAt).getTime()
+    return dateB - dateA
+  })
+  const totalMergedDocs = articlesResult.totalDocs + pressReleasesResult.totalDocs
 
   // Fetch headline and featured for first page only (no search, no filter)
   let headline: (typeof articlesResult.docs)[0] | undefined = undefined
@@ -162,12 +180,12 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                             : 'Semua Artikel'}
                     </h2>
                     <span className="text-sm text-slate-500">
-                      {articlesResult.totalDocs} artikel
+                      {totalMergedDocs} artikel
                     </span>
                   </div>
 
-                  {articlesResult.docs.length > 0 ? (
-                    <ArticleGrid articles={articlesResult.docs} columns={2} />
+                  {mergedDocs.length > 0 ? (
+                    <ArticleGrid articles={mergedDocs} columns={2} />
                   ) : (
                     <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-white p-12 text-center">
                       <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
