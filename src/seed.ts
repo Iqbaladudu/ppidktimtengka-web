@@ -237,6 +237,8 @@ async function seed() {
   // Clear existing data
   console.log('🗑️  Clearing existing data...')
   await payload.delete({ collection: 'articles', where: {} })
+  await payload.delete({ collection: 'events', where: {} })
+  await payload.delete({ collection: 'documents', where: {} })
   await payload.delete({ collection: 'authors', where: {} })
   await payload.delete({ collection: 'categories', where: {} })
   await payload.delete({ collection: 'rubrics', where: {} })
@@ -634,10 +636,211 @@ async function seed() {
     console.log(`  ✓ Created article: "${title.substring(0, 40)}..."`)
   }
 
+  // Seed Documents (PDF)
+  console.log('📄 Creating documents...')
+
+  function generatePdfBuffer(title: string) {
+    const content = `Event document: ${title}`
+    const pdf = `%PDF-1.1
+1 0 obj<</Type /Catalog /Pages 2 0 R>> endobj
+2 0 obj<</Type /Pages /Kids [3 0 R] /Count 1>> endobj
+3 0 obj<</Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]>> endobj
+xref
+0 4
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000115 00000 n
+trailer<</Size 4 /Root 1 0 R>>
+startxref
+190
+%%EOF`
+    return Buffer.from(pdf)
+  }
+
+  const documentData = [
+    { title: 'Panduan Peserta Webinar Islam & Sains', category: 'other' as const, label: 'Panduan' },
+    { title: 'Booklet PPIDK Summit 2025', category: 'other' as const, label: 'Booklet' },
+    { title: 'Materi Workshop Kewirausahaan', category: 'other' as const, label: 'Materi' },
+    { title: 'Rundown Acara Talk Show Kepemimpinan', category: 'other' as const, label: 'Rundown' },
+    { title: 'E-Sertifikat Seminar Nasional Timtengka', category: 'other' as const, label: 'Sertifikat' },
+    { title: 'Proposal Kegiatan Webinar Budaya', category: 'other' as const, label: 'Proposal' },
+  ]
+
+  const documents = await Promise.all(
+    documentData.map((doc) => {
+      const buf = generatePdfBuffer(doc.title)
+      return payload.create({
+        collection: 'documents',
+        data: {
+          title: doc.title,
+          description: `Dokumen pendukung: ${doc.title}`,
+          category: doc.category,
+        },
+        file: {
+          data: buf,
+          mimetype: 'application/pdf',
+          name: `${doc.title.toLowerCase().replace(/\s+/g, '-')}.pdf`,
+          size: buf.length,
+        },
+      })
+    }),
+  )
+  console.log(`  ✓ Created ${documents.length} documents`)
+
+  // Seed Events
+  console.log('🗓️  Creating events...')
+
+  const now = new Date()
+  const future = (daysAhead: number) => new Date(now.getTime() + daysAhead * 86400000).toISOString()
+  const past = (daysAgo: number) => new Date(now.getTime() - daysAgo * 86400000).toISOString()
+
+  const eventsData = [
+    {
+      title: 'Webinar Islam & Sains: Perspektif Mahasiswa Muslim di Era Modern',
+      eventType: 'webinar' as const,
+      excerpt: 'Diskusi mendalam tentang relasi antara ilmu pengetahuan dan ajaran Islam, dibawakan oleh para akademisi terkemuka dari berbagai universitas Timur Tengah.',
+      eventDate: future(14),
+      eventEndDate: future(14),
+      registrationLink: 'https://forms.google.com/webinar-islam-sains',
+      isFeatured: true,
+      status: 'published' as const,
+      mediaIdx: 0,
+      docIndices: [0],
+    },
+    {
+      title: 'Talk Show: Kepemimpinan Muda Indonesia di Panggung Global',
+      eventType: 'talkshow' as const,
+      excerpt: 'Menggali pengalaman dan cerita inspiratif dari alumni pelajar Indonesia di Timur Tengah yang kini memimpin di berbagai sektor strategis.',
+      eventDate: future(21),
+      eventEndDate: future(21),
+      registrationLink: 'https://forms.google.com/talkshow-kepemimpinan',
+      isFeatured: true,
+      status: 'published' as const,
+      mediaIdx: 1,
+      docIndices: [3],
+    },
+    {
+      title: 'PPIDK Summit 2025: Satu Visi, Satu Misi, Satu Aksi',
+      eventType: 'conference' as const,
+      excerpt: 'Pertemuan akbar tahunan seluruh Perhimpunan Pelajar Indonesia di kawasan Timur Tengah dan Afrika untuk menyatukan langkah dan strategi gerakan.',
+      eventDate: future(45),
+      eventEndDate: future(46),
+      registrationLink: 'https://forms.google.com/ppidk-summit-2025',
+      isFeatured: true,
+      status: 'published' as const,
+      mediaIdx: 2,
+      docIndices: [1, 3],
+    },
+    {
+      title: 'Workshop Kewirausahaan Digital untuk Pelajar Indonesia',
+      eventType: 'workshop' as const,
+      excerpt: 'Pelatihan intensif membangun bisnis digital dari nol, khusus untuk mahasiswa Indonesia yang ingin memanfaatkan peluang di era ekonomi digital.',
+      eventDate: future(7),
+      eventEndDate: future(7),
+      registrationLink: 'https://forms.google.com/workshop-wirausaha',
+      isFeatured: false,
+      status: 'published' as const,
+      mediaIdx: 3,
+      docIndices: [2],
+    },
+    {
+      title: 'Seminar Nasional: Beasiswa Timur Tengah & Tips Lolos Seleksi',
+      eventType: 'seminar' as const,
+      excerpt: 'Panduan lengkap mendaftar beasiswa ke universitas-universitas terbaik di Mesir, Arab Saudi, Turki, dan negara Timur Tengah lainnya.',
+      eventDate: future(30),
+      eventEndDate: future(30),
+      registrationLink: 'https://forms.google.com/seminar-beasiswa',
+      isFeatured: false,
+      status: 'published' as const,
+      mediaIdx: 4,
+      docIndices: [4],
+    },
+    {
+      title: 'Webinar Budaya: Merayakan Keanekaragaman Indonesia di Tanah Rantau',
+      eventType: 'webinar' as const,
+      excerpt: 'Eksplorasi kekayaan budaya Nusantara dan bagaimana pelajar Indonesia menjaga identitas budaya di tengah kehidupan internasional.',
+      eventDate: past(10),
+      eventEndDate: past(10),
+      registrationLink: '',
+      isFeatured: false,
+      status: 'published' as const,
+      mediaIdx: 5,
+      docIndices: [5],
+    },
+    {
+      title: 'Talkshow Karir: Membangun Jaringan Profesional dari Luar Negeri',
+      eventType: 'talkshow' as const,
+      excerpt: 'Strategi membangun koneksi profesional dan menembus pasar kerja Indonesia dari posisi sebagai pelajar di luar negeri.',
+      eventDate: past(30),
+      eventEndDate: past(30),
+      registrationLink: '',
+      isFeatured: false,
+      status: 'published' as const,
+      mediaIdx: 6,
+      docIndices: [],
+    },
+    {
+      title: 'Workshop Penulisan Akademik & Jurnal Internasional',
+      eventType: 'workshop' as const,
+      excerpt: 'Teknik menulis paper ilmiah berkualitas internasional dan strategi publikasi di jurnal-jurnal terindeks Scopus dan Web of Science.',
+      eventDate: future(60),
+      eventEndDate: future(60),
+      registrationLink: 'https://forms.google.com/workshop-penulisan',
+      isFeatured: false,
+      status: 'draft' as const,
+      mediaIdx: 7,
+      docIndices: [],
+    },
+  ]
+
+  const events = []
+  for (const ev of eventsData) {
+    const featuredImage = mediaItems[ev.mediaIdx % mediaItems.length]
+    const galleryImages = [
+      mediaItems[(ev.mediaIdx + 1) % mediaItems.length],
+      mediaItems[(ev.mediaIdx + 2) % mediaItems.length],
+    ]
+
+    const slug = ev.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+
+    const event = await payload.create({
+      collection: 'events',
+      data: {
+        title: ev.title,
+        slug,
+        eventType: ev.eventType,
+        excerpt: ev.excerpt,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        description: generateRichContent() as any,
+        eventDate: ev.eventDate,
+        eventEndDate: ev.eventEndDate,
+        registrationLink: ev.registrationLink || undefined,
+        featuredImage: featuredImage.id,
+        gallery: galleryImages.map((img) => ({
+          image: img.id,
+          caption: `Foto acara ${ev.title.substring(0, 30)}`,
+        })),
+        documents: ev.docIndices.map((idx) => ({
+          document: documents[idx].id,
+          label: documentData[idx].label,
+        })),
+        status: ev.status,
+        isFeatured: ev.isFeatured,
+      },
+    })
+    events.push(event)
+    console.log(`  ✓ Created event: "${ev.title.substring(0, 45)}..."`)
+  }
+
   console.log('\n✅ Seed completed successfully!')
   console.log(`
 📊 Summary:
    - Media: ${mediaItems.length}
+   - Documents: ${documents.length}
    - Missions: ${missions.length}
    - Programs: ${programs.length}
    - Authors: ${authors.length}
@@ -645,6 +848,7 @@ async function seed() {
    - Rubrics: ${rubrics.length}
    - Tags: ${tags.length}
    - Articles: ${articleTitles.length}
+   - Events: ${events.length}
   `)
 
   process.exit(0)

@@ -7,23 +7,18 @@ export const revalidateArticle: CollectionAfterChangeHook<Article> = ({
   previousDoc,
   req: { payload },
 }) => {
-  if (doc.status === 'published') {
-    // Revalidate individual article page
-    revalidatePath(`/artikel/${doc.slug}`)
-    
-    // Revalidate article list page
-    revalidatePath('/artikel')
-    
-    // Revalidate homepage (since it often has latest articles)
-    revalidatePath('/')
-    
-    console.log(`[ISR] Revalidated paths for article: ${doc.slug}`)
+  try {
+    if (doc.status === 'published') {
+      revalidatePath(`/artikel/${doc.slug}`)
+      revalidatePath('/artikel')
+      revalidatePath('/')
+      console.log(`[ISR] Revalidated paths for article: ${doc.slug}`)
+    }
+    if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
+      revalidatePath(`/artikel/${previousDoc.slug}`)
+    }
+  } catch {
+    // no-op outside Next.js runtime
   }
-
-  // If the slug changed, revalidate the old slug too
-  if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
-    revalidatePath(`/artikel/${previousDoc.slug}`)
-  }
-
   return doc
 }
