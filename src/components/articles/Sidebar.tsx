@@ -33,7 +33,7 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
               placeholder="Email kamu"
               className="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/60 focus:outline-hidden focus:bg-white/20 transition-all text-sm"
             />
-            <button className="w-full py-2.5 rounded-xl bg-white text-[#a30404] font-bold text-sm hover:bg-slate-50 transition-colors cursor-pointer">
+            <button className="w-full py-2.5 rounded-xl bg-white text-[#a30404] font-bold text-sm hover:bg-white/90 transition-colors cursor-pointer">
               Langganan
             </button>
           </div>
@@ -41,16 +41,16 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
       </div>
 
       {/* Trending Widget */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <div className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 dark:border-slate-800">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div className="mb-6 flex items-center gap-2 border-b border-border pb-4">
           <TrendingUp className="h-5 w-5 text-primary" />
-          <h3 className="font-bold text-slate-900 dark:text-white">Sedang Hangat</h3>
+          <h3 className="font-bold text-foreground">Sedang Hangat</h3>
         </div>
 
         <div className="space-y-6">
           {trendingArticles.map((article, idx) => (
             <div key={article.id} className="group flex items-start gap-4">
-              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-bold text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 {idx + 1}
               </span>
               <div>
@@ -59,12 +59,12 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
                 </span>
                 <Link
                   href={`/artikel/${article.slug}`}
-                  className="mb-2 block font-medium leading-snug text-slate-900 transition-colors group-hover:text-primary dark:text-white dark:group-hover:text-primary"
+                  className="mb-2 block font-medium leading-snug text-foreground transition-colors group-hover:text-primary"
                 >
                   {article.title}
                 </Link>
                 {article.readingTime && (
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <Clock className="h-3 w-3" />
                     <span>{article.readingTime} min baca</span>
                   </div>
@@ -77,29 +77,29 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
 
       {/* Rubrics Widget */}
       {rubrics.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="mb-6 flex items-center gap-2 border-b border-border pb-4">
             <Sparkles className="h-5 w-5 text-primary" />
-            <h3 className="font-bold text-slate-900 dark:text-white">Rubrik Pilihan</h3>
+            <h3 className="font-bold text-foreground">Rubrik Pilihan</h3>
           </div>
           <div className="space-y-3">
             {rubrics.map((rubric) => (
               <Link
                 key={rubric.id}
                 href={`/rubrik/${rubric.slug}`}
-                className="flex items-center justify-between group p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all border border-transparent hover:border-slate-100 dark:hover:border-slate-800"
+                className="flex items-center justify-between group p-3 rounded-xl hover:bg-accent/50 transition-all border border-transparent hover:border-border"
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className="h-2 w-2 rounded-full ring-2 ring-white dark:ring-slate-900 shadow-sm"
+                    className="h-2 w-2 rounded-full ring-2 ring-card shadow-sm"
                     style={{ backgroundColor: rubric.color || 'var(--primary)' }}
                   />
-                  <span className="font-semibold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors text-sm">
+                  <span className="font-semibold text-muted-foreground group-hover:text-primary transition-colors text-sm">
                     {rubric.name}
                   </span>
                 </div>
                 <div className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                  <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-primary" />
+                  <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
                 </div>
               </Link>
             ))}
@@ -109,10 +109,10 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
 
       {/* Featured Authors Widget */}
       {authors.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="mb-6 flex items-center gap-2 border-b border-border pb-4">
             <User className="h-5 w-5 text-primary" />
-            <h3 className="font-bold text-slate-900 dark:text-white">Penulis Aktif</h3>
+            <h3 className="font-bold text-foreground">Penulis Aktif</h3>
           </div>
           <div className="space-y-4">
             {authors.map((author) => {
@@ -123,7 +123,7 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
                   href={`/penulis/${author.slug}`}
                   className="flex items-center gap-3 group"
                 >
-                  <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-100 relative ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
+                  <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-muted relative ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
                     {avatar?.url ? (
                       <Image
                         src={avatar.url}
@@ -132,16 +132,16 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
                         className="object-cover transition-transform group-hover:scale-110"
                       />
                     ) : (
-                      <div className="h-full w-full flex items-center justify-center text-slate-400">
+                      <div className="h-full w-full flex items-center justify-center text-muted-foreground">
                         <User className="h-5 w-5" />
                       </div>
                     )}
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                    <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                       {author.name}
                     </h4>
-                    <p className="text-xs text-slate-500 capitalize">
+                    <p className="text-xs text-muted-foreground capitalize">
                       {author.role || 'Kontributor'}
                     </p>
                   </div>
@@ -153,17 +153,17 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
       )}
 
       {/* Tags Widget */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <div className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 dark:border-slate-800">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div className="mb-6 flex items-center gap-2 border-b border-border pb-4">
           <Tag className="h-5 w-5 text-primary" />
-          <h3 className="font-bold text-slate-900 dark:text-white">Topik Populer</h3>
+          <h3 className="font-bold text-foreground">Topik Populer</h3>
         </div>
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Link
               key={tag.id}
               href={`/artikel?tag=${tag.slug}`}
-              className="rounded-lg bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-600 transition-all hover:bg-secondary/20 hover:text-secondary-foreground hover:scale-105 border border-slate-100 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-secondary/20"
+              className="rounded-lg bg-muted px-3 py-1.5 text-sm font-medium text-muted-foreground transition-all hover:bg-primary/10 hover:text-primary hover:scale-105 border border-border"
             >
               #{tag.name}
             </Link>
@@ -172,16 +172,16 @@ export function Sidebar({ trendingArticles, tags, authors, rubrics }: SidebarPro
       </div>
 
       {/* Archive Link (Simple) */}
-      <div className="rounded-2xl bg-slate-900 p-6 text-white shadow-lg overflow-hidden relative">
-        <div className="absolute inset-0 bg-linear-to-br from-slate-900 to-slate-800" />
+      <div className="rounded-2xl bg-foreground p-6 text-background shadow-lg overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-foreground to-foreground/90" />
         <div className="relative z-10">
           <h3 className="mb-2 text-lg font-bold">Punya tulisan menarik?</h3>
-          <p className="mb-4 text-sm text-slate-300 opacity-90">
+          <p className="mb-4 text-sm text-background/70 opacity-90">
             Kirimkan artikel atau opini kamu untuk dimuat di website PPIDK Timtengka.
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/20 border border-white/10"
+            className="inline-flex items-center gap-2 rounded-lg bg-background/10 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-background/20 border border-background/10"
           >
             Kirim Tulisan
             <ArrowRight className="h-4 w-4" />

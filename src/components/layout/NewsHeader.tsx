@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Search, ChevronDown } from 'lucide-react'
+import { Menu, X, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from './ThemeToggle'
 
 interface NewsHeaderProps {
   siteName?: string
@@ -24,7 +25,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md',
+        'sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-md',
         className,
       )}
     >
@@ -32,10 +33,10 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-emerald-500 to-teal-600 text-xl font-bold text-white shadow-lg shadow-emerald-200">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground shadow-lg shadow-primary/20">
             P
           </div>
-          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+          <span className="text-lg font-bold tracking-tight text-foreground">
             {siteName}
           </span>
         </Link>
@@ -49,8 +50,8 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
               className={cn(
                 'rounded-lg px-4 py-2 text-sm font-medium transition-colors',
                 item.active
-                  ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white',
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-accent hover:text-foreground',
               )}
             >
               {item.label}
@@ -59,19 +60,21 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Link
             href="/cari"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
             aria-label="Cari artikel"
           >
             <Search className="h-5 w-5" />
           </Link>
 
+          <ThemeToggle />
+
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 dark:text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent md:hidden"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -81,7 +84,7 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 md:hidden">
+        <div className="border-t border-border bg-background px-4 py-4 md:hidden">
           <nav className="flex flex-col gap-1">
             {mainNav.map((item) => (
               <Link
@@ -91,8 +94,8 @@ export function NewsHeader({ siteName = 'PPIDK Timtengka', className }: NewsHead
                 className={cn(
                   'rounded-lg px-4 py-3 text-sm font-medium transition-colors',
                   item.active
-                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white',
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground',
                 )}
               >
                 {item.label}

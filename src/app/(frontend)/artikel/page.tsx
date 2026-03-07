@@ -139,7 +139,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
 
         <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
           {/* Search Bar (Mobile/Desktop) */}
-          <div className="mb-10 max-w-2xl mx-auto -mt-16 relative z-10 shadow-xl rounded-2xl bg-white p-2 border border-slate-100 dark:bg-slate-900 dark:border-slate-800">
+          <div className="mb-10 max-w-2xl mx-auto -mt-16 relative z-10 shadow-xl rounded-2xl bg-card p-2 border border-border">
             <ArticleSearch />
           </div>
 
@@ -169,7 +169,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                 {/* Articles Grid */}
                 <section>
                   <div className="mb-6 flex items-center justify-between">
-                    <h2 className="flex items-center gap-2 text-xl font-bold text-slate-900 dark:text-slate-100">
+                    <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
                       <TrendingUp className="h-5 w-5 text-primary" />
                       {q
                         ? 'Hasil Pencarian'
@@ -179,7 +179,7 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                             ? 'Artikel'
                             : 'Semua Artikel'}
                     </h2>
-                    <span className="text-sm text-slate-500">
+                    <span className="text-sm text-muted-foreground">
                       {totalMergedDocs} artikel
                     </span>
                   </div>
@@ -187,14 +187,14 @@ export default async function BeritaPage({ searchParams }: BeritaPageProps) {
                   {mergedDocs.length > 0 ? (
                     <ArticleGrid articles={mergedDocs} columns={2} />
                   ) : (
-                    <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-white p-12 text-center">
-                      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
-                        <Clock className="h-8 w-8 text-slate-400" />
+                    <div className="rounded-2xl border-2 border-dashed border-border bg-card p-12 text-center">
+                      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+                        <Clock className="h-8 w-8 text-muted-foreground" />
                       </div>
-                      <h3 className="mt-4 text-lg font-semibold text-slate-900">
+                      <h3 className="mt-4 text-lg font-semibold text-foreground">
                         Tidak ada artikel ditemukan
                       </h3>
-                      <p className="mt-2 text-sm text-slate-600">
+                      <p className="mt-2 text-sm text-muted-foreground">
                         Coba gunakan kata kunci lain atau reset filter kategori.
                       </p>
                     </div>

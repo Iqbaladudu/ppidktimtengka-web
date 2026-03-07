@@ -18,6 +18,7 @@ import {
   ShareButtons,
   AuthorCard,
   ReadingProgressBar,
+  ArticlePDF,
 } from '@/components/articles'
 import { NewsLayout } from '@/components/layout/NewsLayout'
 
@@ -154,14 +155,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
 
         {/* Article Content */}
-        <div className="rounded-2xl bg-white px-5 py-6 shadow-sm md:px-12 md:py-12">
+        <div className="rounded-2xl bg-card px-5 py-6 shadow-sm md:px-12 md:py-12">
           <ArticleContent content={article.content} />
+          {pressReleaseDoc?.document && <ArticlePDF document={pressReleaseDoc.document} />}
         </div>
 
         {/* Author Card */}
         {author && (
-          <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h3 className="mb-6 text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <div className="mt-12 rounded-2xl border border-border bg-card p-8 shadow-sm">
+            <h3 className="mb-6 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               Tentang Penulis
             </h3>
             <AuthorCard author={author} size="lg" showBio />
@@ -171,7 +173,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
-        <div className="border-t border-slate-200 bg-slate-50 py-12">
+        <div className="border-t border-border bg-muted py-12">
           <div className="mx-auto max-w-7xl px-4 md:px-6">
             <RelatedArticles articles={relatedArticles} />
           </div>

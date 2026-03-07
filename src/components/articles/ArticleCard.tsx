@@ -70,7 +70,7 @@ export function ArticleCard({
         <div className="flex flex-1 flex-col py-1">
           <div className="mb-2">
             {isPressRelease && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 mb-2 mr-2">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2 mr-2">
                 <FileText className="w-3 h-3" />
                 Siaran Pers
               </span>
@@ -106,7 +106,7 @@ export function ArticleCard({
     return (
       <article
         className={cn(
-          'group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-white/5',
+          'group relative overflow-hidden rounded-3xl bg-foreground shadow-xl border border-border/10',
           className,
         )}
       >
@@ -124,8 +124,8 @@ export function ArticleCard({
               priority={priority}
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-slate-800">
-              <span className="text-slate-500">No image</span>
+            <div className="flex h-full w-full items-center justify-center bg-muted">
+              <span className="text-muted-foreground">No image</span>
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />

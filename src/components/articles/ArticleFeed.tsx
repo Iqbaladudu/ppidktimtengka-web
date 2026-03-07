@@ -9,7 +9,7 @@ export function ArticleFeed({ children }: { children: React.ReactNode }) {
   if (isPending) {
     return (
       <div className="min-h-[400px] flex items-center justify-center">
-        <div className="text-slate-400 text-sm animate-pulse">Menyiapkan konten...</div>
+        <div className="text-muted-foreground text-sm animate-pulse">Menyiapkan konten...</div>
       </div>
     )
   }

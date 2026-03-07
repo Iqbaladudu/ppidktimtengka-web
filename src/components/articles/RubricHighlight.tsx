@@ -34,7 +34,7 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
   return (
     <div className="relative my-12 py-4">
       <div className="relative px-4 md:px-0">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b-2 border-slate-100 dark:border-slate-800">
+        <div className="flex items-end justify-between mb-8 pb-4 border-b-2 border-border">
           <div>
             <div
               className="inline-flex items-center gap-2 mb-4 rounded-full px-4 py-2"
@@ -48,7 +48,7 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
                 Pilihan Redaksi
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
               {rubric.name}
             </h2>
           </div>
@@ -56,14 +56,14 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
           <div className="hidden md:flex gap-3">
             <button
               onClick={() => scroll('left')}
-              className="p-3 rounded-xl bg-white dark:bg-slate-900 shadow-lg border-2 border-slate-200 dark:border-slate-800 hover:scale-105 hover:shadow-xl transition-all text-slate-700 dark:text-slate-300 hover:-translate-y-0.5"
+              className="p-3 rounded-xl bg-card shadow-lg border-2 border-border hover:scale-105 hover:shadow-xl transition-all text-muted-foreground hover:-translate-y-0.5"
               aria-label="Scroll left"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={() => scroll('right')}
-              className="p-3 rounded-xl bg-white dark:bg-slate-900 shadow-lg border-2 border-slate-200 dark:border-slate-800 hover:scale-105 hover:shadow-xl transition-all text-slate-700 dark:text-slate-300 hover:-translate-y-0.5"
+              className="p-3 rounded-xl bg-card shadow-lg border-2 border-border hover:scale-105 hover:shadow-xl transition-all text-muted-foreground hover:-translate-y-0.5"
               aria-label="Scroll right"
             >
               <ChevronRight className="h-5 w-5" />
@@ -87,9 +87,9 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
               <div key={article.id} className="snap-start shrink-0 w-[280px] md:w-[320px] group">
                 <Link
                   href={`/artikel/${article.slug}`}
-                  className="flex flex-col h-full bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                  className="flex flex-col h-full bg-card rounded-2xl overflow-hidden border border-border shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                     {displayImage?.url ? (
                       <Image
                         src={displayImage.url}
@@ -99,14 +99,14 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
                         sizes="(max-width: 768px) 280px, 320px"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100 dark:bg-slate-800 font-semibold">
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted font-semibold">
                         No Image
                       </div>
                     )}
 
                     <div className="absolute top-4 left-4">
                       <span
-                        className="px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wide shadow-lg backdrop-blur-md bg-white/90 dark:bg-slate-900/90"
+                        className="px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wide shadow-lg backdrop-blur-md bg-card/90"
                         style={{ color: rubricColor }}
                       >
                         {(article.categories as any)?.[0]?.name || 'Artikel'}
@@ -115,12 +115,12 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
                   </div>
 
                   <div className="flex flex-col flex-1 p-5 md:p-6">
-                    <h3 className="text-lg md:text-xl font-black leading-tight text-slate-900 dark:text-white mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg md:text-xl font-black leading-tight text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                       {article.title}
                     </h3>
 
-                    <div className="mt-auto flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                      <div className="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden relative ring-1 ring-slate-200 dark:ring-slate-700 shrink-0">
+                    <div className="mt-auto flex items-center gap-3 pt-4 border-t border-border">
+                      <div className="h-8 w-8 rounded-full bg-muted overflow-hidden relative ring-1 ring-border shrink-0">
                         {(author.avatar as Media)?.url ? (
                           <Image
                             src={(author.avatar as Media).url!}
@@ -129,16 +129,16 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
                             className="object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 text-xs font-bold">
+                          <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-xs font-bold">
                             {author.name.charAt(0)}
                           </div>
                         )}
                       </div>
                       <div className="flex flex-col min-w-0">
-                        <span className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate">
+                        <span className="text-xs font-bold text-foreground truncate">
                           {author.name}
                         </span>
-                        <time className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
+                        <time className="text-[10px] text-muted-foreground font-semibold">
                           {new Date(article.publishedAt || article.createdAt).toLocaleDateString(
                             'id-ID',
                             {
@@ -159,14 +159,14 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
           {/* 'See All' Card */}
           <Link
             href={`/rubrik/${rubric.slug}`}
-            className="snap-start shrink-0 w-[240px] flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-900 hover:border-solid hover:shadow-xl transition-all duration-500 group relative overflow-hidden hover:-translate-y-2"
+            className="snap-start shrink-0 w-[240px] flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-card/50 hover:bg-card hover:border-solid hover:shadow-xl transition-all duration-500 group relative overflow-hidden hover:-translate-y-2"
           >
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity"
               style={{ backgroundColor: rubricColor }}
             />
             <div
-              className="h-14 w-14 rounded-2xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110 shadow-lg border bg-white dark:bg-slate-800"
+              className="h-14 w-14 rounded-2xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110 shadow-lg border bg-card"
               style={{
                 color: rubricColor,
                 borderColor: `${rubricColor}40`,
@@ -174,10 +174,10 @@ export function RubricHighlight({ rubric, articles }: RubricHighlightProps) {
             >
               <ArrowRight className="h-6 w-6" />
             </div>
-            <span className="font-black text-lg text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+            <span className="font-black text-lg text-foreground group-hover:text-primary transition-colors">
               Lihat Semua
             </span>
-            <span className="text-sm text-slate-500 dark:text-slate-400 text-center px-6 mt-2 font-semibold">
+            <span className="text-sm text-muted-foreground text-center px-6 mt-2 font-semibold">
               Artikel di {rubric.name}
             </span>
           </Link>

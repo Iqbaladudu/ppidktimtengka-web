@@ -74,7 +74,7 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
 
       {/* Thumbnail Image (if exists) */}
       {showImage && thumbnail?.url && (
-        <figure className="relative mb-6 aspect-video overflow-hidden rounded-xl border border-slate-100 bg-slate-50 md:aspect-16/9">
+        <figure className="relative mb-6 aspect-video overflow-hidden rounded-xl border border-border bg-muted md:aspect-16/9">
           <Image
             src={thumbnail.url}
             alt={`Thumbnail: ${thumbnail.alt || article.title}`}
@@ -89,7 +89,7 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
             <figcaption className="absolute bottom-0 inset-x-0 bg-black/60 p-4 text-sm text-white">
               {thumbnail.caption && <span>{thumbnail.caption}</span>}
               {thumbnail.caption && thumbnail.credit && <span> · </span>}
-              {thumbnail.credit && <span className="text-gray-300">Foto: {thumbnail.credit}</span>}
+              {thumbnail.credit && <span className="text-white/70">Foto: {thumbnail.credit}</span>}
             </figcaption>
           )}
         </figure>
@@ -111,7 +111,7 @@ export function ArticleMeta({ article, showImage = true }: ArticleMetaProps) {
               {featuredImage.caption && <span>{featuredImage.caption}</span>}
               {featuredImage.caption && featuredImage.credit && <span> · </span>}
               {featuredImage.credit && (
-                <span className="text-gray-300">Foto: {featuredImage.credit}</span>
+                <span className="text-white/70">Foto: {featuredImage.credit}</span>
               )}
             </figcaption>
           )}

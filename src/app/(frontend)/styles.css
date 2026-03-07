@@ -235,13 +235,13 @@
 
 /* Glass morphism effect */
 .glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: oklch(from var(--background) l c h / 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 .glass-dark {
-  background: rgba(15, 23, 42, 0.85);
+  background: oklch(from var(--foreground) l c h / 0.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }

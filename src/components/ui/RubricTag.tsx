@@ -25,7 +25,7 @@ export function RubricTag({ rubric, size = 'md', className, variant = 'default' 
         href={`/rubrik/${rubric.slug}`} 
         className={cn(
           baseStyles,
-          'px-2.5 py-1 rounded-full border bg-white dark:bg-slate-900 shadow-sm hover:shadow-md hover:-translate-y-0.5'
+          'px-2.5 py-1 rounded-full border bg-card shadow-sm hover:shadow-md hover:-translate-y-0.5'
         )}
         style={{ 
           color: rubricColor,
