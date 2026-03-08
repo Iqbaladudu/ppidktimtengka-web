@@ -182,7 +182,7 @@ export const GridMap: React.FC = React.memo(() => {
 
   return (
     <section
-      id="grid-map"
+      id="ppi-negara"
       className="py-24 lg:py-32 relative overflow-hidden bg-slate-50 dark:bg-slate-950"
     >
       <div className="absolute inset-0 bg-[url('/grid.svg')] animate-professional-grid pointer-events-none" />

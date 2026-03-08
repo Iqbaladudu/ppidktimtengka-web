@@ -52,8 +52,8 @@ const navItems: NavItem[] = [
     href: '/about',
     children: [
       { label: '19 PPI Negara', href: '/about#ppi-negara', description: 'Daftar PPI anggota' },
-      { label: 'Cari Anggota', href: '/about#cari-anggota', description: 'Database mahasiswa' },
-      { label: 'Alumni', href: '/about#alumni', description: 'Jaringan alumni sukses' },
+      // { label: 'Cari Anggota', href: '/about#cari-anggota', description: 'Database mahasiswa' },
+      // { label: 'Alumni', href: '/about#alumni', description: 'Jaringan alumni sukses' },
     ],
   },
   { label: 'Acara', href: '/events' },
