@@ -27,6 +27,24 @@ import { Navigation } from './globals/Navigation'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const payloadSecret = process.env.PAYLOAD_SECRET
+const databaseUrl = process.env.DATABASE_URL
+const r2Env = {
+  bucket: process.env.R2_BUCKET,
+  endpoint: process.env.R2_ENDPOINT,
+  accessKeyId: process.env.R2_ACCESS_KEY_ID,
+  secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+}
+
+if (!payloadSecret) {
+  throw new Error('Missing PAYLOAD_SECRET. Set it in the server environment before starting Payload.')
+}
+
+if (!databaseUrl) {
+  throw new Error('Missing DATABASE_URL. Payload admin requires a reachable Postgres database.')
+}
+
+const hasCompleteR2Config = Object.values(r2Env).every(Boolean)
 
 export default buildConfig({
   admin: {
@@ -41,13 +59,13 @@ export default buildConfig({
   collections: [Users, Media, Documents, Authors, Categories, Rubrics, Tags, Articles, PressReleases, Events, Programs, Missions],
   globals: [SiteSettings, Navigation],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: payloadSecret,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: databaseUrl,
     },
   }),
   sharp,
@@ -75,26 +93,30 @@ export default buildConfig({
         },
       },
     }),
-    s3Storage({
-      collections: {
-        media: {
-          disableLocalStorage: true,
-          prefix: 'media',
-        },
-        documents: {
-          disableLocalStorage: true,
-          prefix: 'documents',
-        },
-      },
-      bucket: process.env.R2_BUCKET || '',
-      config: {
-        endpoint: process.env.R2_ENDPOINT,
-        credentials: {
-          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
-        },
-        region: 'auto',
-      },
-    }),
+    ...(hasCompleteR2Config
+      ? [
+          s3Storage({
+            collections: {
+              media: {
+                disableLocalStorage: true,
+                prefix: 'media',
+              },
+              documents: {
+                disableLocalStorage: true,
+                prefix: 'documents',
+              },
+            },
+            bucket: r2Env.bucket!,
+            config: {
+              endpoint: r2Env.endpoint,
+              credentials: {
+                accessKeyId: r2Env.accessKeyId!,
+                secretAccessKey: r2Env.secretAccessKey!,
+              },
+              region: 'auto',
+            },
+          }),
+        ]
+      : []),
   ],
 })

@@ -1,10 +1,10 @@
 # Payload Blank Template
 
-This template comes configured with the bare minimum to get started on anything you need.
+This project is a Next.js + Payload CMS site backed by PostgreSQL, with optional Cloudflare R2 storage for uploaded media.
 
 ## Quick start
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+Deployments need a reachable PostgreSQL database plus `PAYLOAD_SECRET`. Cloudflare R2 is optional.
 
 ## Quick Start - local setup
 
@@ -17,26 +17,27 @@ After you click the `Deploy` button above, you'll want to have standalone copy o
 ### Development
 
 1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+2. `cp .env.example .env` to copy the example environment variables.
+3. Set `DATABASE_URL` to a reachable PostgreSQL instance and `PAYLOAD_SECRET` to a strong random secret.
+4. If you want remote media storage, fill in the Cloudflare R2 variables. If you leave them unset, Payload will keep using local storage for uploads.
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+5. `pnpm install && pnpm dev` to install dependencies and start the dev server
+6. Open `http://localhost:3000` to open the app in your browser
 
 That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
 
 #### Docker (Optional)
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+If you prefer to use Docker for local development instead of a locally installed PostgreSQL instance, the provided `docker-compose.yml` file can be used.
 
 To do so, follow these steps:
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
+- Set `DATABASE_URL` in your `.env` file to match the Postgres container, for example `postgresql://ppidktimtengka:R8vjMWv8N86X@127.0.0.1:5432/ppidktimtengka`
 - Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
 
 ## How it works
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+The Payload config is tailored to this site and is pre-configured in the following ways:
 
 ### Collections
 
