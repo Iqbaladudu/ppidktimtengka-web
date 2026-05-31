@@ -29,9 +29,9 @@ export function ArticlePDF({ document }: ArticlePDFProps) {
         <div className="flex flex-col overflow-hidden">
           <h4
             className="text-base font-semibold text-foreground truncate"
-            title={document.title || 'Dokumen Press Release'}
+            title={document.title || 'Dokumen PDF'}
           >
-            {document.title || 'Dokumen Press Release'}
+            {document.title || 'Dokumen PDF'}
           </h4>
           <span className="text-sm text-muted-foreground">
             PDF Document &bull; {formatBytes(document.filesize)}

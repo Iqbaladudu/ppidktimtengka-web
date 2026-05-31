@@ -10,7 +10,7 @@ import {
   getPressReleases,
   normalizePressReleaseAsArticle,
 } from '@/lib/payload'
-import type { Category, Author, Rubric } from '@/payload-types'
+import type { Category, Author, Rubric, Document } from '@/payload-types'
 import {
   ArticleMeta,
   ArticleContent,
@@ -111,6 +111,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const author = article.author as Author
   const rubric = article.rubric as Rubric | undefined
   const siteSettings = await getSiteSettings()
+  const articleAttachments =
+    article.attachments
+      ?.map((attachment) => attachment.document)
+      .filter((doc): doc is Document => Boolean(doc) && typeof doc !== 'number') || []
 
   // JSON-LD structured data
   const jsonLd = {
@@ -157,6 +161,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         {/* Article Content */}
         <div className="rounded-2xl bg-card px-5 py-6 shadow-sm md:px-12 md:py-12">
           <ArticleContent content={article.content} />
+          {articleAttachments.map((doc) => (
+            <ArticlePDF key={doc.id} document={doc} />
+          ))}
           {pressReleaseDoc?.document && <ArticlePDF document={pressReleaseDoc.document} />}
         </div>
 
